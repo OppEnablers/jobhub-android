@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">JobHub</string>
+    <string name="main_login_flavor_text">Already have an account?</string>
+    <string name="main_sign_up_flavor_text">New to JobHub?</string>
+    <string name="main_or">or</string>
+    <string name="main_button_log_in">LOG IN</string>
+    <string name="main_button_sign_up">SIGN UP</string>
 </resources>
