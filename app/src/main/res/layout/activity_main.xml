@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4682A9"
+    android:background="@color/accent"
     tools:context=".MainActivity">
 
     <androidx.cardview.widget.CardView
@@ -23,7 +23,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="571dp"
+            android:layout_height="570dp"
+            android:background="?attr/colorSurface"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="24dp">
@@ -35,24 +36,22 @@
                 android:layout_marginTop="20dp"
                 android:src="@drawable/logoimage" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+            <!--            <androidx.constraintlayout.widget.Guideline-->
+            <!--                android:id="@+id/guideline"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal" />-->
 
             <TextView
-                android:id="@+id/myTextView"
-                android:layout_width="266dp"
+                android:layout_width="270dp"
                 android:layout_height="16dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/montserrat_medium"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="start"
-                android:text="Already have an account?"
-                android:textColor="#4682A9"
-                android:textColorLink="#4682A9"
-                android:textFontWeight="7000"
+                android:text="@string/main_login_flavor_text"
+                android:textColor="@color/accent"
+                android:textColorLink="@color/accent"
                 android:textSize="12sp" />
 
 
@@ -61,9 +60,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="#4682A9"
+                android:backgroundTint="@color/accent"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="LOG IN"
+                android:text="@string/main_button_log_in"
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -71,31 +70,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="or"
-                android:textColor="#4682A9"
-                android:textColorLink="#4682A9"
+                android:text="@string/main_or"
+                android:textColor="@color/accent"
+                android:textColorLink="@color/accent"
                 android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/myTextView"
-                android:layout_width="266dp"
+                android:layout_width="270dp"
                 android:layout_height="16dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="start"
-                android:text="New to JobHub?"
-                android:textColor="#4682A9"
-                android:textColorLink="#4682A9"
-                android:textFontWeight="7000"
+                android:text="@string/main_sign_up_flavor_text"
+                android:textColor="@color/accent"
+                android:textColorLink="@color/accent"
                 android:textSize="12sp" />
 
             <Button
                 android:id="@+id/signUpButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#4682A9"
+                android:backgroundTint="@color/accent"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="SIGN UP"
+                android:text="@string/main_button_sign_up"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
