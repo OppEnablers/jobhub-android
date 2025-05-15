@@ -54,11 +54,6 @@
                 android:gravity="center"
                 android:layout_marginBottom="16dp">
 
-                <Switch
-                    android:id="@+id/jobToggle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="27dp"
@@ -66,6 +61,11 @@
                     android:text="Employer"
                     android:textColor="#427D9D"
                     android:textSize="16sp" />
+
+                <Switch
+                    android:id="@+id/jobToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
