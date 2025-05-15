@@ -28,20 +28,14 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(loginIntent);
-            }
+        loginButton.setOnClickListener(v -> {
+            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
         });
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signupIntent = new Intent(MainActivity.this, SignupActivity.class);
-                startActivity(signupIntent);
-            }
+        signupButton.setOnClickListener(v -> {
+            Intent signupIntent = new Intent(MainActivity.this, SignupActivity.class);
+            startActivity(signupIntent);
         });
     }
 }
