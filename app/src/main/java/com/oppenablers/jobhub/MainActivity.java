@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
-            Intent loginIntent = new Intent(MainActivity.this, Login_JobSeeker_Activity.class);
+            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(loginIntent);
         });
 
