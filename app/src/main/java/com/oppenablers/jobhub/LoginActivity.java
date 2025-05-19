@@ -1,23 +1,39 @@
 package com.oppenablers.jobhub;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private Switch jobToggle;
+    private TextView roleLabel;
+    private LinearLayout jobSeekerLayout, employerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.login_jobseeker);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        setContentView(R.layout.activity_login);
+
+        jobToggle = findViewById(R.id.jobToggle);
+        roleLabel = findViewById(R.id.roleLabel);
+        jobSeekerLayout = findViewById(R.id.jobSeekerLayout);
+        employerLayout = findViewById(R.id.employerLayout);
+
+        jobToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                roleLabel.setText("Employer");
+                employerLayout.setVisibility(View.VISIBLE);
+                jobSeekerLayout.setVisibility(View.GONE);
+            } else {
+                roleLabel.setText("Job Seeker");
+                employerLayout.setVisibility(View.GONE);
+                jobSeekerLayout.setVisibility(View.VISIBLE);
+            }
         });
     }
 }
