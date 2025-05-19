@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.oppenablers.jobhub.mariatoggle.widget.LabeledSwitch;
+
 public class LoginActivity extends AppCompatActivity {
 
-    private Switch jobToggle;
+    private LabeledSwitch jobToggle;
     private TextView roleLabel;
     private LinearLayout jobSeekerLayout, employerLayout;
 
@@ -20,17 +22,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         jobToggle = findViewById(R.id.jobToggle);
-        roleLabel = findViewById(R.id.roleLabel);
         jobSeekerLayout = findViewById(R.id.jobSeekerLayout);
         employerLayout = findViewById(R.id.employerLayout);
 
-        jobToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        jobToggle.setOnToggleListener((buttonView, isChecked) -> {
             if (isChecked) {
-                roleLabel.setText("Employer");
                 employerLayout.setVisibility(View.VISIBLE);
                 jobSeekerLayout.setVisibility(View.GONE);
             } else {
-                roleLabel.setText("Job Seeker");
                 employerLayout.setVisibility(View.GONE);
                 jobSeekerLayout.setVisibility(View.VISIBLE);
             }
