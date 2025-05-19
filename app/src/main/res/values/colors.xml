@@ -3,4 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="accent">#FF4682A9</color>
+
+    <color name="toggle_default_accent">#FF4081</color>
+    <color name="toggle_accent_off">#FF4682A9</color>
+    <color name="toggle_accent_on">#FFA2C0D4</color>
 </resources>
