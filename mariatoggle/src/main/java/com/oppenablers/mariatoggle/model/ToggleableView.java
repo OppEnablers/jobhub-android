@@ -1,4 +1,4 @@
-package com.oppenablers.jobhub.mariatoggle.model;
+package com.oppenablers.mariatoggle.model;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.oppenablers.jobhub.mariatoggle.listener.OnToggledListener;
+import com.oppenablers.mariatoggle.listener.OnToggledListener;
 
 public class ToggleableView extends View {
 

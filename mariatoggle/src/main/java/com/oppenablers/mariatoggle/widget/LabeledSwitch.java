@@ -1,7 +1,8 @@
-package com.oppenablers.jobhub.mariatoggle.widget;
+package com.oppenablers.mariatoggle.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,8 +13,10 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.oppenablers.jobhub.R;
-import com.oppenablers.jobhub.mariatoggle.model.ToggleableView;
+import androidx.core.content.res.ResourcesCompat;
+
+import com.oppenablers.mariatoggle.R;
+import com.oppenablers.mariatoggle.model.ToggleableView;
 
 public class LabeledSwitch extends ToggleableView {
     private int padding;
@@ -71,7 +74,7 @@ public class LabeledSwitch extends ToggleableView {
         this.labelOff = "OFF";
 
         this.isEnabled = true;
-        this.textSize = (int)(12f * getResources().getDisplayMetrics().scaledDensity);
+        this.textSize = (int) (12f * getResources().getDisplayMetrics().scaledDensity);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             colorBorder = colorOn = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
@@ -94,52 +97,62 @@ public class LabeledSwitch extends ToggleableView {
     }
 
     private void initProperties(AttributeSet attrs) {
-        TypedArray tarr = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.ToggleableView,0,0);
-        final int N = tarr.getIndexCount();
-        for (int i = 0; i < N; ++i) {
-            int attr = tarr.getIndex(i);
-            if (attr == R.styleable.ToggleableView_on) {
-                isOn = tarr.getBoolean(R.styleable.ToggleableView_on, false);
-            } else if (attr == R.styleable.ToggleableView_colorOff) {
-                colorOff = tarr.getColor(R.styleable.ToggleableView_colorOff, Color.parseColor("#FFFFFF"));
-            } else if (attr == R.styleable.ToggleableView_colorBorder) {
-                int accentColor;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                    accentColor = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
-                } else {
-                    accentColor = getResources().getColor(R.color.toggle_default_accent);
+        TypedArray tarr = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.ToggleableView, 0, 0);
+        try {
+            final int N = tarr.getIndexCount();
+            for (int i = 0; i < N; ++i) {
+                int attr = tarr.getIndex(i);
+                if (attr == R.styleable.ToggleableView_isOn) {
+                    isOn = tarr.getBoolean(R.styleable.ToggleableView_isOn, false);
+                } else if (attr == R.styleable.ToggleableView_colorOff) {
+                    colorOff = tarr.getColor(R.styleable.ToggleableView_colorOff, Color.parseColor("#FFFFFF"));
+                } else if (attr == R.styleable.ToggleableView_colorBorder) {
+                    int accentColor;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        accentColor = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
+                    } else {
+                        accentColor = getResources().getColor(R.color.toggle_default_accent);
+                    }
+                    colorBorder = tarr.getColor(R.styleable.ToggleableView_colorBorder, accentColor);
+                } else if (attr == R.styleable.ToggleableView_colorOn) {
+                    int accentColor;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        accentColor = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
+                    } else {
+                        accentColor = getResources().getColor(R.color.toggle_default_accent);
+                    }
+                    colorOn = tarr.getColor(R.styleable.ToggleableView_colorOn, accentColor);
+                } else if (attr == R.styleable.ToggleableView_colorDisabled) {
+                    colorDisabled = tarr.getColor(R.styleable.ToggleableView_colorOff, Color.parseColor("#D3D3D3"));
+                } else if (attr == R.styleable.ToggleableView_textOff) {
+                    labelOff = tarr.getString(R.styleable.ToggleableView_textOff);
+                } else if (attr == R.styleable.ToggleableView_textOn) {
+                    labelOn = tarr.getString(R.styleable.ToggleableView_textOn);
+                } else if (attr == R.styleable.ToggleableView_android_textSize) {
+                    int defaultTextSize = (int) (12f * getResources().getDisplayMetrics().scaledDensity);
+                    textSize = tarr.getDimensionPixelSize(R.styleable.ToggleableView_android_textSize, defaultTextSize);
+                } else if (attr == R.styleable.ToggleableView_android_enabled) {
+                    isEnabled = tarr.getBoolean(R.styleable.ToggleableView_android_enabled, false);
+                } else if (attr == R.styleable.ToggleableView_android_fontFamily) {
+                    int fontResourceId = tarr.getResourceId(R.styleable.ToggleableView_android_fontFamily, 0);
+                    if (fontResourceId > 0) {
+                        setTypeface(ResourcesCompat.getFont(getContext(), fontResourceId));
+                    }
                 }
-                colorBorder = tarr.getColor(R.styleable.ToggleableView_colorBorder, accentColor);
-            } else if (attr == R.styleable.ToggleableView_colorOn) {
-                int accentColor;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                    accentColor = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
-                } else {
-                    accentColor = getResources().getColor(R.color.toggle_default_accent);
-                }
-                colorOn = tarr.getColor(R.styleable.ToggleableView_colorOn, accentColor);
-            } else if (attr == R.styleable.ToggleableView_colorDisabled) {
-                colorDisabled = tarr.getColor(R.styleable.ToggleableView_colorOff, Color.parseColor("#D3D3D3"));
-            } else if (attr == R.styleable.ToggleableView_textOff) {
-                labelOff = tarr.getString(R.styleable.ToggleableView_textOff);
-            } else if (attr == R.styleable.ToggleableView_textOn) {
-                labelOn = tarr.getString(R.styleable.ToggleableView_textOn);
-            } else if (attr == R.styleable.ToggleableView_android_textSize) {
-                int defaultTextSize = (int)(12f * getResources().getDisplayMetrics().scaledDensity);
-                textSize = tarr.getDimensionPixelSize(R.styleable.ToggleableView_android_textSize, defaultTextSize);
-            } else if(attr == R.styleable.ToggleableView_android_enabled) {
-                isEnabled = tarr.getBoolean(R.styleable.ToggleableView_android_enabled, false);
             }
+        } finally {
+            tarr.recycle();
         }
     }
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         paint.setTextSize(textSize);
 
 //      Drawing Switch background here
         {
-            if(isEnabled()) {
+            if (isEnabled()) {
                 paint.setColor(colorBorder);
             } else {
                 paint.setColor(colorDisabled);
@@ -158,7 +171,7 @@ public class LabeledSwitch extends ToggleableView {
             alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
             int onColor;
 
-            if(isEnabled()) {
+            if (isEnabled()) {
                 onColor = Color.argb(alpha, Color.red(colorOn), Color.green(colorOn), Color.blue(colorOn));
             } else {
                 onColor = Color.argb(alpha, Color.red(colorDisabled), Color.green(colorDisabled), Color.blue(colorDisabled));
@@ -182,8 +195,8 @@ public class LabeledSwitch extends ToggleableView {
 //      Drawing Switch Labels here
         String MAX_CHAR = "N";
         float textCenter = paint.measureText(MAX_CHAR) / 2;
-        if(isOn) {
-            int alpha = (int)((((width >>> 1) - thumbBounds.centerX()) / ((width >>> 1) - thumbOffCenterX)) * 255);
+        if (isOn) {
+            int alpha = (int) ((((width >>> 1) - thumbBounds.centerX()) / ((width >>> 1) - thumbOffCenterX)) * 255);
             alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
             int onColor = Color.argb(alpha, Color.red(colorOn), Color.green(colorOn), Color.blue(colorOn));
             paint.setColor(onColor);
@@ -191,7 +204,7 @@ public class LabeledSwitch extends ToggleableView {
             float centerX = (width - padding - ((padding + (padding >>> 1)) + (thumbRadii << 1))) >>> 1;
             canvas.drawText(labelOff, (padding + (padding >>> 1)) + (thumbRadii << 1) + centerX - (paint.measureText(labelOff) / 2), (height >>> 1) + textCenter, paint);
 
-            alpha = (int)(((thumbBounds.centerX() - (width >>> 1)) / (thumbOnCenterX - (width >>> 1))) * 255);
+            alpha = (int) (((thumbBounds.centerX() - (width >>> 1)) / (thumbOnCenterX - (width >>> 1))) * 255);
             alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
             int offColor = Color.argb(alpha, Color.red(colorOff), Color.green(colorOff), Color.blue(colorOff));
             paint.setColor(offColor);
@@ -201,7 +214,7 @@ public class LabeledSwitch extends ToggleableView {
             centerX = (((padding >>> 1) + maxSize) - padding) >>> 1;
             canvas.drawText(labelOn, padding + centerX - (paint.measureText(labelOn) / 2), (height >>> 1) + textCenter, paint);
         } else {
-            int alpha = (int)(((thumbBounds.centerX() - (width >>> 1)) / (thumbOnCenterX - (width >>> 1))) * 255);
+            int alpha = (int) (((thumbBounds.centerX() - (width >>> 1)) / (thumbOnCenterX - (width >>> 1))) * 255);
             alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
             int offColor = Color.argb(alpha, Color.red(colorOff), Color.green(colorOff), Color.blue(colorOff));
             paint.setColor(offColor);
@@ -210,10 +223,10 @@ public class LabeledSwitch extends ToggleableView {
             float centerX = (((padding >>> 1) + maxSize) - padding) >>> 1;
             canvas.drawText(labelOn, padding + centerX - (paint.measureText(labelOn) / 2), (height >>> 1) + textCenter, paint);
 
-            alpha = (int)((((width >>> 1) - thumbBounds.centerX()) / ((width >>> 1) - thumbOffCenterX)) * 255);
+            alpha = (int) ((((width >>> 1) - thumbBounds.centerX()) / ((width >>> 1) - thumbOffCenterX)) * 255);
             alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
             int onColor;
-            if(isEnabled()) {
+            if (isEnabled()) {
                 onColor = Color.argb(alpha, Color.red(colorOn), Color.green(colorOn), Color.blue(colorOn));
             } else {
                 onColor = Color.argb(alpha, Color.red(colorDisabled), Color.green(colorDisabled), Color.blue(colorDisabled));
@@ -235,7 +248,7 @@ public class LabeledSwitch extends ToggleableView {
             alpha = (int) (((thumbOnCenterX - thumbBounds.centerX()) / (thumbOnCenterX - thumbOffCenterX)) * 255);
             alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
             int onColor;
-            if(isEnabled()) {
+            if (isEnabled()) {
                 onColor = Color.argb(alpha, Color.red(colorOn), Color.green(colorOn), Color.blue(colorOn));
             } else {
                 onColor = Color.argb(alpha, Color.red(colorDisabled), Color.green(colorDisabled), Color.blue(colorDisabled));
@@ -245,7 +258,8 @@ public class LabeledSwitch extends ToggleableView {
         }
     }
 
-    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int desiredWidth = getResources().getDimensionPixelSize(R.dimen.labeled_default_width);
         int desiredHeight = getResources().getDimensionPixelSize(R.dimen.labeled_default_height);
 
@@ -282,20 +296,21 @@ public class LabeledSwitch extends ToggleableView {
         thumbBounds.set(padding, padding, padding + thumbRadii, height - padding);
         thumbOffCenterX = thumbBounds.centerX();
 
-        if(isOn) {
+        if (isOn) {
             thumbBounds.set(width - padding - thumbRadii, padding, width - padding, height - padding);
         } else {
             thumbBounds.set(padding, padding, padding + thumbRadii, height - padding);
         }
 
-        leftBgArc.set(0,0, outerRadii << 1, height);
-        rightBgArc.set(width - (outerRadii << 1),0, width, height);
+        leftBgArc.set(0, 0, outerRadii << 1, height);
+        rightBgArc.set(width - (outerRadii << 1), 0, width, height);
 
-        leftFgArc.set(padding / 10,padding / 10, (outerRadii << 1)- (padding / 10), height - (padding / 10));
-        rightFgArc.set(width - (outerRadii << 1) + (padding / 10),padding / 10, width - (padding / 10), height - (padding / 10));
+        leftFgArc.set(padding / 10, padding / 10, (outerRadii << 1) - (padding / 10), height - (padding / 10));
+        rightFgArc.set(width - (outerRadii << 1) + (padding / 10), padding / 10, width - (padding / 10), height - (padding / 10));
     }
 
-    @Override public final boolean performClick() {
+    @Override
+    public final boolean performClick() {
         super.performClick();
         if (isOn) {
             ValueAnimator switchColor = ValueAnimator.ofFloat(width - padding - thumbRadii, padding);
@@ -318,15 +333,16 @@ public class LabeledSwitch extends ToggleableView {
             switchColor.setDuration(250);
             switchColor.start();
         }
-        isOn =! isOn;
-        if(onToggledListener != null) {
+        isOn = !isOn;
+        if (onToggledListener != null) {
             onToggledListener.onToggled(this, isOn);
         }
         return true;
     }
 
-    @Override public final boolean onTouchEvent(MotionEvent event) {
-        if(isEnabled()) {
+    @Override
+    public final boolean onTouchEvent(MotionEvent event) {
+        if (isEnabled()) {
             float x = event.getX();
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN: {
@@ -334,14 +350,14 @@ public class LabeledSwitch extends ToggleableView {
                     return true;
                 }
 // BROKEN!!!!!!!! fix someday i hope
-//
-//                case MotionEvent.ACTION_MOVE: {
-//                    if (x - (thumbRadii >>> 1) > padding && x + (thumbRadii >>> 1) < width - padding) {
-//                        thumbBounds.set(x - (thumbRadii >>> 1), thumbBounds.top, x + (thumbRadii >>> 1), thumbBounds.bottom);
-//                        invalidate();
-//                    }
-//                    return true;
-//                }
+
+                case MotionEvent.ACTION_MOVE: {
+                    if (x - (thumbRadii >>> 1) > padding && x + (thumbRadii >>> 1) < width - padding) {
+                        thumbBounds.set(x - (thumbRadii >>> 1), thumbBounds.top, x + (thumbRadii >>> 1), thumbBounds.bottom);
+                        invalidate();
+                    }
+                    return true;
+                }
 
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL: {
@@ -373,7 +389,7 @@ public class LabeledSwitch extends ToggleableView {
                             switchColor.start();
                             isOn = false;
                         }
-                        if(onToggledListener != null) {
+                        if (onToggledListener != null) {
                             onToggledListener.onToggled(this, isOn);
                         }
                     }
@@ -431,14 +447,17 @@ public class LabeledSwitch extends ToggleableView {
     }
 
     public void setTypeface(Typeface typeface) {
-        this.typeface = typeface;
-        paint.setTypeface(typeface);
-        invalidate();
+        if (typeface != null) {
+            this.typeface = typeface;
+            paint.setTypeface(typeface);
+            invalidate();
+        }
     }
 
-    @Override public void setOn(boolean on) {
+    @Override
+    public void setOn(boolean on) {
         super.setOn(on);
-        if(isOn) {
+        if (isOn) {
             thumbBounds.set(width - padding - thumbRadii, padding, width - padding, height - padding);
         } else {
             thumbBounds.set(padding, padding, padding + thumbRadii, height - padding);
@@ -469,7 +488,7 @@ public class LabeledSwitch extends ToggleableView {
     }
 
     public void setTextSize(int textSize) {
-        this.textSize = (int)(textSize * getResources().getDisplayMetrics().scaledDensity);
+        this.textSize = (int) (textSize * getResources().getDisplayMetrics().scaledDensity);
         invalidate();
     }
 }

@@ -9,9 +9,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.oppenablers.mariatoggle.widget.LabeledSwitch;
+
 public class SignupActivity extends AppCompatActivity {
 
-    private Switch jobToggle;
+    private LabeledSwitch jobToggle;
     private TextView userTypeText;
     private EditText nameInput, addressOrBirthdayInput;
     private EditText emailInput, confirmEmailInput;
@@ -24,7 +26,6 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         jobToggle = findViewById(R.id.jobToggle);
-        userTypeText = findViewById(R.id.userTypeText);
         nameInput = findViewById(R.id.fullOrCompanyName);
         addressOrBirthdayInput = findViewById(R.id.companyAddressOrBirthday);
         emailInput = findViewById(R.id.emailEditText);
@@ -34,15 +35,13 @@ public class SignupActivity extends AppCompatActivity {
         signupButton = findViewById(R.id.signupButton);
 
         // Toggle listener to switch form hints
-        jobToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        jobToggle.setOnToggleListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // Employer
-                userTypeText.setText("Employer");
                 nameInput.setHint("Company Name");
                 addressOrBirthdayInput.setHint("Company Address");
             } else {
                 // Job Seeker
-                userTypeText.setText("Job Seeker");
                 nameInput.setHint("Full Name");
                 addressOrBirthdayInput.setHint("Birthday MM/DD/YYYY");
             }
@@ -72,7 +71,7 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
-            String userType = jobToggle.isChecked() ? "employer" : "jobseeker";
+            String userType = jobToggle.isOn() ? "employer" : "jobseeker";
 
 //            Need to connect firebase here
 

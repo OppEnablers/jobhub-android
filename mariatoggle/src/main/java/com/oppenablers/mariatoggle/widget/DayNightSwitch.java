@@ -1,4 +1,4 @@
-package com.oppenablers.jobhub.mariatoggle.widget;
+package com.oppenablers.mariatoggle.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -12,8 +12,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.oppenablers.jobhub.R;
-import com.oppenablers.jobhub.mariatoggle.model.ToggleableView;
+import com.oppenablers.mariatoggle.R;
+import com.oppenablers.mariatoggle.model.ToggleableView;
 
 public class DayNightSwitch extends ToggleableView {
 
@@ -101,8 +101,8 @@ public class DayNightSwitch extends ToggleableView {
         final int N = tarr.getIndexCount();
         for (int i = 0; i < N; ++i) {
             int attr = tarr.getIndex(i);
-            if (attr == R.styleable.ToggleableView_on) {
-                isOn = tarr.getBoolean(R.styleable.ToggleableView_on, false);
+            if (attr == R.styleable.ToggleableView_isOn) {
+                isOn = tarr.getBoolean(R.styleable.ToggleableView_isOn, false);
             } else if(attr == R.styleable.ToggleableView_android_enabled) {
                 isEnabled = tarr.getBoolean(R.styleable.ToggleableView_android_enabled, false);
             }
