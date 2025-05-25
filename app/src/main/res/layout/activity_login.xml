@@ -37,12 +37,13 @@
                 android:contentDescription="Logo"
                 android:src="@drawable/logoimage" />
 
-            <com.oppenablers.jobhub.mariatoggle.widget.LabeledSwitch
+            <com.oppenablers.mariatoggle.widget.LabeledSwitch
                 android:id="@+id/jobToggle"
-                android:layout_width="128dp"
-                android:layout_height="wrap_content"
+                android:layout_width="96dp"
+                android:layout_height="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
+                android:fontFamily="@font/montserrat"
                 app:colorBorder="@color/accent"
                 app:colorOff="@color/toggle_accent_off"
                 app:colorOn="#D6EBF6"

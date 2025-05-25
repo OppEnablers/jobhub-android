@@ -1,4 +1,4 @@
-package com.oppenablers.jobhub.mariatoggle.listener;
+package com.oppenablers.mariatoggle.listener;
 
 import android.view.View;
 

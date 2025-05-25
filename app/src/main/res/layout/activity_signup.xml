@@ -38,33 +38,29 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:src="@drawable/logoname"/>
+                    android:src="@drawable/logoname" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="16dp"
-                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/userTypeText"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/montserrat"
-                        android:text="Job Seeker"
-                        android:textAlignment="center"
-                        android:textColor="#427D9D"
-                        android:textSize="14dp" />
-
-                    <Switch
+                    <com.oppenablers.mariatoggle.widget.LabeledSwitch
                         android:id="@+id/jobToggle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-
+                        android:layout_width="96dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:fontFamily="@font/montserrat"
+                        app:colorBorder="@color/accent"
+                        app:colorOff="@color/toggle_accent_off"
+                        app:colorOn="#D6EBF6"
+                        app:textOff="Job Seeker"
+                        app:textOn="Employer" />
                 </LinearLayout>
+
             </LinearLayout>
 
             <EditText
