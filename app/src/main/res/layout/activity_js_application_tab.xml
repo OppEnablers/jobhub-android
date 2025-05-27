@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/header_container"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="86dp"
         android:background="#FFFFFF"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="192dp"
-            android:layout_height="75dp"
+            android:layout_width="203dp"
+            android:layout_height="86dp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/logoname" />
 
@@ -65,27 +65,121 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="16dp">
+        android:layout_margin="12dp">
 
         <TextView
             android:id="@+id/application_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="101dp"
             android:background="@drawable/bg_header_rounded"
+            android:fontFamily="@font/montserrat_extrabold"
             android:gravity="center"
+            android:padding="-15dp"
             android:text="APPLICATION"
-            android:textColor="#3A3A3A"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#4682A9"
+            android:textFontWeight="800"
+            android:textSize="19dp"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:padding="12dp" />
+            android:translationY="-20dp"
+            />
 
         <LinearLayout
             android:id="@+id/application_list_container"
             android:layout_width="match_parent"
-            android:layout_height="511dp"
+            android:layout_height="493dp"
             android:background="@drawable/bg_content_rounded"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="12dp"
+            android:layout_marginTop="-40dp">
+
+            <!-- Job Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="99dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/jobcard_bg"
+                android:elevation="5dp"
+                android:marginBottom="12dp"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="iACADEMY"
+                        android:textAlignment="center"
+                        android:textColor="#6C7282"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="#6C7282" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Promote iACADEMY to boost enrollment.
+                        Provide admissions guidance and collaborate..."
+                        android:textColor="#6C7282"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="99dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/jobcard_bg"
+                android:elevation="5dp"
+                android:marginBottom="12dp"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Opsyconservices.ph Inc."
+                        android:textAlignment="center"
+                        android:textColor="#6C7282"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="#6C7282" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Seeking an enthusiastic and driven Sales and Marketing Associate to join our dynamic team..."
+                        android:textColor="#6C7282"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
@@ -119,7 +213,7 @@
             <ImageView
                 android:layout_width="43dp"
                 android:layout_height="47dp"
-                android:src="@drawable/star" />
+                android:src="@drawable/star_blue" />
         </LinearLayout>
 
         <LinearLayout
