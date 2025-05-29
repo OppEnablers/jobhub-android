@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
-            android:text="MASTER'S DEGREE"
+            android:text="WORK DURATION"
             android:textColor="#999999"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
-                    android:hint="(optional)" />
+                    android:hint="5 years" />
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
-            android:text="BACHELOR'S DEGREE"
+            android:text="COMPANY"
             android:textColor="#999999"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -96,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
-                    android:hint="Software Engineer" />
+                    android:hint="iACADEMY" />
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -131,13 +131,13 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/educ_attainment"
+            android:id="@+id/workexp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="left"
             android:padding="1dp"
-            android:text="Educational Attainment"
+            android:text="Work Experience"
             android:textColor="@color/accent"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -164,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
-            android:text="ASSOCIATE"
+            android:text="JOB POSITION"
             android:textColor="#999999"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -185,7 +185,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:hint="(optional)" />
+                android:hint="Marketing Manager" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -195,18 +195,11 @@
         android:layout_width="match_parent"
         android:layout_height="259dp"
         android:layout_below="@id/name_section"
-        android:layout_marginTop="95dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical"
         android:padding="24dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="DOCTORAL DEGREE"
-            android:textColor="#999999"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -217,31 +210,13 @@
             app:boxStrokeWidth="1dp"
             app:boxStrokeWidthFocused="2dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="#4682A9"
-                app:boxStrokeWidth="1dp"
-                app:boxStrokeWidthFocused="2dp"
-                app:endIconContentDescription="Add item"
-                app:endIconDrawable="@drawable/addlogo"
-                app:endIconMode="custom">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:hint="(optional)" />
-            </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/update_phone_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="55dp"
             android:backgroundTint="#4682A9"
             android:fontFamily="@font/montserrat_bold"
             android:text="UPDATE"

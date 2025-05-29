@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <!-- HEADER SECTION - Your existing foundation -->
+
     <LinearLayout
         android:id="@+id/header_container"
         android:layout_width="match_parent"
@@ -46,8 +46,9 @@
             android:textColor="@color/accent"
             android:textSize="26sp"
             android:textStyle="bold" />
-
     </LinearLayout>
+
+
 
     <!-- MAIN CONTENT AREA -->
     <ScrollView
@@ -62,19 +63,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- =============================================== -->
-            <!-- NOTIFICATION ITEM TEMPLATE - EASILY CUSTOMIZABLE -->
-            <!-- =============================================== -->
-            <!--
-                BACKEND DEVELOPERS: Duplicate this notification item structure
-                for each notification. You can easily modify:
-                1. Profile image (@+id/notification_avatar)
-                2. User name (@+id/notification_username)
-                3. Time stamp (@+id/notification_time)
-                4. Message content (@+id/notification_message)
-                5. App source (@+id/notification_app_source)
-                6. Read/unread status (background color)
-            -->
 
             <!-- NOTIFICATION ITEM 1 - UNREAD EXAMPLE -->
             <LinearLayout
@@ -85,6 +73,7 @@
                 android:background="white"
                 android:orientation="horizontal"
                 android:padding="16dp">
+
 
                 <!-- Profile Avatar Section -->
                 <LinearLayout
