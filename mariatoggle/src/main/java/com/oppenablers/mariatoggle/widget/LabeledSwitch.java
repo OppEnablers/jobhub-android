@@ -135,7 +135,7 @@ public class LabeledSwitch extends ToggleableView {
                     isEnabled = tarr.getBoolean(R.styleable.ToggleableView_android_enabled, false);
                 } else if (attr == R.styleable.ToggleableView_android_fontFamily) {
                     int fontResourceId = tarr.getResourceId(R.styleable.ToggleableView_android_fontFamily, 0);
-                    if (fontResourceId > 0) {
+                    if (fontResourceId > 0  && !isInEditMode()) {
                         setTypeface(ResourcesCompat.getFont(getContext(), fontResourceId));
                     }
                 }
