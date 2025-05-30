@@ -6,7 +6,7 @@
     android:background="#F0F0F0">
 
     <LinearLayout
-        android:id="@+id/name_section"
+        android:id="@+id/name_section1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header_container"
@@ -54,7 +54,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/name_section"
+        android:id="@+id/name_section2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header_container"
@@ -188,13 +188,13 @@
                 android:hint="Marketing Manager" />
         </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/age_section"
         android:layout_width="match_parent"
         android:layout_height="259dp"
-        android:layout_below="@id/name_section"
+        android:layout_below="@id/name_section2"
         android:layout_marginTop="35dp"
         android:orientation="vertical"
         android:padding="24dp">
