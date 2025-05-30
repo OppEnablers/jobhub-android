@@ -9,33 +9,28 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.oppenablers.jobhub.databinding.ActivitySignupBinding;
 import com.oppenablers.mariatoggle.widget.LabeledSwitch;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private LabeledSwitch jobToggle;
-    private TextView userTypeText;
-    private EditText nameInput, addressOrBirthdayInput;
-    private EditText emailInput, confirmEmailInput;
-    private EditText passwordInput, confirmPasswordInput;
-    private Button signupButton;
+    ActivitySignupBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        binding = ActivitySignupBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        jobToggle = findViewById(R.id.jobToggle);
-        nameInput = findViewById(R.id.fullOrCompanyName);
-        addressOrBirthdayInput = findViewById(R.id.companyAddressOrBirthday);
-        emailInput = findViewById(R.id.emailEditText);
-        confirmEmailInput = findViewById(R.id.confirmEmailEditText);
-        passwordInput = findViewById(R.id.passwordEditText);
-        confirmPasswordInput = findViewById(R.id.confirmPasswordEditText);
-        signupButton = findViewById(R.id.signupButton);
+        EditText nameInput = binding.fullOrCompanyName;
+        EditText addressOrBirthdayInput = binding.companyAddressOrBirthday;
+        EditText emailInput = binding.emailEditText;
+        EditText confirmEmailInput = binding.confirmEmailEditText;
+        EditText passwordInput = binding.passwordEditText;
+        EditText confirmPasswordInput = binding.confirmPasswordEditText;
 
         // Toggle listener to switch form hints
-        jobToggle.setOnToggleListener((buttonView, isChecked) -> {
+        binding.jobToggle.setOnToggleListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // Employer
                 nameInput.setHint("Company Name");
@@ -47,7 +42,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        signupButton.setOnClickListener(v -> {
+        binding.signupButton.setOnClickListener(v -> {
             String name = nameInput.getText().toString().trim();
             String addressOrBirthday = addressOrBirthdayInput.getText().toString().trim();
             String email = emailInput.getText().toString().trim();
@@ -71,7 +66,7 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
-            String userType = jobToggle.isOn() ? "employer" : "jobseeker";
+            String userType = binding.jobToggle.isOn() ? "employer" : "jobseeker";
 
 //            Need to connect firebase here
 

@@ -7,30 +7,26 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.oppenablers.jobhub.databinding.ActivityLoginBinding;
 import com.oppenablers.mariatoggle.widget.LabeledSwitch;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LabeledSwitch jobToggle;
-    private TextView roleLabel;
-    private LinearLayout jobSeekerLayout, employerLayout;
+    ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        jobToggle = findViewById(R.id.jobToggle);
-        jobSeekerLayout = findViewById(R.id.jobSeekerLayout);
-        employerLayout = findViewById(R.id.employerLayout);
-
-        jobToggle.setOnToggleListener((buttonView, isChecked) -> {
+        binding.jobToggle.setOnToggleListener((buttonView, isChecked) -> {
             if (isChecked) {
-                employerLayout.setVisibility(View.VISIBLE);
-                jobSeekerLayout.setVisibility(View.GONE);
+                binding.employerLayout.setVisibility(View.VISIBLE);
+                binding.jobSeekerLayout.setVisibility(View.GONE);
             } else {
-                employerLayout.setVisibility(View.GONE);
-                jobSeekerLayout.setVisibility(View.VISIBLE);
+                binding.employerLayout.setVisibility(View.GONE);
+                binding.jobSeekerLayout.setVisibility(View.VISIBLE);
             }
         });
     }
