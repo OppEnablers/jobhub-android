@@ -2,8 +2,6 @@ package com.oppenablers.jobhub;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,16 +9,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.oppenablers.jobhub.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
+
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-
-        Button loginButton = findViewById(R.id.loginButton);
-        Button signupButton = findViewById(R.id.signUpButton);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -28,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        loginButton.setOnClickListener(v -> {
+        binding.loginButton.setOnClickListener(v -> {
             Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(loginIntent);
         });
 
-        signupButton.setOnClickListener(v -> {
+        binding.signUpButton.setOnClickListener(v -> {
             Intent signupIntent = new Intent(MainActivity.this, SignupActivity.class);
             startActivity(signupIntent);
         });
