@@ -54,8 +54,8 @@
                         android:layout_marginTop="24dp"
                         android:layout_marginBottom="24dp"
                         android:fontFamily="@font/montserrat"
-                        app:colorBorder="@color/accent"
-                        app:colorOff="@color/toggle_accent_off"
+                        app:colorBorder="@color/md_theme_primary"
+                        app:colorOff="@color/md_theme_inversePrimary"
                         app:colorOn="#D6EBF6"
                         app:textOff="Job Seeker"
                         app:textOn="Employer" />

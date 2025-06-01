@@ -52,7 +52,7 @@
             android:gravity="left"
             android:padding="1dp"
             android:text="John Doe"
-            android:textColor="@color/accent"
+            android:textColor="@color/md_theme_primary"
             android:textSize="26sp"
             android:textStyle="bold" />
 

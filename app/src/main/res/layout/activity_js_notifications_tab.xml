@@ -43,7 +43,7 @@
             android:gravity="left"
             android:padding="1dp"
             android:text="Notifications"
-            android:textColor="@color/accent"
+            android:textColor="@color/md_theme_primary"
             android:textSize="26sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -112,7 +112,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Nash Jerby Joo"
-                            android:textColor="@color/accent"
+                            android:textColor="@color/md_theme_primary"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                         <!-- TODO: Replace with dynamic username from backend -->
@@ -199,7 +199,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="JobHub"
-                            android:textColor="@color/accent"
+                            android:textColor="@color/md_theme_primary"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
