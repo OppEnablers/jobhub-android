@@ -254,6 +254,10 @@ public class LabeledSwitch2 extends ToggleableView {
 
         invalidate();
 
+        if (onToggledListener != null) {
+            onToggledListener.onToggled(this, isOn);
+        }
+
         return true;
     }
 

@@ -3,6 +3,14 @@
     <string name="main_login_flavor_text">Already have an account?</string>
     <string name="main_sign_up_flavor_text">New to JobHub?</string>
     <string name="main_or">or</string>
-    <string name="main_button_log_in">LOG IN</string>
-    <string name="main_button_sign_up">SIGN UP</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">LOG IN</string>
+    <string name="signup">SIGN UP</string>
+    <string name="full_name">Full Name</string>
+    <string name="confirm_email">Confirm Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="birthday">Birthday</string>
+    <string name="company_address">Company Address</string>
+    <string name="company_name">Company Name</string>
 </resources>

@@ -35,7 +35,7 @@
                 android:layout_height="215dp"
                 android:layout_marginTop="20dp"
                 android:contentDescription="Logo"
-                android:src="@drawable/logoimage" />
+                android:src="@drawable/logoname" />
 
             <com.oppenablers.mariatoggle.widget.LabeledSwitch2
                 android:id="@+id/jobToggle"
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="LOG IN" />
+                android:text="@string/login" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

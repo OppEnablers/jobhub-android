@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#427D9D">
+    android:background="@color/md_theme_primary">
 
     <androidx.cardview.widget.CardView
         android:layout_marginTop="8dp"
@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:cardBackgroundColor="@android:color/white">
+        app:cardBackgroundColor="@color/md_theme_secondaryContainer">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,113 +44,140 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="right|center_vertical"
+                    android:gravity="end|center_vertical"
                     android:orientation="horizontal">
 
-                    <com.oppenablers.mariatoggle.widget.LabeledSwitch
+                    <com.oppenablers.mariatoggle.widget.LabeledSwitch2
                         android:id="@+id/jobToggle"
-                        android:layout_width="96dp"
-                        android:layout_height="24dp"
+                        android:layout_width="120dp"
+                        android:layout_height="36dp"
                         android:layout_marginTop="24dp"
                         android:layout_marginBottom="24dp"
-                        android:fontFamily="@font/montserrat"
-                        app:colorBorder="@color/md_theme_primary"
-                        app:colorOff="@color/md_theme_inversePrimary"
-                        app:colorOn="#D6EBF6"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textSize="12sp"
+                        app:isOn="false"
+                        app:colorOff="@color/md_theme_primary"
+                        app:colorOn="@color/md_theme_inversePrimary"
                         app:textOff="Job Seeker"
                         app:textOn="Employer" />
                 </LinearLayout>
 
             </LinearLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fullOrCompanyName"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/inputtextoutline"
-                android:hint="Full Name"
-                android:textColor="#4A90E2"
-                android:textColorHint="#4A90E2"
-                android:paddingHorizontal="16dp"
-                android:fontFamily="@font/montserrat"
-                android:textSize="16sp" />
+                android:hint="@string/full_name"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 
-            <EditText
-                android:id="@+id/companyAddressOrBirthday"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textPersonName|textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/birthday"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/inputtextoutline"
-                android:hint="Birthday MM/DD/YYYY"
-                android:textColor="#4A90E2"
-                android:textColorHint="#4A90E2"
-                android:paddingHorizontal="16dp"
-                android:fontFamily="@font/montserrat"
-                android:textSize="16sp" />
+                android:hint="@string/birthday"
+                app:placeholderText="mm/dd/yyyy"
+                app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge"
+                app:startIconDrawable="@drawable/ic_calendar">
 
-            <EditText
-                android:id="@+id/emailEditText"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="datetime|date" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/companyAddress"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/inputtextoutline"
-                android:hint="Email"
-                android:textColor="#4A90E2"
-                android:textColorHint="#4A90E2"
-                android:paddingHorizontal="16dp"
-                android:fontFamily="@font/montserrat"
-                android:textSize="16sp" />
+                android:hint="@string/company_address"
+                android:visibility="gone"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 
-            <EditText
-                android:id="@+id/confirmEmailEditText"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textPostalAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/inputtextoutline"
-                android:hint="Confirm Email"
-                android:textColor="#4A90E2"
-                android:textColorHint="#4A90E2"
-                android:paddingHorizontal="16dp"
-                android:fontFamily="@font/montserrat"
-                android:textSize="16sp" />
+                android:hint="@string/email"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 
-            <EditText
-                android:id="@+id/passwordEditText"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/confirmEmail"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/inputtextoutline"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="#4A90E2"
-                android:textColorHint="#4A90E2"
-                android:paddingHorizontal="16dp"
-                android:fontFamily="@font/montserrat"
-                android:textSize="16sp" />
+                android:hint="@string/confirm_email"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 
-            <EditText
-                android:id="@+id/confirmPasswordEditText"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/inputtextoutline"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:textColor="#4A90E2"
-                android:textColorHint="#4A90E2"
-                android:paddingHorizontal="16dp"
-                android:fontFamily="@font/montserrat"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/password"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 
-            <Button
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/confirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/confirm_password"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/signupButton"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:backgroundTint="#4682A9"
-                android:text="SIGN UP"
-                android:textColor="@android:color/white"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/md_theme_primary"
+                android:text="@string/signup"
                 android:fontFamily="@font/montserrat_bold" />
 
         </LinearLayout>
