@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F0F0">
+
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="44dp"
+            android:layout_height="51dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="56dp"
+                android:layout_height="52dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/return_button"
+                    android:layout_width="36dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/arrowback" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/interests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="left"
+            android:padding="1dp"
+            android:text="Interested In"
+            android:textColor="@color/accent"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Gray line below header -->
+    <ImageView
+        android:id="@+id/grayline"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/header_container"
+        android:layout_marginTop="-32dp"
+        android:layout_marginBottom="-7dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/grayline" />
+
+    <!-- First Section -->
+    <LinearLayout
+        android:id="@+id/name_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_container"
+        android:orientation="horizontal"
+        android:padding="24dp"
+        android:layout_marginTop="-14dp">
+
+        <Button
+            android:id="@+id/profession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Analyst"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp"/>
+
+        <Button
+            android:id="@+id/profession2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Project Manager"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp" />
+
+    </LinearLayout>
+
+    <!-- Second Section -->
+    <LinearLayout
+        android:id="@+id/name_section2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_container"
+        android:orientation="horizontal"
+        android:padding="24dp"
+        android:layout_marginTop="42dp">
+
+        <Button
+            android:id="@+id/profession3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Designer"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp"
+            />
+
+        <Button
+            android:id="@+id/profession4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Engineer"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp" />
+
+        <Button
+            android:id="@+id/profession5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Scientist"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp" />
+
+    </LinearLayout>
+
+    <!-- Third Section -->
+    <LinearLayout
+        android:id="@+id/name_section3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_container"
+        android:orientation="horizontal"
+        android:padding="24dp"
+        android:layout_marginTop="98dp">
+
+        <Button
+            android:id="@+id/profession6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Technician"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp"/>
+
+        <Button
+            android:id="@+id/profession7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Developer"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp" />
+
+        <Button
+            android:id="@+id/profession8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Sales"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp" />
+
+    </LinearLayout>
+
+    <!-- Fourth Section -->
+    <LinearLayout
+        android:id="@+id/name_section4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_container"
+        android:orientation="horizontal"
+        android:padding="24dp"
+        android:layout_marginTop="154dp">
+
+        <Button
+            android:id="@+id/profession9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Finance"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp"/>
+
+        <Button
+            android:id="@+id/profession10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Advertising"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp" />
+
+        <Button
+            android:id="@+id/profession11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Nursing"
+            android:textColor="@color/button_text_selector"
+            android:textSize="12sp"
+            android:layout_marginRight="12dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_section"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="459dp"
+        android:layout_marginBottom="6dp"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <Button
+            android:id="@+id/update_phone_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:backgroundTint="#4682A9"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="UPDATE"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</RelativeLayout>
