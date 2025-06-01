@@ -21,13 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.jobToggle.setOnToggleListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                binding.employerLayout.setVisibility(View.VISIBLE);
-                binding.jobSeekerLayout.setVisibility(View.GONE);
-            } else {
-                binding.employerLayout.setVisibility(View.GONE);
-                binding.jobSeekerLayout.setVisibility(View.VISIBLE);
-            }
+            // login flow for either job seeker or employer here
         });
     }
 }
