@@ -37,16 +37,17 @@
                 android:contentDescription="Logo"
                 android:src="@drawable/logoimage" />
 
-            <com.oppenablers.mariatoggle.widget.LabeledSwitch
+            <com.oppenablers.mariatoggle.widget.LabeledSwitch2
                 android:id="@+id/jobToggle"
-                android:layout_width="96dp"
-                android:layout_height="24dp"
+                android:layout_width="120dp"
+                android:layout_height="36dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
-                android:fontFamily="@font/montserrat"
-                app:colorBorder="@color/accent"
-                app:colorOff="@color/toggle_accent_off"
-                app:colorOn="#D6EBF6"
+                android:fontFamily="@font/montserrat_bold"
+                android:textSize="12sp"
+                app:isOn="false"
+                app:colorOff="@color/md_theme_primary"
+                app:colorOn="@color/md_theme_inversePrimary"
                 app:textOff="Job Seeker"
                 app:textOn="Employer" />
 

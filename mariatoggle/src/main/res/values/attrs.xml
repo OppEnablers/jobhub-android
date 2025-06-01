@@ -7,9 +7,10 @@
         <attr name="colorOn" format="color" />
         <attr name="colorBorder" format="color" />
         <attr name="colorDisabled" format="color" />
+        <attr name="borderWidth" format="dimension" />
         <attr name="isOn" format="boolean" />
-        <attr name="android:textSize" />
         <attr name="android:fontFamily" />
+        <attr name="android:textSize" />
         <attr name="android:enabled" />
     </declare-styleable>
 </resources>
