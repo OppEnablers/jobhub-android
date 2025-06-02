@@ -46,14 +46,15 @@
 
         <TextView
             android:id="@+id/application_title"
-            android:layout_width="match_parent"
+            android:layout_width="319dp"
             android:layout_height="wrap_content"
 
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="left"
             android:padding="1dp"
             android:text="John Doe"
             android:textColor="@color/accent"
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
 
@@ -67,6 +68,7 @@
         android:orientation="vertical"
         android:layout_margin="16dp"
         />
+
     <LinearLayout
         android:id="@+id/notification_section"
         android:layout_below="@id/header_container"
