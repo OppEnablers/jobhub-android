@@ -1,4 +1,4 @@
-package com.oppenablers.jobhub;
+package com.oppenablers.jobhub.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
