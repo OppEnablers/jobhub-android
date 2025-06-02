@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#427D9D"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardContainer"

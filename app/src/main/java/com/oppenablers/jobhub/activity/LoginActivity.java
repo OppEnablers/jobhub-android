@@ -1,14 +1,11 @@
-package com.oppenablers.jobhub;
+package com.oppenablers.jobhub.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.oppenablers.jobhub.databinding.ActivityLoginBinding;
-import com.oppenablers.mariatoggle.widget.LabeledSwitch;
 
 public class LoginActivity extends AppCompatActivity {
 
