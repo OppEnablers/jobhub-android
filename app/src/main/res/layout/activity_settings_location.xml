@@ -35,13 +35,13 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/skills"
+            android:id="@+id/location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="left"
             android:padding="1dp"
-            android:text="Skills"
+            android:text="Location"
             android:textColor="@color/accent"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
-            android:text="SOFT SKILLS"
+            android:text="CITY"
             android:textColor="#999999"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -82,67 +82,11 @@
             app:boxStrokeWidth="1dp"
             app:boxStrokeWidthFocused="2dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="#4682A9"
-                app:boxStrokeWidth="1dp"
-                app:boxStrokeWidthFocused="2dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="#4682A9"
-                    app:boxStrokeWidth="1dp"
-                    app:boxStrokeWidthFocused="2dp">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dpdp"
-                        app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#4682A9"
-                        app:boxStrokeWidth="1dp"
-                        app:boxStrokeWidthFocused="2dp">
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="8dp"
-                        app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#4682A9"
-                        app:boxStrokeWidth="1dp"
-                        app:boxStrokeWidthFocused="2dp"
-                        app:endIconContentDescription="Add item"
-                        app:endIconDrawable="@drawable/addlogo"
-                        app:endIconMode="custom">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat"
-                            android:hint="(optional)" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:hint="Event Planning" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:hint="Leadership & Communication " />
+                android:hint="San Antonio" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -162,7 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="259dp"
         android:layout_below="@id/name_section2"
-        android:layout_marginTop="335dp"
+        android:layout_marginTop="180dp"
         android:orientation="vertical"
         android:padding="24dp">
 
@@ -170,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
-            android:text="HARD SKILLS"
+            android:text="PROVINCE"
             android:textColor="#999999"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -191,16 +135,13 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="#4682A9"
                 app:boxStrokeWidth="1dp"
-                app:boxStrokeWidthFocused="2dp"
-                app:endIconContentDescription="Add item"
-                app:endIconDrawable="@drawable/addlogo"
-                app:endIconMode="custom">
+                app:boxStrokeWidthFocused="2dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
-                    android:hint="(optional)" />
+                    android:hint="Makati" />
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F0F0">
+
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="44dp"
+            android:layout_height="51dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="56dp"
+                android:layout_height="52dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/return_button"
+                    android:layout_width="36dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/arrowback" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/phonenum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="left"
+            android:padding="1dp"
+            android:text="Phone Number"
+            android:textColor="@color/accent"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Gray line below header -->
+    <ImageView
+        android:id="@+id/grayline"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/header_container"
+        android:layout_marginTop="-32dp"
+        android:layout_marginBottom="-7dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/grayline" />
+
+    <!-- Name Section -->
+    <LinearLayout
+        android:id="@+id/name_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_container"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="PHONE NUMBER"
+            android:textColor="#999999"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#4682A9"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:hint="+6309063376387" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <!-- Age Section -->
+    <LinearLayout
+        android:id="@+id/age_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_section"
+        android:layout_marginTop="-17dp"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+
+
+        <Button
+            android:id="@+id/update_phone_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:backgroundTint="#4682A9"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="UPDATE"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</RelativeLayout>

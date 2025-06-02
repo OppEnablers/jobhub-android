@@ -371,12 +371,13 @@
             android:id="@+id/update_phone_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:backgroundTint="#4682A9"
             android:fontFamily="@font/montserrat_bold"
             android:text="UPDATE"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"/>
     </LinearLayout>
 
 </RelativeLayout>
