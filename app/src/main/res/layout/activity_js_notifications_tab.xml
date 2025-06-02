@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-
     <LinearLayout
         android:id="@+id/header_container"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="73dp"
         android:background="#FFFFFF"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -28,29 +27,35 @@
 
                 <ImageView
                     android:id="@+id/return_button"
-                    android:layout_width="46dp"
-                    android:layout_height="42dp"
+                    android:layout_width="36dp"
+                    android:layout_height="38dp"
                     android:src="@drawable/arrowback" />
-
             </LinearLayout>
-
         </LinearLayout>
 
         <TextView
-            android:id="@+id/application_title"
+            android:id="@+id/notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="left"
             android:padding="1dp"
             android:text="Notifications"
             android:textColor="@color/md_theme_primary"
-            android:textSize="26sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/grayline"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/header_container"
+        android:layout_marginTop="-32dp"
+        android:layout_marginBottom="-7dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/grayline" />
 
-
-    <!-- MAIN CONTENT AREA -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -63,44 +68,31 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-
-            <!-- NOTIFICATION ITEM 1 - UNREAD EXAMPLE -->
+            <!-- NOTIFICATION ITEM 1 -->
             <LinearLayout
                 android:id="@+id/notification_item_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="5dp"
                 android:background="#FFFFFF"
                 android:orientation="horizontal"
                 android:padding="16dp">
 
+                <ImageView
+                    android:id="@+id/notification_avatar_1"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/iac_icon"
+                    android:padding="6dp"
+                    android:scaleType="centerCrop" />
 
-                <!-- Profile Avatar Section -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp">
-
-                    <ImageView
-                        android:id="@+id/notification_avatar_1"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:background="@drawable/circleborder"
-                        android:padding="4dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/person" />
-                    <!-- TODO: Replace @drawable/default_profile_icon with actual user profile image -->
-
-                </LinearLayout>
-
-                <!-- Content Section -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginStart="12dp"
                     android:orientation="vertical">
 
-                    <!-- Username and Time Row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -111,83 +103,65 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Nash Jerby Joo"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="iACADEMY"
                             android:textColor="@color/md_theme_primary"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
-                        <!-- TODO: Replace with dynamic username from backend -->
 
                         <TextView
                             android:id="@+id/notification_time_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2m"
+                            android:fontFamily="@font/montserrat"
+                            android:text="2mins"
                             android:textColor="#666666"
                             android:textSize="12sp" />
-                        <!-- TODO: Replace with dynamic timestamp from backend -->
-
                     </LinearLayout>
 
-                    <!-- Notification Message -->
                     <TextView
                         android:id="@+id/notification_message_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="You have a new notification"
-                        android:textColor="#333333"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="sent you a message! Check it now"
+                        android:textColor="#999999"
                         android:textSize="14sp" />
-                    <!-- TODO: Replace with actual notification message from backend -->
-
-                    <!-- App Source -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-
-
-                    </LinearLayout>
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
-            <!-- NOTIFICATION ITEM 2 - READ EXAMPLE -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#E0E0E0"
+                android:layout_marginBottom="10dp" />
+
+            <!-- NOTIFICATION ITEM 2 -->
             <LinearLayout
                 android:id="@+id/notification_item_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:padding="16dp">
 
-                <!-- Profile Avatar Section -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp">
+                <ImageView
+                    android:id="@+id/notification_avatar_2"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/jobhub_icon"
+                    android:padding="6dp"
+                    android:scaleType="centerCrop" />
 
-                    <ImageView
-                        android:id="@+id/notification_avatar_2"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:background="@drawable/circleborder"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/logoimage" />
-
-                </LinearLayout>
-
-                <!-- Content Section -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginStart="12dp"
                     android:orientation="vertical">
 
-                    <!-- Username and Time Row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -198,50 +172,35 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/montserrat_medium"
                             android:text="JobHub"
                             android:textColor="@color/md_theme_primary"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/notification_time_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
                             android:text="1h"
                             android:textColor="#666666"
                             android:textSize="12sp" />
-
                     </LinearLayout>
 
-                    <!-- Notification Message -->
                     <TextView
                         android:id="@+id/notification_message_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Welcome to the application! Your account has been successfully created."
-                        android:textColor="#333333"
+                        android:fontFamily="@font/montserrat"
+                        android:text="You haven't swiped in a while"
+                        android:textColor="#999999"
                         android:textSize="14sp" />
-
-                    <!-- App Source -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="14dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-
-
-                    </LinearLayout>
-
                 </LinearLayout>
-
-                <!-- No unread indicator for read notifications -->
-
             </LinearLayout>
 
-
-            <!-- EMPTY STATE - Show when no notifications -->
+            <!-- EMPTY STATE -->
             <LinearLayout
                 android:id="@+id/empty_state_container"
                 android:layout_width="match_parent"
@@ -250,7 +209,6 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone">
-                <!-- TODO: Set visibility="visible" when no notifications exist -->
 
                 <ImageView
                     android:layout_width="80dp"
@@ -275,12 +233,7 @@
                     android:textColor="#cccccc"
                     android:textSize="14sp"
                     android:gravity="center" />
-
             </LinearLayout>
-
         </LinearLayout>
-
     </ScrollView>
-
 </RelativeLayout>
-

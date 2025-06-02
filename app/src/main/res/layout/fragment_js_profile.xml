@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/profile_title"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_header_rounded"
+        android:fontFamily="@font/montserrat_extrabold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="PROFILE"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#4682A9"
+        android:textFontWeight="800"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:translationY="-15dp" />
+
+    <ScrollView
+        android:id="@+id/profile_scroll_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/profile_title"
+        android:background="@drawable/bg_content_rounded"
+        android:padding="12dp"
+        android:layout_marginTop="-30dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Profile Picture Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_top_rounded_white"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingTop="24dp"
+                android:paddingBottom="12dp"
+                android:layout_marginBottom="7dp">
+
+                <FrameLayout
+                    android:layout_width="137dp"
+                    android:layout_height="125dp">
+
+                    <ImageView
+                        android:id="@+id/profile_picture"
+                        android:layout_width="match_parent"
+                        android:layout_height="97dp"
+                        android:scaleType="centerCrop"
+                        android:layout_margin="2dp"
+                        android:src="@drawable/pfp" />
+
+                    <ImageView
+                        android:id="@+id/edit_profile_picture"
+                        android:layout_width="69dp"
+                        android:layout_height="77dp"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="2dp"
+                        android:padding="6dp"
+                        android:src="@drawable/edit_icon" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <!-- Profile Sections -->
+            <!-- Repeat this layout block for each section: Personal Info, Objectives, etc. -->
+            <include layout="@layout/profile_section_row"
+                android:id="@+id/section_personal_info"
+                tools:text="Personal Information" />
+
+            <include layout="@layout/profile_section_row"
+                android:id="@+id/section_objectives"
+                tools:text="Objectives" />
+
+            <include layout="@layout/profile_section_row"
+                android:id="@+id/section_education"
+                tools:text="Educational Attainment" />
+
+            <include layout="@layout/profile_section_row"
+                android:id="@+id/section_experience"
+                tools:text="Work Experience" />
+
+            <include layout="@layout/profile_section_row"
+                android:id="@+id/section_skills"
+                tools:text="Skills" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

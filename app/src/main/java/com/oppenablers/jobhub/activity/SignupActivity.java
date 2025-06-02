@@ -1,9 +1,10 @@
 package com.oppenablers.jobhub;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.oppenablers.jobhub.databinding.ActivitySignupBinding;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import com.oppenablers.mariatoggle.widget.LabeledSwitch;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -82,19 +80,24 @@ public class SignupActivity extends AppCompatActivity {
             String password = getTextFromTextInputLayout(passwordInput);
             String confirmPassword = getTextFromTextInputLayout(confirmPasswordInput);
 
-            if (name.isEmpty() || addressOrBirthday.isEmpty() || email.isEmpty() ||
-                    confirmEmail.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(SignupActivity.this, "Missing fields", Toast.LENGTH_SHORT).show();
+            binding.ErrorText.setVisibility(View.GONE);  // hide previous errors
+
+            if (name.isEmpty() || addressOrBirthday.isEmpty() || email.isEmpty()
+                    || confirmEmail.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                binding.ErrorText.setText("All fields are required");
+                binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
             }
 
             if (!email.equals(confirmEmail)) {
-                Toast.makeText(SignupActivity.this, "Emails do not match", Toast.LENGTH_SHORT).show();
+                binding.ErrorText.setText("Emails do not match");
+                binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
             }
 
             if (!password.equals(confirmPassword)) {
-                Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                binding.ErrorText.setText("Passwords do not match");
+                binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
             }
 
