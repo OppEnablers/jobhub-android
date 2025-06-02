@@ -1,16 +1,13 @@
-package com.oppenablers.jobhub;
+package com.oppenablers.jobhub.activity;
 
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.oppenablers.jobhub.databinding.ActivitySignupBinding;
-import com.oppenablers.mariatoggle.widget.LabeledSwitch;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -31,6 +28,13 @@ public class SignupActivity extends AppCompatActivity {
 
         // Toggle listener to switch form hints
         binding.jobToggle.setOnToggleListener((buttonView, isChecked) -> {
+            nameInput.setText("");
+            addressOrBirthdayInput.setText("");
+            emailInput.setText("");
+            confirmEmailInput.setText("");
+            passwordInput.setText("");
+            confirmPasswordInput.setText("");
+
             if (isChecked) {
                 // Employer
                 nameInput.setHint("Company Name");
@@ -43,26 +47,31 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         binding.signupButton.setOnClickListener(v -> {
-            String name = nameInput.getText().toString().trim();
-            String addressOrBirthday = addressOrBirthdayInput.getText().toString().trim();
-            String email = emailInput.getText().toString().trim();
-            String confirmEmail = confirmEmailInput.getText().toString().trim();
-            String password = passwordInput.getText().toString();
-            String confirmPassword = confirmPasswordInput.getText().toString();
+            String name = binding.fullOrCompanyName.getText().toString().trim();
+            String addressOrBirthday = binding.companyAddressOrBirthday.getText().toString().trim();
+            String email = binding.emailEditText.getText().toString().trim();
+            String confirmEmail = binding.confirmEmailEditText.getText().toString().trim();
+            String password = binding.passwordEditText.getText().toString();
+            String confirmPassword = binding.confirmPasswordEditText.getText().toString();
 
-            if (name.isEmpty() || addressOrBirthday.isEmpty() || email.isEmpty() ||
-                    confirmEmail.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(SignupActivity.this, "Missing fields", Toast.LENGTH_SHORT).show();
+            binding.ErrorText.setVisibility(View.GONE);  // hide previous errors
+
+            if (name.isEmpty() || addressOrBirthday.isEmpty() || email.isEmpty()
+                    || confirmEmail.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                binding.ErrorText.setText("All fields are required");
+                binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
             }
 
             if (!email.equals(confirmEmail)) {
-                Toast.makeText(SignupActivity.this, "Emails do not match", Toast.LENGTH_SHORT).show();
+                binding.ErrorText.setText("Emails do not match");
+                binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
             }
 
             if (!password.equals(confirmPassword)) {
-                Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                binding.ErrorText.setText("Passwords do not match");
+                binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
             }
 
