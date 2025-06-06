@@ -230,6 +230,9 @@ public class LabeledSwitch2 extends ToggleableView {
                 if (timeDifference < 200) {
                     wasMoved = false;
                     performClick();
+                } else {
+                    wasMoved = true;
+                    performClick();
                 }
 
                 break;
