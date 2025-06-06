@@ -9,12 +9,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +30,19 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        if (AuthManager.isLoggedIn()) {
+            Intent navigatorIntent = new Intent(this, JsNavigatorActivity.class);
+            navigatorIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(navigatorIntent);
+        }
+
         binding.loginButton.setOnClickListener(v -> {
-            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         });
 
         binding.signUpButton.setOnClickListener(v -> {
-            Intent signupIntent = new Intent(MainActivity.this, SignupActivity.class);
+            Intent signupIntent = new Intent(this, SignupActivity.class);
             startActivity(signupIntent);
         });
     }
