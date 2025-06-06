@@ -57,6 +57,8 @@ public class LabeledSwitch2 extends ToggleableView {
     private Rect textOnRect = new Rect();
     private Rect textOffRect = new Rect();
 
+    private long touchStartTimeMillis;
+
 
     public LabeledSwitch2(Context context) {
         super(context);
@@ -205,6 +207,7 @@ public class LabeledSwitch2 extends ToggleableView {
         int touchX = (int) event.getX();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
+                touchStartTimeMillis = System.currentTimeMillis();
                 handleTouchX = touchX - handleCX;
                 break;
             }
@@ -220,8 +223,15 @@ public class LabeledSwitch2 extends ToggleableView {
                 invalidate();
                 break;
             }
-            case MotionEvent.ACTION_UP: {
-                performClick();
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL: {
+
+                long timeDifference = System.currentTimeMillis() - touchStartTimeMillis;
+                if (timeDifference < 200) {
+                    wasMoved = false;
+                    performClick();
+                }
+
                 break;
             }
             default:
