@@ -43,7 +43,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="4dpdp"
+                        android:layout_marginTop="4dp"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="#4682A9"
                         app:boxStrokeWidth="1dp"
@@ -186,7 +186,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="4dpdp"
+                        android:layout_marginTop="4dp"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="#4682A9"
                         app:boxStrokeWidth="1dp"
@@ -244,7 +244,6 @@
         android:id="@+id/hard_skills"
         android:layout_width="match_parent"
         android:layout_height="231dp"
-        android:layout_below="@id/name_section2"
         android:layout_marginTop="500dp"
         android:orientation="vertical"
         android:padding="24dp">

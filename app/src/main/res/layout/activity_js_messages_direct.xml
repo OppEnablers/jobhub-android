@@ -55,8 +55,6 @@
             android:text="John Doe"
             android:textColor="@color/md_theme_primary"
             android:textSize="26sp"
-            android:textColor="@color/accent"
-            android:textSize="24sp"
             android:textStyle="bold" />
 
 

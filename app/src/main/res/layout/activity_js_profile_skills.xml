@@ -103,7 +103,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="4dpdp"
+                        android:layout_marginTop="4dp"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="#4682A9"
                         app:boxStrokeWidth="1dp"
