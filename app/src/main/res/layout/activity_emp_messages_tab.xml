@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="203dp"
+            android:layout_height="86dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/logoname" />
+
+        <ImageView
+            android:id="@+id/spacer"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="56dp"
+                android:layout_height="52dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/notification"
+                    android:layout_width="46dp"
+                    android:layout_height="42dp"
+                    android:src="@drawable/bell" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="26dp"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/settings"
+                    android:layout_width="38dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/setting" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/messages_section"
+        android:layout_below="@id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="12dp">
+
+
+        <TextView
+            android:id="@+id/messages_title"
+            android:layout_width="match_parent"
+            android:layout_height="101dp"
+            android:background="@drawable/bg_header_rounded"
+            android:fontFamily="@font/montserrat_extrabold"
+            android:gravity="center"
+            android:padding="-15dp"
+            android:text="MESSAGES"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#4682A9"
+            android:textFontWeight="800"
+            android:textSize="19dp"
+            android:textStyle="bold"
+            android:translationY="-20dp" />
+
+        <LinearLayout
+            android:id="@+id/messages_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="493dp"
+            android:background="@drawable/bg_content_rounded"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:layout_marginTop="-40dp">
+
+
+            <!-- =============================================== -->
+            <!-- MESSAGE CARD 1 - READ MESSAGE -->
+            <!-- =============================================== -->
+            <LinearLayout
+                android:id="@+id/message_card_1"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/jobcard_bg"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <!-- Profile Picture Section -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/message_avatar_1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circleborder"
+                        android:padding="4dp"
+                        android:scaleY="1.8"
+                        android:scaleX="1.8"
+                        android:src="@drawable/pfp" />
+
+                    <!-- No unread indicator for read messages -->
+
+                </LinearLayout>
+
+                <!-- Message Content Section -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="57dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp">
+
+                    <!-- Sender Name and Time -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/sender_name_1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Nash Jerby Joo"
+                            android:textAlignment="textStart"
+                            android:textColor="#6C7282"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/message_time_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="1h"
+                            android:textColor="#999999"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
+
+                    <!-- Separator Line -->
+
+                    <!-- Message Preview -->
+                    <TextView
+                        android:id="@+id/message_preview_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:maxLines="2"
+                        android:text="Good day, Sir. I would be available in..."
+                        android:textColor="#bcbdbd"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- =============================================== -->
+            <!-- MESSAGE CARD 2 - READ MESSAGE -->
+            <!-- =============================================== -->
+
+            <LinearLayout
+                android:id="@+id/message_card_2"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/jobcard_bg"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <!-- Profile Picture Section -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/message_avatar_1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circleborder"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/person_blue" />
+
+                    <!-- No unread indicator for read messages -->
+
+                </LinearLayout>
+
+                <!-- Message Content Section -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="57dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp">
+
+                    <!-- Sender Name and Time -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/sender_name_1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Takuya Nakasone"
+                            android:textAlignment="textStart"
+                            android:textColor="#6C7282"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/message_time_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="1h"
+                            android:textColor="#999999"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
+
+                    <!-- Separator Line -->
+
+                    <!-- Message Preview -->
+                    <TextView
+                        android:id="@+id/message_preview_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:maxLines="2"
+                        android:text="Hello, I can go at Makati on Saturday..."
+                        android:textColor="#bcbdbd"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- =============================================== -->
+            <!-- MESSAGE CARD 2 - READ MESSAGE -->
+            <!-- =============================================== -->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="43dp"
+                android:src="@drawable/briefcase" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="43dp"
+                android:layout_height="47dp"
+                android:src="@drawable/star_blue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="53dp"
+                android:layout_height="41dp"
+                android:src="@drawable/message" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="47dp"
+                android:src="@drawable/person" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+
