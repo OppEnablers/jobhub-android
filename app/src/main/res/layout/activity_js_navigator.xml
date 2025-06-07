@@ -1,78 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/header_container"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="203dp"
-            android:layout_height="86dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/logoname" />
-
-        <ImageView
-            android:id="@+id/spacer"
-            android:layout_width="64dp"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            app:menu="@menu/menu_navigator">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/logoname" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <LinearLayout
-                android:layout_width="56dp"
-                android:layout_height="52dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/notification"
-                    android:layout_width="46dp"
-                    android:layout_height="42dp"
-                    android:src="@drawable/bell" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="26dp"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/settings"
-                    android:layout_width="38dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/setting" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_below="@id/header_container"
-        android:layout_above="@id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/bottom_nav"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="72dp"
+        android:layout_gravity="bottom"
         android:orientation="horizontal"
         android:background="#F5F5F5"
-        android:gravity="center">
+        android:gravity="center"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -127,4 +97,6 @@
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
