@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#427D9D"
-    tools:context=".activity.LoginActivity">
+    tools:context=".activity.LoginActivity"
+    android:background="@color/md_theme_primary">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardContainer"
@@ -15,7 +15,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="32dp"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,114 +33,55 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="215dp"
-                android:layout_marginTop="20dp"
-                android:contentDescription="Logo"
-                android:src="@drawable/logoimage" />
-
-            <com.oppenablers.mariatoggle.widget.LabeledSwitch
-                android:id="@+id/jobToggle"
-                android:layout_width="96dp"
-                android:layout_height="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
-                android:fontFamily="@font/montserrat"
-                app:colorBorder="@color/accent"
-                app:colorOff="@color/toggle_accent_off"
-                app:colorOn="#D6EBF6"
-                app:textOff="Job Seeker"
-                app:textOn="Employer" />
+                android:contentDescription="Logo"
+                android:src="@drawable/logoname" />
 
-            <!--Job Seeker Login-->
             <LinearLayout
-                android:id="@+id/jobSeekerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <EditText
-                    android:id="@+id/jobSeekerEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/inputtextoutline"
-                    android:fontFamily="@font/montserrat"
-                    android:hint="Email"
-                    android:paddingHorizontal="16dp"
-                    android:textColor="#000000"
-                    android:textColorHint="#4A90E2"
-                    android:textSize="16dp" />
-
-                <EditText
-                    android:id="@+id/jobSeekerPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="40dp"
-                    android:background="@drawable/inputtextoutline"
-                    android:fontFamily="@font/montserrat"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:paddingHorizontal="16dp"
-                    android:textColor="#000000"
-                    android:textColorHint="#4A90E2"
-                    android:textSize="16dp" />
-
-                <Button
-                    android:id="@+id/jobSeekerLoginButton"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="40dp"
-                    android:backgroundTint="#4682A9"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:text="LOG IN"
-                    android:textColor="@android:color/white" />
+                    android:layout_marginBottom="16dp"
+                    android:hint="@string/email"
+                    app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text|textEmailAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:hint="@string/password"
+                    app:passwordToggleEnabled="true"
+                    app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text|textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
 
-            <!--Employer Login-->
-            <LinearLayout
-                android:id="@+id/employerLayout"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <EditText
-                    android:id="@+id/employerEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/inputtextoutline"
-                    android:fontFamily="@font/montserrat"
-                    android:hint="Email"
-                    android:paddingHorizontal="16dp"
-                    android:textColor="#000000"
-                    android:textColorHint="#4A90E2"
-                    android:textSize="16dp" />
-
-                <EditText
-                    android:id="@+id/employerPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="40dp"
-                    android:background="@drawable/inputtextoutline"
-                    android:fontFamily="@font/montserrat"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:paddingHorizontal="16dp"
-                    android:textColor="#000000"
-                    android:textColorHint="#4A90E2"
-                    android:textSize="16dp" />
-
-                <Button
-                    android:id="@+id/employerLoginButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="40dp"
-                    android:backgroundTint="#4682A9"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:text="LOG IN"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
+                android:layout_marginBottom="40dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/login" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

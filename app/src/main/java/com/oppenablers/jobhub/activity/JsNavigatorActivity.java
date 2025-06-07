@@ -3,14 +3,22 @@ package com.oppenablers.jobhub.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.internal.EdgeToEdgeUtils;
 import com.oppenablers.jobhub.R;
+import com.oppenablers.jobhub.Util;
 import com.oppenablers.jobhub.databinding.ActivityJsNavigatorBinding;
 import com.oppenablers.jobhub.fragment.JsApplicationFragment;
 import com.oppenablers.jobhub.fragment.JsJobFragment;
@@ -25,32 +33,49 @@ public class JsNavigatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityJsNavigatorBinding.inflate(getLayoutInflater());
+        EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         replaceFragment(new JsJobFragment(), "jobs");
 
-        ImageView navJobs = findViewById(R.id.nav_jobs);
-        navJobs.setOnClickListener(v -> replaceFragment(new JsJobFragment(), "jobs"));
+        binding.navJobs.setOnClickListener(v -> replaceFragment(new JsJobFragment(), "jobs"));
+        binding.navStar.setOnClickListener(v -> replaceFragment(new JsApplicationFragment(), "application"));
+        binding.navMessage.setOnClickListener(v -> replaceFragment(new JsMessagesFragment(), "message"));
+        binding.navProfile.setOnClickListener(v -> replaceFragment(new JsProfileFragment(), "profile"));
 
-        ImageView navApplication = findViewById(R.id.nav_star);
-        navApplication.setOnClickListener(v -> replaceFragment(new JsApplicationFragment(), "application"));
+        binding.topAppBar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
 
-        ImageView navMessage = findViewById(R.id.nav_message);
-        navMessage.setOnClickListener(v -> replaceFragment(new JsMessagesFragment(), "message"));
+            if (itemId == R.id.notifications) {
+                Intent intent = new Intent(this, JsNotificationActivity.class);
+                startActivity(intent);
+            } else if (itemId == R.id.settings) {
+                Intent intent = new Intent(this, JsSettingsTabActivity.class);
+                startActivity(intent);
+            } else if (itemId == R.id.logout_button) {
 
-        ImageView navProfile = findViewById(R.id.nav_profile);
-        navProfile.setOnClickListener(v -> replaceFragment(new JsProfileFragment(), "profile"));
+            } else {
+                return false;
+            }
 
-        ImageView bellIcon = findViewById(R.id.notification);
-        bellIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(JsNavigatorActivity.this, JsNotificationActivity.class);
-            startActivity(intent);
+            return true;
         });
+
+//        ImageView bellIcon = findViewById(R.id.notification);
+//        bellIcon.setOnClickListener(v -> {
+//            Intent intent = new Intent(JsNavigatorActivity.this, JsNotificationActivity.class);
+//            startActivity(intent);
+//        });
 
 
     }
 
-    private void replaceFragment(Fragment fragment, String selected){
+    private void replaceFragment(Fragment fragment, String selected) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);

@@ -20,8 +20,8 @@
             android:id="@+id/return_button"
             android:layout_width="36dp"
             android:layout_height="38dp"
-            android:src="@drawable/arrowback"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/arrowback" />
 
         <TextView
             android:id="@+id/educ_attainment"
@@ -30,7 +30,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:gravity="left"
             android:text="Settings"
-            android:textColor="@color/accent"
+            android:textColor="@color/md_theme_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -48,9 +48,9 @@
 
     <!-- MAIN CONTENT -->
     <ScrollView
-        android:layout_below="@id/grayline"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/grayline"
         android:fillViewport="true">
 
         <LinearLayout
@@ -60,26 +60,25 @@
             android:padding="5dp">
 
 
-
             <!-- PHONE -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="ACCOUNT SETTINGS"
                 android:textColor="#999999"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="12dp"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:padding="16dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="16dp">
 
 
                 <TextView
@@ -94,22 +93,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:fontFamily="@font/montserrat"
                     android:text="+6391234567890"
                     android:textColor="#888888"
-                    android:textSize="14sp"
-                    android:layout_marginRight="5dp"/>
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/arrow_right"
+                    android:src="@drawable/arrow_right" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:background="#E0E0E0"
-                android:layout_marginBottom="4dp" />
+                android:layout_height="match_parent"
+                android:layout_marginBottom="4dp"
+                android:background="#E0E0E0" />
 
 
             <!-- EMAIL -->
@@ -117,9 +117,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:padding="16dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -149,23 +149,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="DISCOVERY"
                 android:textColor="#999999"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="12dp"/>
+                android:textStyle="bold" />
 
             <!-- LOCATION -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:padding="16dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -179,11 +179,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:fontFamily="@font/montserrat"
                     android:text="Makati, Metro Manila"
                     android:textColor="#888888"
-                    android:textSize="14sp"
-                    android:layout_marginRight="5dp"/>
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:layout_width="16dp"
@@ -193,14 +193,9 @@
 
             <View
                 android:layout_width="match_parent"
-                android:background="#E0E0E0"
-                android:layout_marginBottom="4dp" />
-
-
-            \
-
-
-
+                android:layout_height="match_parent"
+                android:layout_marginBottom="4dp"
+                android:background="#E0E0E0" />
             <!-- LOGOUT -->
 
             <!-- APP LOGO + VERSION -->
@@ -209,8 +204,8 @@
                 android:id="@+id/logout_button"
                 android:layout_width="362dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginLeft="22dp"
+                android:layout_marginTop="30dp"
                 android:backgroundTint="#4682A9"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="LOGOUT"
@@ -246,15 +241,14 @@
                 android:id="@+id/update_phone_button"
                 android:layout_width="357dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="#4682A9"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="DELETE ACCOUNT"
                 android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                android:layout_marginLeft="22dp"
-                android:layout_marginTop="10dp"/>
+                android:textSize="15sp" />
         </LinearLayout>
 
-    </LinearLayout>
-</ScrollView>
-    </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

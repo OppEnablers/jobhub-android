@@ -5,15 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/accent"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivity"
+    android:background="@color/md_theme_primary">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +24,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="570dp"
-            android:background="?attr/colorSurface"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="24dp">
@@ -43,27 +42,26 @@
             <!--                android:orientation="horizontal" />-->
 
             <TextView
-                android:layout_width="270dp"
+                android:layout_width="match_parent"
                 android:layout_height="16dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/montserrat_bold"
+                android:fontFamily="@font/montserrat_medium"
                 android:gravity="start"
                 android:text="@string/main_login_flavor_text"
-                android:textColor="@color/accent"
-                android:textColorLink="@color/accent"
+                android:textColor="@color/md_theme_primary"
+                android:textColorLink="@color/md_theme_primary"
                 android:textSize="12sp" />
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/accent"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="@string/main_button_log_in"
-                android:textColor="@android:color/white" />
+                android:text="@string/login" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,29 +69,32 @@
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/main_or"
-                android:textColor="@color/accent"
-                android:textColorLink="@color/accent"
-                android:textSize="13sp" />
+                android:textColor="@color/md_theme_primary"
+                android:textColorLink="@color/md_theme_primary"
+                android:textSize="12sp" />
 
             <TextView
-                android:layout_width="270dp"
+                android:layout_width="match_parent"
                 android:layout_height="16dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="start"
                 android:text="@string/main_sign_up_flavor_text"
-                android:textColor="@color/accent"
-                android:textColorLink="@color/accent"
+                android:textColor="@color/md_theme_primary"
                 android:textSize="12sp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/signUpButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/accent"
+                android:backgroundTint="@color/md_theme_primary"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="@string/main_button_sign_up"
-                android:textColor="@android:color/white" />
+                android:text="@string/signup" />
+
+            <com.oppenablers.mariatoggle.widget.LabeledSwitch2
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

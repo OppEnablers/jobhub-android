@@ -42,7 +42,7 @@
             android:gravity="left"
             android:padding="1dp"
             android:text="Location"
-            android:textColor="@color/accent"
+            android:textColor="@color/md_theme_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -105,7 +105,6 @@
         android:id="@+id/hard_skills"
         android:layout_width="match_parent"
         android:layout_height="259dp"
-        android:layout_below="@id/name_section2"
         android:layout_marginTop="180dp"
         android:orientation="vertical"
         android:padding="24dp">
