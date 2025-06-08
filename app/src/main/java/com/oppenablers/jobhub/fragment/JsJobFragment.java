@@ -15,6 +15,7 @@ import com.oppenablers.jobhub.adapter.JobCardAdapter;
 import com.oppenablers.jobhub.databinding.FragmentJsJobBinding;
 import com.oppenablers.jobhub.model.Job;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.StackFrom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,9 @@ public class JsJobFragment extends Fragment {
         JobCardAdapter jobCardAdapter = new JobCardAdapter(jobs);
 
         CardStackLayoutManager layoutManager = new CardStackLayoutManager(getContext());
+//        layoutManager.setTranslationInterval(0.9f);
+//        layoutManager.setScaleInterval(0.9f);
+        layoutManager.setStackFrom(StackFrom.Top);
 //        layoutManager.setCanScrollVertical(false);
 
         binding.cardStackView.setLayoutManager(layoutManager);

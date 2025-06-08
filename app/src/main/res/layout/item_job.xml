@@ -2,12 +2,13 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Material3.CardView.Elevated"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
     app:cardPreventCornerOverlap="false"
-    app:cardUseCompatPadding="true"
-    style="@style/Widget.Material3.CardView.Elevated">
+    app:cardUseCompatPadding="true">
 
     <ImageView
         android:id="@+id/backgroundImage"
@@ -37,6 +38,7 @@
             android:id="@+id/companyName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="160dp"
             android:textColor="@color/md_theme_inverseOnSurface"
             tools:text="Company name" />
     </LinearLayout>

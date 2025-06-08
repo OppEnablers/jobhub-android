@@ -58,7 +58,7 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
         public void setItems(Job job) {
             jobPosition.setText(job.getJobPosition());
             companyName.setText(job.getCompanyName());
-            backgroundImage.setImageResource(R.drawable.ic_launcher_background);
+            backgroundImage.setImageResource(R.drawable.ic_launcher_foreground);
         }
     }
 }
