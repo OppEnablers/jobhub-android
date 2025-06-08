@@ -27,6 +27,11 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.SignupActivity" />
         <activity android:name=".activity.JsNavigatorActivity" />
+        <activity android:name=".activity.JsProfilePersonalInfo" />
+        <activity android:name=".activity.JsProfileObjectives" />
+        <activity android:name=".activity.JsProfileEducAttainment" />
+        <activity android:name=".activity.JsProfileWorkExp" />
+        <activity android:name=".activity.JsProfileSkills" />
         <activity
             android:name=".activity.JsNotificationActivity"
             android:exported="false"

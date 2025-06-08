@@ -20,6 +20,7 @@
             android:src="@drawable/info" />
 
         <TextView
+            android:id="@+id/section_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -29,6 +30,7 @@
             android:textSize="14sp" />
 
         <Button
+            android:id="@+id/btn_edit_section"
             android:layout_width="56dp"
             android:layout_height="32dp"
             android:backgroundTint="#4682A9"
