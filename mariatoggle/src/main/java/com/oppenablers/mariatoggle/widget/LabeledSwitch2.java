@@ -83,11 +83,13 @@ public class LabeledSwitch2 extends ToggleableView {
     }
 
     private void loadAttributes(Context context, AttributeSet attrs) {
-        try (TypedArray typedArray = context.getTheme().obtainStyledAttributes(
+        TypedArray typedArray = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.ToggleableView,
                 0, 0
-        )) {
+        );
+
+        try {
             for (int i = 0; i < typedArray.getIndexCount(); i++) {
                 int index = typedArray.getIndex(i);
                 if (index == R.styleable.ToggleableView_isOn) {
@@ -111,6 +113,8 @@ public class LabeledSwitch2 extends ToggleableView {
                     textSize = typedArray.getDimension(index, 12);
                 }
             }
+        } finally {
+            typedArray.recycle();
         }
     }
 
