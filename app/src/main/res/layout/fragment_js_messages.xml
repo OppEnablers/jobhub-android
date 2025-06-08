@@ -41,6 +41,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/message_item_1"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/jobcard_bg"
                 android:elevation="5dp"
