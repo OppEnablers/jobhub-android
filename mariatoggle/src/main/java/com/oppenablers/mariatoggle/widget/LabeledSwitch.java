@@ -2,8 +2,8 @@ package com.oppenablers.mariatoggle.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,12 +13,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.oppenablers.mariatoggle.R;
 import com.oppenablers.mariatoggle.model.ToggleableView;
 
 public class LabeledSwitch extends ToggleableView {
+
     private int padding;
 
     private int colorOn;
@@ -76,11 +78,7 @@ public class LabeledSwitch extends ToggleableView {
         this.isEnabled = true;
         this.textSize = (int) (12f * getResources().getDisplayMetrics().scaledDensity);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            colorBorder = colorOn = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
-        } else {
-            colorBorder = colorOn = getResources().getColor(R.color.toggle_default_accent);
-        }
+        colorBorder = colorOn = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
 
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -97,8 +95,7 @@ public class LabeledSwitch extends ToggleableView {
     }
 
     private void initProperties(AttributeSet attrs) {
-        TypedArray tarr = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.ToggleableView, 0, 0);
-        try {
+        try (TypedArray tarr = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.ToggleableView, 0, 0)) {
             final int N = tarr.getIndexCount();
             for (int i = 0; i < N; ++i) {
                 int attr = tarr.getIndex(i);
@@ -108,19 +105,11 @@ public class LabeledSwitch extends ToggleableView {
                     colorOff = tarr.getColor(R.styleable.ToggleableView_colorOff, Color.parseColor("#FFFFFF"));
                 } else if (attr == R.styleable.ToggleableView_colorBorder) {
                     int accentColor;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        accentColor = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
-                    } else {
-                        accentColor = getResources().getColor(R.color.toggle_default_accent);
-                    }
+                    accentColor = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
                     colorBorder = tarr.getColor(R.styleable.ToggleableView_colorBorder, accentColor);
                 } else if (attr == R.styleable.ToggleableView_colorOn) {
                     int accentColor;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        accentColor = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
-                    } else {
-                        accentColor = getResources().getColor(R.color.toggle_default_accent);
-                    }
+                    accentColor = getResources().getColor(R.color.toggle_default_accent, getContext().getTheme());
                     colorOn = tarr.getColor(R.styleable.ToggleableView_colorOn, accentColor);
                 } else if (attr == R.styleable.ToggleableView_colorDisabled) {
                     colorDisabled = tarr.getColor(R.styleable.ToggleableView_colorOff, Color.parseColor("#D3D3D3"));
@@ -135,18 +124,16 @@ public class LabeledSwitch extends ToggleableView {
                     isEnabled = tarr.getBoolean(R.styleable.ToggleableView_android_enabled, false);
                 } else if (attr == R.styleable.ToggleableView_android_fontFamily) {
                     int fontResourceId = tarr.getResourceId(R.styleable.ToggleableView_android_fontFamily, 0);
-                    if (fontResourceId > 0  && !isInEditMode()) {
+                    if (fontResourceId > 0 && !isInEditMode()) {
                         setTypeface(ResourcesCompat.getFont(getContext(), fontResourceId));
                     }
                 }
             }
-        } finally {
-            tarr.recycle();
         }
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         paint.setTextSize(textSize);
 
@@ -165,10 +152,10 @@ public class LabeledSwitch extends ToggleableView {
 
             canvas.drawArc(leftFgArc, 90, 180, false, paint);
             canvas.drawArc(rightFgArc, 90, -180, false, paint);
-            canvas.drawRect(outerRadii, padding / 10, (width - outerRadii), height - (padding / 10), paint);
+            canvas.drawRect(outerRadii, (float) padding / 10, (width - outerRadii), height - ((float) padding / 10), paint);
 
             int alpha = (int) (((thumbBounds.centerX() - thumbOffCenterX) / (thumbOnCenterX - thumbOffCenterX)) * 255);
-            alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
+            alpha = (alpha < 0 ? 0 : (Math.min(alpha, 255)));
             int onColor;
 
             if (isEnabled()) {
@@ -183,13 +170,13 @@ public class LabeledSwitch extends ToggleableView {
             canvas.drawRect(outerRadii, 0, (width - outerRadii), height, paint);
 
             alpha = (int) (((thumbOnCenterX - thumbBounds.centerX()) / (thumbOnCenterX - thumbOffCenterX)) * 255);
-            alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
+            alpha = (alpha < 0 ? 0 : (Math.min(alpha, 255)));
             int offColor = Color.argb(alpha, Color.red(colorOff), Color.green(colorOff), Color.blue(colorOff));
             paint.setColor(offColor);
 
             canvas.drawArc(leftFgArc, 90, 180, false, paint);
             canvas.drawArc(rightFgArc, 90, -180, false, paint);
-            canvas.drawRect(outerRadii, padding / 10, (width - outerRadii), height - (padding / 10), paint);
+            canvas.drawRect(outerRadii, (float) padding / 10, (width - outerRadii), height - ((float) padding / 10), paint);
         }
 
 //      Drawing Switch Labels here
@@ -197,7 +184,7 @@ public class LabeledSwitch extends ToggleableView {
         float textCenter = paint.measureText(MAX_CHAR) / 2;
         if (isOn) {
             int alpha = (int) ((((width >>> 1) - thumbBounds.centerX()) / ((width >>> 1) - thumbOffCenterX)) * 255);
-            alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
+            alpha = (alpha < 0 ? 0 : (Math.min(alpha, 255)));
             int onColor = Color.argb(alpha, Color.red(colorOn), Color.green(colorOn), Color.blue(colorOn));
             paint.setColor(onColor);
 
@@ -205,7 +192,7 @@ public class LabeledSwitch extends ToggleableView {
             canvas.drawText(labelOff, (padding + (padding >>> 1)) + (thumbRadii << 1) + centerX - (paint.measureText(labelOff) / 2), (height >>> 1) + textCenter, paint);
 
             alpha = (int) (((thumbBounds.centerX() - (width >>> 1)) / (thumbOnCenterX - (width >>> 1))) * 255);
-            alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
+            alpha = (alpha < 0 ? 0 : (Math.min(alpha, 255)));
             int offColor = Color.argb(alpha, Color.red(colorOff), Color.green(colorOff), Color.blue(colorOff));
             paint.setColor(offColor);
 
@@ -215,7 +202,7 @@ public class LabeledSwitch extends ToggleableView {
             canvas.drawText(labelOn, padding + centerX - (paint.measureText(labelOn) / 2), (height >>> 1) + textCenter, paint);
         } else {
             int alpha = (int) (((thumbBounds.centerX() - (width >>> 1)) / (thumbOnCenterX - (width >>> 1))) * 255);
-            alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
+            alpha = (alpha < 0 ? 0 : (Math.min(alpha, 255)));
             int offColor = Color.argb(alpha, Color.red(colorOff), Color.green(colorOff), Color.blue(colorOff));
             paint.setColor(offColor);
 
@@ -224,7 +211,7 @@ public class LabeledSwitch extends ToggleableView {
             canvas.drawText(labelOn, padding + centerX - (paint.measureText(labelOn) / 2), (height >>> 1) + textCenter, paint);
 
             alpha = (int) ((((width >>> 1) - thumbBounds.centerX()) / ((width >>> 1) - thumbOffCenterX)) * 255);
-            alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
+            alpha = (alpha < 0 ? 0 : (Math.min(alpha, 255)));
             int onColor;
             if (isEnabled()) {
                 onColor = Color.argb(alpha, Color.red(colorOn), Color.green(colorOn), Color.blue(colorOn));
@@ -240,13 +227,13 @@ public class LabeledSwitch extends ToggleableView {
 //      Drawing Switch Thumb here
         {
             int alpha = (int) (((thumbBounds.centerX() - thumbOffCenterX) / (thumbOnCenterX - thumbOffCenterX)) * 255);
-            alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
+            alpha = (alpha < 0 ? 0 : (Math.min(alpha, 255)));
             int offColor = Color.argb(alpha, Color.red(colorOff), Color.green(colorOff), Color.blue(colorOff));
             paint.setColor(offColor);
 
             canvas.drawCircle(thumbBounds.centerX(), thumbBounds.centerY(), thumbRadii, paint);
             alpha = (int) (((thumbOnCenterX - thumbBounds.centerX()) / (thumbOnCenterX - thumbOffCenterX)) * 255);
-            alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
+            alpha = (alpha < 0 ? 0 : (Math.min(alpha, 255)));
             int onColor;
             if (isEnabled()) {
                 onColor = Color.argb(alpha, Color.red(colorOn), Color.green(colorOn), Color.blue(colorOn));
@@ -305,8 +292,8 @@ public class LabeledSwitch extends ToggleableView {
         leftBgArc.set(0, 0, outerRadii << 1, height);
         rightBgArc.set(width - (outerRadii << 1), 0, width, height);
 
-        leftFgArc.set(padding / 10, padding / 10, (outerRadii << 1) - (padding / 10), height - (padding / 10));
-        rightFgArc.set(width - (outerRadii << 1) + (padding / 10), padding / 10, width - (padding / 10), height - (padding / 10));
+        leftFgArc.set((float) padding / 10, (float) padding / 10, (outerRadii << 1) - (float) padding / 10, height - ((float) padding / 10));
+        rightFgArc.set(width - (outerRadii << 1) + ((float) padding / 10), (float) padding / 10, width - ((float) padding / 10), height - ((float) padding / 10));
     }
 
     @Override
@@ -364,7 +351,7 @@ public class LabeledSwitch extends ToggleableView {
                     long endTime = System.currentTimeMillis();
                     long span = endTime - startTime;
                     if (span < 200) {
-                        performClick();
+//                        performClick();
                     } else {
                         if (x >= width >>> 1) {
                             ValueAnimator switchColor = ValueAnimator.ofFloat((x > (width - padding - thumbRadii) ? (width - padding - thumbRadii) : x), width - padding - thumbRadii);
