@@ -42,7 +42,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/application_title"
+            android:id="@+id/employer_name"
             android:layout_width="319dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"

@@ -1,6 +1,7 @@
 package com.oppenablers.jobhub.activity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,5 +23,9 @@ public class JsDirectMessageActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        String employer_name = getIntent().getStringExtra("userName");
+        TextView employerNameTextView = findViewById(R.id.employer_name);
+        employerNameTextView.setText(employer_name);
     }
 }
