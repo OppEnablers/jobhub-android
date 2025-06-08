@@ -9,18 +9,18 @@
       android:translateY="12">
     <path
         android:pathData="M31.094,37.243C28.729,40.79 26.365,44.337 24,47.884 21.635,44.337 19.271,40.79 16.906,37.243l3.547,-30.149 7.094,0z"
-        android:fillColor="#4682a9"
+        android:fillColor="#000000"
         android:strokeColor="#00000000"
         android:fillType="nonZero"/>
     <path
         android:pathData="m18.68,-0l10.641,0l0,5.32l-10.641,-0z"
-        android:fillColor="#4682a9"
+        android:fillColor="#000000"
         android:strokeColor="#00000000"
         android:fillType="nonZero"/>
     <path
         android:pathData="m29.321,7.094 l3.228,20.365 7.394,3.939 0.286,-8.372z"
         android:strokeWidth="0.081"
-        android:fillColor="#a3c1d4"
+        android:fillColor="#000000"
         android:strokeColor="#00000000"
         android:fillType="nonZero"/>
   </group>
