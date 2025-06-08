@@ -3,13 +3,13 @@
     android:id="@+id/fragment_messages"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:padding="12dp">
+    android:background="#ffffff">
 
     <TextView
         android:id="@+id/messages_title"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="72dp"
+        android:layout_alignParentTop="true"
         android:background="@drawable/bg_header_rounded"
         android:fontFamily="@font/montserrat_extrabold"
         android:gravity="center"
@@ -18,20 +18,18 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#4682A9"
         android:textFontWeight="800"
-        android:textSize="19sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:translationY="-15dp"/>
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <ScrollView
         android:id="@+id/messages_list_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/messages_title"
+        android:layout_margin="8dp"
         android:background="@drawable/bg_content_rounded"
-        android:padding="12dp"
-        android:layout_marginTop="-30dp"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:padding="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,8 +50,8 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="12dp"
                     android:background="@drawable/circleborder"
-                    android:scaleType="centerCrop"
                     android:padding="4dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/person_blue" />
 
                 <LinearLayout
@@ -96,12 +94,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
                         android:fontFamily="@font/montserrat_medium"
+                        android:maxLines="2"
                         android:text="Good day Mr. Jerby. Are you willing ..."
                         android:textColor="#bcbdbd"
-                        android:textSize="13sp"
-                        android:maxLines="2"
-                        android:ellipsize="end" />
+                        android:textSize="13sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -119,8 +117,8 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="12dp"
                     android:background="@drawable/circleborder"
-                    android:scaleType="centerCrop"
                     android:padding="4dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/person" />
 
                 <LinearLayout
@@ -163,12 +161,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
                         android:fontFamily="@font/montserrat_medium"
+                        android:maxLines="2"
                         android:text="We are the Opsyconservice.ph Inc ..."
                         android:textColor="#bcbdbd"
-                        android:textSize="13sp"
-                        android:maxLines="2"
-                        android:ellipsize="end" />
+                        android:textSize="13sp" />
                 </LinearLayout>
             </LinearLayout>
 

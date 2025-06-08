@@ -30,10 +30,10 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="225dp"
-                android:layout_height="242dp"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/logoname" />
+                android:src="@drawable/landingpage_logo" />
 
             <!--            <androidx.constraintlayout.widget.Guideline-->
             <!--                android:id="@+id/guideline"-->
