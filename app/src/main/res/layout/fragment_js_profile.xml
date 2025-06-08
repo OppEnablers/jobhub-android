@@ -75,25 +75,64 @@
 
             <!-- Profile Sections -->
             <!-- Repeat this layout block for each section: Personal Info, Objectives, etc. -->
-            <include layout="@layout/profile_section_row"
-                android:id="@+id/section_personal_info"
-                tools:text="Personal Information" />
 
-            <include layout="@layout/profile_section_row"
-                android:id="@+id/section_objectives"
-                tools:text="Objectives" />
+            <LinearLayout
+                android:id="@+id/personal_info_section_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/profile_section_row"
+                    android:id="@+id/section_personal_info"
+                    tools:text="Personal Information" />
+            </LinearLayout>
 
-            <include layout="@layout/profile_section_row"
-                android:id="@+id/section_education"
-                tools:text="Educational Attainment" />
+            <LinearLayout
+                android:id="@+id/objectives_section_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <include layout="@layout/profile_section_row"
-                android:id="@+id/section_experience"
-                tools:text="Work Experience" />
+                <include
+                    layout="@layout/profile_section_row"
+                    android:id="@+id/section_objectives"
+                    tools:text="Objectives" />
+            </LinearLayout>
 
-            <include layout="@layout/profile_section_row"
-                android:id="@+id/section_skills"
-                tools:text="Skills" />
+            <LinearLayout
+                android:id="@+id/education_section_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/profile_section_row"
+                    android:id="@+id/section_education"
+                    tools:text="Educational Attainment" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/experience_section_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/profile_section_row"
+                    android:id="@+id/section_experience"
+                    tools:text="Work Experience" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/skills_section_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/profile_section_row"
+                    android:id="@+id/section_skills"
+                    tools:text="Skills" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
