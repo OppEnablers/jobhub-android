@@ -11,12 +11,9 @@ import com.oppenablers.jobhub.model.Employer;
 import com.oppenablers.jobhub.model.JobSeeker;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.ConnectionSpec;
-import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,17 +22,30 @@ import okhttp3.Response;
 
 public class JobHubClient {
 
-    private static final String HOSTNAME = "10.0.2.2";
-    private static final String BASE_URL = "https://" + HOSTNAME + ":7267/api";
+    private static String hostName = "localhost";
+    private static String baseUrl = "https://" + hostName + "/api";
     private static final Handler HANDLER = HandlerCompat.createAsync(Looper.getMainLooper());
     private static final AuthInterceptor INTERCEPTOR = new AuthInterceptor();
     private static final OkHttpClient CLIENT = new OkHttpClient.Builder()
-            .hostnameVerifier((hostname, session) -> hostname.contentEquals(HOSTNAME))
+            .hostnameVerifier((hostname, session) -> hostname.contentEquals(hostName))
             .addInterceptor(INTERCEPTOR)
             .build();
     private static final Gson GSON = new Gson();
 
     private static String token;
+
+    public static String getHostName() {
+        return hostName;
+    }
+
+    public static void setHostName(String hostName) {
+        baseUrl = "https://" + hostName + "/api";
+        JobHubClient.hostName = hostName;
+    }
+
+    public static void ping(Callback callback) {
+        CLIENT.newCall(get("/ping")).enqueue(createNotifyCallback(callback));
+    }
 
     public static void login(String idToken, Callback callback) {
         INTERCEPTOR.setToken(idToken);
@@ -68,7 +78,7 @@ public class JobHubClient {
 
     private static Request.Builder startRequest(String endpoint) {
         return new Request.Builder()
-                .url(BASE_URL + endpoint);
+                .url(baseUrl + endpoint);
     }
 
     /**

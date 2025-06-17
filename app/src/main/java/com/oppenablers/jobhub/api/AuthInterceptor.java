@@ -45,8 +45,8 @@ public class AuthInterceptor implements Interceptor {
                         setAuthHeader(builder, token);
                         request = builder.build();
                         return chain.proceed(request);
-                    } catch (ExecutionException | InterruptedException ee) {
-                        throw new RuntimeException(ee);
+                    } catch (ExecutionException | InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }
