@@ -1,11 +1,5 @@
 <resources>
-    <style name="Theme.JobHub.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_anim</item>
-<!--        <item name="windowSplashScreenAnimationDuration">1000</item>-->
-        <item name="postSplashScreenTheme">@style/Theme.JobHub</item>
-    </style>
-
-    <style name="Theme.JobHub" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.JobHub" parent="Theme.Material3Expressive.Light.NoActionBar">
         <item name="fontFamily">@font/montserrat_medium</item>
 
         <item name="colorPrimary">@color/md_theme_primary</item>
@@ -54,5 +48,11 @@
         <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer</item>
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
+    </style>
+
+    <style name="Theme.JobHub.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_anim</item>
+        <!--        <item name="windowSplashScreenAnimationDuration">1000</item>-->
+        <item name="postSplashScreenTheme">@style/Theme.JobHub</item>
     </style>
 </resources>

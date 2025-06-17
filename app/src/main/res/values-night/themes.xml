@@ -1,6 +1,6 @@
 <resources>
-    <style name="Theme.JobHub" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="fontFamily">@font/montserrat</item>
+    <style name="Theme.JobHub" parent="Theme.Material3Expressive.Dark.NoActionBar">
+        <item name="fontFamily">@font/montserrat_medium</item>
 
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
