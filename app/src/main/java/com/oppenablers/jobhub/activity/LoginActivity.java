@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                                                     if (response.isSuccessful()) {
                                                         Intent intent = new Intent(LoginActivity.this, JsNavigatorActivity.class);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                         startActivity(intent);
                                                     } else {
                                                         Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();

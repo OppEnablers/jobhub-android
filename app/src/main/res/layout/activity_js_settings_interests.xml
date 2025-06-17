@@ -91,25 +91,22 @@
         android:padding="24dp"
         android:layout_marginTop="34dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Analyst"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
-            android:layout_marginRight="12dp"/>
+            android:layout_marginRight="12dp"
+            style="button"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Project Manager"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
@@ -125,37 +122,31 @@
         android:padding="24dp"
         android:layout_marginTop="94dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Designer"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp"
             />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Engineer"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Scientist"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
@@ -171,36 +162,30 @@
         android:padding="24dp"
         android:layout_marginTop="154dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Technician"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Developer"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Scrum"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
@@ -242,36 +227,30 @@
 
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Therapist"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Physician"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Dentist"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
@@ -287,25 +266,21 @@
         android:padding="24dp"
         android:layout_marginTop="304dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Pharmacist"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Medical Assistant"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
@@ -321,36 +296,30 @@
         android:padding="24dp"
         android:layout_marginTop="364dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Veterinarian"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Doctor"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/profession18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:fontFamily="@font/montserrat_bold"
             android:text="Nurse"
-            android:textColor="@color/button_text_selector"
             android:textSize="12sp"
             android:layout_marginRight="12dp" />
 
@@ -367,7 +336,7 @@
         android:orientation="vertical"
         android:padding="4dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/update_phone_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

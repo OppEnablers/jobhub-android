@@ -26,6 +26,10 @@ public class AuthManager {
         return FIREBASE_AUTH.signInWithEmailAndPassword(email, password);
     }
 
+    public static void logout() {
+        FIREBASE_AUTH.signOut();
+    }
+
     public static Task<AuthResult> signup(String email, String password) {
         return FIREBASE_AUTH.createUserWithEmailAndPassword(email, password);
     }

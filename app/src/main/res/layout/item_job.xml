@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardCornerRadius="8dp"
-    app:cardElevation="8dp"
+    app:cardElevation="1dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true">
 
@@ -23,7 +23,10 @@
         android:layout_gravity="bottom"
         android:background="@drawable/gradation_black"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:paddingLeft="8dp"
+        android:paddingTop="36dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="120dp">
 
         <TextView
             android:id="@+id/jobPosition"
@@ -38,7 +41,6 @@
             android:id="@+id/companyName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="160dp"
             android:textColor="@color/md_theme_inverseOnSurface"
             tools:text="Company name" />
     </LinearLayout>

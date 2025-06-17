@@ -214,7 +214,7 @@
                         android:background="@drawable/circleborder"
                         android:padding="4dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/person_blue" />
+                        android:src="@drawable/ic_nav_profile" />
 
                     <!-- No unread indicator for read messages -->
 
@@ -340,7 +340,7 @@
             <ImageView
                 android:layout_width="44dp"
                 android:layout_height="47dp"
-                android:src="@drawable/person" />
+                android:src="@drawable/ic_nav_profile" />
         </LinearLayout>
     </LinearLayout>
 

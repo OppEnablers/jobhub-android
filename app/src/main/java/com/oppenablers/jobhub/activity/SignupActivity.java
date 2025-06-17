@@ -71,44 +71,27 @@ public class SignupActivity extends AppCompatActivity {
 
         birthdayInput.setStartIconOnClickListener(v -> {
             String toFormat = Util.getTextFromTextInputLayout(birthdayInput);
-            Date initialDate = new Date();
+            Date initialDate;
             try {
                 initialDate = dateFormat.parse(toFormat);
-            } catch (ParseException ife) {
-                birthdayInput.setError("Unable to parse date");
+            } catch (ParseException ignored) {
+                initialDate = new Date();
             }
 
             if (initialDate == null) return;
 
-            MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker().setTitleText("Select birthday").setSelection(initialDate.getTime()).build();
+            MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select birthday")
+                    .setSelection(initialDate.getTime())
+                    .build();
 
             picker.addOnPositiveButtonClickListener(selection -> {
                 Date date = new Date(selection);
                 Util.setTextFromTextInputLayout(birthdayInput, dateFormat.format(date));
-                Log.d("bday", "selection: " + selection);
             });
 
             picker.show(getSupportFragmentManager(), null);
         });
-
-        EditText birthdayEditText = birthdayInput.getEditText();
-        if (birthdayEditText != null) {
-            birthdayEditText.setOnFocusChangeListener((v, hasFocus) -> {
-                if (!hasFocus) {
-                    String toFormat = Util.getTextFromTextInputLayout(birthdayInput);
-                    try {
-                        Date date = dateFormat.parse(toFormat);
-                        if (date != null) {
-                            Util.setTextFromTextInputLayout(birthdayInput, dateFormat.format(date));
-                            birthdayInput.setError("");
-                            birthdayInput.setErrorEnabled(false);
-                        }
-                    } catch (ParseException ife) {
-                        birthdayInput.setError("Unable to parse date");
-                    }
-                }
-            });
-        }
 
         binding.signupButton.setOnClickListener(v -> {
             String name = Util.getTextFromTextInputLayout(nameInput);
@@ -125,25 +108,33 @@ public class SignupActivity extends AppCompatActivity {
             binding.ErrorText.setVisibility(View.GONE);  // hide previous errors
 
             if (name.isEmpty() || addressOrBirthday.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                binding.ErrorText.setText("All fields are required");
+                binding.ErrorText.setText(R.string.signup_all_fields_required);
                 binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
+            }
+
+            String toFormat = Util.getTextFromTextInputLayout(birthdayInput);
+            Date birthdayDate = new Date();
+            try {
+                birthdayDate = dateFormat.parse(toFormat);
+                if (birthdayDate != null) {
+                    Util.setTextFromTextInputLayout(birthdayInput, dateFormat.format(birthdayDate));
+                    birthdayInput.setError("");
+                    birthdayInput.setErrorEnabled(false);
+                } else {
+                    return;
+                }
+            } catch (ParseException ife) {
+                birthdayInput.setError("Unable to parse date");
             }
 
             if (!password.equals(confirmPassword)) {
-                binding.ErrorText.setText("Passwords do not match");
+                binding.ErrorText.setText(R.string.signup_passwords_not_match);
                 binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
             }
 
-            Date birthdayDate;
-            try {
-                birthdayDate = dateFormat.parse(addressOrBirthday);
-                if (birthdayDate == null) return;
-            } catch (ParseException pe) {
-                Toast.makeText(this, pe.getMessage(), Toast.LENGTH_SHORT).show();
-                return;
-            }
+            Date finalBirthdayDate = birthdayDate;
 
             AuthManager.signup(email, password).addOnSuccessListener(authResult -> {
                 FirebaseUser user = authResult.getUser();
@@ -156,7 +147,7 @@ public class SignupActivity extends AppCompatActivity {
                 if (binding.jobToggle.isOn()) {
                     // TODO employer
                 } else {
-                    JobSeeker jobSeeker = new JobSeeker(user.getUid(), email, name, birthdayDate.getTime(), new ArrayList<>());
+                    JobSeeker jobSeeker = new JobSeeker(user.getUid(), email, name, finalBirthdayDate.getTime(), new ArrayList<>());
 
                     // what a mess
                     JobHubClient.signUpJobSeeker(jobSeeker, new Callback() {

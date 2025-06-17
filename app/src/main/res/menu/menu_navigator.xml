@@ -9,8 +9,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/settings"
-        android:title="Settings" />
-    <item
-        android:id="@+id/logOut"
-        android:title="Log Out" />
+        android:icon="@drawable/ic_settings"
+        android:title="Settings"
+        app:showAsAction="always" />
 </menu>

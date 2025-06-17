@@ -2,11 +2,13 @@ package com.oppenablers.jobhub.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -64,8 +66,6 @@ public class JsNavigatorActivity extends AppCompatActivity {
             } else if (itemId == R.id.settings) {
                 Intent intent = new Intent(this, JsSettingsTabActivity.class);
                 startActivity(intent);
-            } else if (itemId == R.id.logout_button) {
-
             } else {
                 return false;
             }
