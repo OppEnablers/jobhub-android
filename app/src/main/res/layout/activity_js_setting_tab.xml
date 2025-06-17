@@ -74,6 +74,7 @@
                 android:layout_marginLeft="12dp"/>
 
             <LinearLayout
+                android:id="@+id/phone_number_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
@@ -109,6 +110,7 @@
 
             <!-- EMAIL -->
             <LinearLayout
+                android:id="@+id/email_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
@@ -155,6 +157,7 @@
 
             <!-- LOCATION -->
             <LinearLayout
+                android:id="@+id/location_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
@@ -224,6 +227,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/interests_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"

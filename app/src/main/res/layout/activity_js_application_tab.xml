@@ -237,7 +237,7 @@
             <ImageView
                 android:layout_width="44dp"
                 android:layout_height="47dp"
-                android:src="@drawable/person" />
+                android:src="@drawable/ic_nav_profile" />
         </LinearLayout>
     </LinearLayout>
 

@@ -125,13 +125,13 @@ public class SignupActivity extends AppCompatActivity {
             binding.ErrorText.setVisibility(View.GONE);  // hide previous errors
 
             if (name.isEmpty() || addressOrBirthday.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                binding.ErrorText.setText("All fields are required");
+                binding.ErrorText.setText(R.string.signup_all_fields_required);
                 binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
             }
 
             if (!password.equals(confirmPassword)) {
-                binding.ErrorText.setText("Passwords do not match");
+                binding.ErrorText.setText(R.string.signup_passwords_not_match);
                 binding.ErrorText.setVisibility(View.VISIBLE);
                 return;
             }

@@ -16,7 +16,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="36dp"
                 android:scaleType="fitStart"
                 app:srcCompat="@drawable/logoname" />
         </com.google.android.material.appbar.MaterialToolbar>
@@ -43,7 +43,7 @@
             app:itemIconSize="36dp"
             app:itemIconTint="@color/bottom_nav_color"
             app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/nav_menu" />
+            app:menu="@menu/bottom_nav_menu" />
     </LinearLayout>
 
 
