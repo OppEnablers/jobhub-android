@@ -300,12 +300,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="right|center">
 
             <ImageView
-                android:layout_width="56dp"
-                android:layout_height="43dp"
-                android:src="@drawable/briefcase" />
+                android:layout_width="57dp"
+                android:layout_height="56dp"
+                android:layout_marginRight="17dp"
+                android:src="@drawable/emp_post" />
         </LinearLayout>
 
         <LinearLayout
@@ -315,33 +316,23 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="43dp"
-                android:layout_height="47dp"
-                android:src="@drawable/star_blue" />
+                android:layout_width="116dp"
+                android:layout_height="82dp"
+                android:src="@drawable/emp_match"
+                android:layout_marginBottom="5dp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="left|center">
 
             <ImageView
-                android:layout_width="53dp"
-                android:layout_height="41dp"
-                android:src="@drawable/message" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="44dp"
-                android:layout_height="47dp"
-                android:src="@drawable/ic_nav_profile" />
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/emp_messages">
         </LinearLayout>
     </LinearLayout>
 
