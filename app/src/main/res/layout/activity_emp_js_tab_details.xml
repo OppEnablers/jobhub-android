@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="203dp"
+            android:layout_height="86dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/logoname" />
+
+        <ImageView
+            android:id="@+id/spacer"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="56dp"
+                android:layout_height="52dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/notification"
+                    android:layout_width="46dp"
+                    android:layout_height="42dp"
+                    android:src="@drawable/bell" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="26dp"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/settings"
+                    android:layout_width="38dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/setting" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/application_section"
+        android:layout_below="@id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="12dp">
+
+        <TextView
+            android:id="@+id/vacancy_title"
+            android:layout_width="match_parent"
+            android:layout_height="101dp"
+            android:background="@drawable/bg_header_rounded"
+            android:fontFamily="@font/montserrat_extrabold"
+            android:gravity="center"
+            android:padding="-15dp"
+            android:text="JOB SEEKER"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#4682A9"
+            android:textFontWeight="800"
+            android:textSize="19dp"
+            android:textStyle="bold"
+            android:translationY="-20dp" />
+
+        <!-- Container for job card and overlapping buttons -->
+        <RelativeLayout
+            android:id="@+id/card_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-40dp">
+
+            <LinearLayout
+                android:id="@+id/application_list_container"
+                android:layout_width="match_parent"
+                android:layout_height="493dp"
+                android:background="@drawable/bg_content_rounded"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <!-- Job Card -->
+                <LinearLayout
+                    android:id="@+id/job_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="389dp"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/jobcard_bg"
+                        android:elevation="5dp"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:gravity="center"
+                            android:text="SOFTWARE ENGINEERING"
+                            android:textColor="#6C7282"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="2dp"
+                            android:background="#6C7282" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="359dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="89dp"
+                                android:layout_height="105dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="-5dp"
+                                android:layout_marginRight="2dp"
+                                android:padding="2dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/pfp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="222dp"
+                                android:layout_marginTop="-8dp"
+                                android:fontFamily="@font/montserrat_medium"
+                                android:text="Name: Nash Jerby Joo
+                            \n Age: 21 years old
+                            \n Degree: Bachelor of Science in Computer Science
+                             \n Objectives: A dedicated and driven student committed to excellence, innovation, and teamwork. Passionate about seizing opportunities, taking risks, and fostering a collaborative environment for growth and success.
+                            \n Skills:
+                            \n ● Leadership &amp; Communication
+                            \n ● Event Planning
+                            \n ● Creativity
+                            \n ● Project Management"
+                                android:textColor="#6C7282"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+<!-- buttons -->
+            <LinearLayout
+                android:id="@+id/action_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="360dp"
+                android:orientation="horizontal"
+                android:elevation="15dp">
+
+                <ImageView
+                    android:id="@+id/message_button"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="20dp"
+                    android:elevation="15dp"
+                    android:src="@drawable/message_button"
+                    android:translationZ="15dp" />
+
+                <ImageView
+                    android:id="@+id/delete_button"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:elevation="15dp"
+                    android:src="@drawable/delete_button"
+                    android:translationZ="15dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right|center">
+
+            <ImageView
+                android:layout_width="57dp"
+                android:layout_height="56dp"
+                android:layout_marginRight="17dp"
+                android:src="@drawable/emp_post" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="116dp"
+                android:layout_height="82dp"
+                android:src="@drawable/emp_match"
+                android:layout_marginBottom="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/emp_messages" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
