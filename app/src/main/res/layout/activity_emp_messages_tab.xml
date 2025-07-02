@@ -332,7 +332,7 @@
                 android:layout_width="50dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/emp_messages">
+                android:src="@drawable/emp_messages"/>
         </LinearLayout>
     </LinearLayout>
 
