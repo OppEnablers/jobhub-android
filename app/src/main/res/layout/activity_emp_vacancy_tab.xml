@@ -258,7 +258,7 @@
                     android:src="@drawable/edit_button"
                     android:layout_marginTop="10dp"
                     android:elevation="4dp"
-                    android:translationZ="4dp">
+                    android:translationZ="4dp"/>
 
                 <ImageView
                     android:layout_width="48dp"
@@ -267,7 +267,7 @@
                     android:gravity="center"
                     android:elevation="4dp"
                     android:translationZ="4dp"
-                    android:src="@drawable/delete_button">
+                    android:src="@drawable/delete_button"/>
 </LinearLayout>
 
             </LinearLayout>
@@ -320,7 +320,7 @@
                 android:layout_width="50dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/emp_messages">
+                android:src="@drawable/emp_messages"/>
         </LinearLayout>
     </LinearLayout>
 

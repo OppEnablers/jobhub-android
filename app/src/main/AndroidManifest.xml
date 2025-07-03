@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,12 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.JobHub">
+        android:theme="@style/Theme.JobHub" >
+        <activity
+            android:name=".activity.EmpNavigatorActivity"
+            android:exported="false"
+            android:theme="@style/Theme.JobHub">
+        </activity>
         <activity
             android:name=".activity.JsSettingsInterests"
             android:exported="false" />
@@ -33,7 +38,6 @@
             android:theme="@style/Theme.JobHub.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,6 +51,10 @@
         <activity android:name=".activity.JsProfileSkills" />
         <activity
             android:name=".activity.JsNotificationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activity.EmpNotificationActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
