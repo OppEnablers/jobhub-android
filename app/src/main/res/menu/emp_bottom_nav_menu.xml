@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/post"
+        android:icon="@drawable/emp_post"
+        android:title="Post" />
+    <item
+        android:id="@+id/match"
+        android:icon="@drawable/emp_match"
+        android:title="Match" />
+    <item
+        android:id="@+id/emp_messages"
+        android:icon="@drawable/emp_messages"
+        android:title="Messages" />
+</menu>

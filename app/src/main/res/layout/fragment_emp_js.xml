@@ -1,100 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_messages"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <LinearLayout
-        android:id="@+id/header_container"
+    <!-- Header Title -->
+    <TextView
+        android:id="@+id/messages_title"
         android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:background="#FFFFFF"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:layout_height="72dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_header_rounded"
+        android:fontFamily="@font/montserrat_extrabold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="VACANCY"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#4682A9"
+        android:textFontWeight="800"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="203dp"
-            android:layout_height="86dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/logoname" />
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:id="@+id/messages_list_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/messages_title"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_content_rounded"
+        android:fillViewport="true"
+        android:padding="12dp">
 
-        <ImageView
-            android:id="@+id/spacer"
-            android:layout_width="64dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="56dp"
-                android:layout_height="52dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/notification"
-                    android:layout_width="46dp"
-                    android:layout_height="42dp"
-                    android:src="@drawable/bell" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="26dp"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/settings"
-                    android:layout_width="38dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/setting" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/application_section"
-        android:layout_below="@id/header_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="12dp">
-
-        <TextView
-            android:id="@+id/vacancy_title"
-            android:layout_width="match_parent"
-            android:layout_height="101dp"
-            android:background="@drawable/bg_header_rounded"
-            android:fontFamily="@font/montserrat_extrabold"
-            android:gravity="center"
-            android:padding="-15dp"
-            android:text="JOB SEEKER"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="#4682A9"
-            android:textFontWeight="800"
-            android:textSize="19dp"
-            android:textStyle="bold"
-            android:translationY="-20dp" />
-
-        <LinearLayout
-            android:id="@+id/application_list_container"
-            android:layout_width="match_parent"
-            android:layout_height="493dp"
-            android:background="@drawable/bg_content_rounded"
-            android:orientation="vertical"
-            android:padding="12dp"
-            android:layout_marginTop="-40dp">
-
-            <!-- Job Card -->
-            <!--1-->
-
+            <!-- Card 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
@@ -129,8 +73,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="48dp"
@@ -155,8 +98,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!--2-->
-
+            <!-- Card 2 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
@@ -214,67 +156,69 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!--3-->
-
+            <!-- Card 3 with buttons outside -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="304dp"
-                android:layout_height="102dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/jobcard_bg"
-                android:elevation="5dp"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:gravity="center"
-                    android:text="MARKETING ASSOCIATE"
-                    android:textColor="#6C7282"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="#6C7282" />
-
+                <!-- Card Content -->
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/circleborder"
-                        android:padding="4dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_nav_profile"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="6dp"/>
+                    android:layout_width="0dp"
+                    android:layout_height="102dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/jobcard_bg"
+                    android:elevation="5dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="Jacob Bes Tarun\n23 years old\nBachelor of Science in Business..."
+                        android:fontFamily="@font/montserrat"
+                        android:gravity="center"
+                        android:text="MARKETING ASSOCIATE"
                         android:textColor="#6C7282"
-                        android:textSize="12sp"
-                        android:layout_marginTop="8dp"/>
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="#6C7282" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/circleborder"
+                            android:padding="4dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_nav_profile"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="6dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="Jacob Bes Tarun\n23 years old\nBachelor of Science in Business..."
+                            android:textColor="#6C7282"
+                            android:textSize="12sp"
+                            android:layout_marginTop="8dp"/>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-
+                <!-- Buttons -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -299,60 +243,7 @@
                         android:translationZ="4dp"
                         android:src="@drawable/delete_button"/>
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bottom_nav"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="right|center">
-
-            <ImageView
-                android:layout_width="57dp"
-                android:layout_height="56dp"
-                android:layout_marginRight="17dp"
-                android:src="@drawable/emp_post" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="116dp"
-                android:layout_height="82dp"
-                android:src="@drawable/emp_match"
-                android:layout_marginBottom="5dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="left|center">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/emp_messages"/>
-        </LinearLayout>
-    </LinearLayout>
-
+    </ScrollView>
 </RelativeLayout>

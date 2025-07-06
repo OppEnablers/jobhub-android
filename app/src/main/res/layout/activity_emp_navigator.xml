@@ -43,7 +43,7 @@
             app:itemIconSize="36dp"
             app:itemIconTint="@color/bottom_nav_color"
             app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/js_bottom_nav_menu" />
+            app:menu="@menu/emp_bottom_nav_menu" />
     </LinearLayout>
 
 
