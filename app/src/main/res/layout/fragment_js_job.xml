@@ -26,6 +26,7 @@
         android:layout_marginBottom="48dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_swipe_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,6 +34,7 @@
             app:srcCompat="@drawable/ic_thumb_down" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fap_undo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
@@ -42,6 +44,7 @@
             app:srcCompat="@drawable/ic_undo" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_swipe_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
