@@ -45,6 +45,8 @@
         <activity android:name=".activity.JsProfileEducAttainment" />
         <activity android:name=".activity.JsProfileWorkExp" />
         <activity android:name=".activity.JsProfileSkills" />
+        <activity android:name=".activity.JsDirectMessageActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.JsNotificationActivity"
             android:exported="false"
