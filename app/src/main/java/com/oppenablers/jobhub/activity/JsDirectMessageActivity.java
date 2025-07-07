@@ -22,8 +22,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.databinding.ActivityMainBinding;
+import com.oppenablers.jobhub.model.ChatMessage;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -69,6 +71,9 @@ public class JsDirectMessageActivity extends AppCompatActivity {
                 addSentMessageBubble(messageText);
 
                 // Send to Firebase
+                ChatMessage chatMessage = new ChatMessage();
+                //chatMessage.setSenderId(AuthManager.getCurrentUser());
+                chatMessage.sendMessageAsEmployee(userId, AuthManager.getCurrentUser().getUid(), messageText);
 
                 messageInput.setText("");
             }

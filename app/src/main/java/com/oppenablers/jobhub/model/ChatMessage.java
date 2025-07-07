@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +24,30 @@ public class ChatMessage {
         this.receiverId = receiverId;
         this.content = content;
         this.timestamp = timestamp;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setSenderId(FirebaseUser currentUser) {
+        if (currentUser != null) {
+            this.senderId = currentUser.getUid();
+        } else {
+            Log.e("ChatMessage", "Current user is null, cannot set senderId");
+        }
     }
 
     public void sendMessageAsEmployee(String companyId, String employeeId, String messageText) {
