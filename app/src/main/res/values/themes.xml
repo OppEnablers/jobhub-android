@@ -1,6 +1,7 @@
 <resources>
     <style name="Theme.JobHub" parent="Theme.Material3Expressive.Light.NoActionBar">
         <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.JobHub.Preferences</item>
 
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
@@ -54,5 +55,18 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_anim</item>
         <!--        <item name="windowSplashScreenAnimationDuration">1000</item>-->
         <item name="postSplashScreenTheme">@style/Theme.JobHub</item>
+    </style>
+
+    <style name="ThemeOverlay.JobHub.Preferences" parent="PreferenceThemeOverlay">
+        <item name="switchPreferenceCompatStyle">@style/Theme.JobHub.PrefsSwitch</item>
+    </style>
+
+    <style name="Theme.JobHub.PrefsSwitch" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="widgetLayout">@layout/prefs_material_switch</item>
+    </style>
+    
+    <style name="circleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

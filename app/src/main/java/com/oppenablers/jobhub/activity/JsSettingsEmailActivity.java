@@ -9,17 +9,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.oppenablers.jobhub.databinding.ActivityJsSettingsEmailBinding;
-import com.oppenablers.jobhub.databinding.ActivitySettingsLocationBinding;
 
-public class JsSettingsLocation extends AppCompatActivity {
+public class JsSettingsEmailActivity extends AppCompatActivity {
 
-    ActivitySettingsLocationBinding binding;
+    ActivityJsSettingsEmailBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        binding = ActivitySettingsLocationBinding.inflate(getLayoutInflater());
+        binding = ActivityJsSettingsEmailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

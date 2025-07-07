@@ -8,19 +8,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.oppenablers.jobhub.R;
-import com.oppenablers.jobhub.databinding.ActivityJsSettingTabBinding;
-import com.oppenablers.jobhub.databinding.ActivityJsSettingsEmailBinding;
+import com.oppenablers.jobhub.databinding.ActivityJsSettingsPhonenumBinding;
 
-public class JsSettingsEmail extends AppCompatActivity {
+public class JsSettingsPhoneNumActivity extends AppCompatActivity {
 
-    ActivityJsSettingsEmailBinding binding;
+    ActivityJsSettingsPhonenumBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        binding = ActivityJsSettingsEmailBinding.inflate(getLayoutInflater());
+        binding = ActivityJsSettingsPhonenumBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
