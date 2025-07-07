@@ -14,14 +14,21 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.databinding.ActivityMainBinding;
@@ -68,7 +75,7 @@ public class JsDirectMessageActivity extends AppCompatActivity {
                 Map<String, Object> messageData = new HashMap<>();
                 messageData.put("content", messageText);
 
-                addSentMessageBubble(messageText);
+                addSentMessageBubble(messageText, 0);
 
                 // Send to Firebase
                 ChatMessage chatMessage = new ChatMessage();
@@ -78,9 +85,43 @@ public class JsDirectMessageActivity extends AppCompatActivity {
                 messageInput.setText("");
             }
         });
+
+        String employeeId = AuthManager.getCurrentUser().getUid();
+
+        // Firebase path
+        DatabaseReference messageRef = FirebaseDatabase.getInstance()
+                .getReference("messages")
+                .child(userId)
+                .child(employeeId);
+
+        // Load messages
+        messageRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Message msg = child.getValue(Message.class);
+                    if (msg != null) {
+                        if (msg.senderId.equals(AuthManager.getCurrentUser().getUid())) {
+                            addSentMessageBubble(msg.content, msg.timestamp);
+                        } else {
+                            //addReceivedMessageBubble(msg.content);
+                        }
+                    }
+                }
+
+                // Scroll to bottom
+                ScrollView scroll = findViewById(R.id.messages_scroll);
+                scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(JsDirectMessageActivity.this, "Failed to load messages.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void addSentMessageBubble(String messageText) {
+    private void addSentMessageBubble(String messageText, long timestamp) {
         // Find your container
         LinearLayout messagesContainer = findViewById(R.id.messages_container);
 
@@ -128,7 +169,11 @@ public class JsDirectMessageActivity extends AppCompatActivity {
         timeTextView.setLayoutParams(timeParams);
         timeTextView.setTextColor(Color.parseColor("#e0e0e0"));
         timeTextView.setTextSize(12f);
-        timeTextView.setText(new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date()));
+        if (timestamp == 0) {
+            timeTextView.setText(new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date()));
+        } else {
+            timeTextView.setText(new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date(timestamp)));
+        }
 
         // Build view hierarchy
         bubbleLayout.addView(messageTextView);
@@ -141,5 +186,19 @@ public class JsDirectMessageActivity extends AppCompatActivity {
         if (scroll != null) {
             scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
         }
+    }
+}
+
+class Message {
+    public String content;
+    public String senderId;
+    public long timestamp;
+
+    public Message() {}
+
+    public Message(String content, String senderId, long timestamp) {
+        this.content = content;
+        this.senderId = senderId;
+        this.timestamp = timestamp;
     }
 }
