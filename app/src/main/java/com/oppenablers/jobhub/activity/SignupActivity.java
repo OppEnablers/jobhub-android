@@ -21,7 +21,6 @@ import com.oppenablers.jobhub.Util;
 import com.oppenablers.jobhub.api.JobHubClient;
 import com.oppenablers.jobhub.databinding.ActivitySignupBinding;
 import com.oppenablers.jobhub.model.JobSeeker;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -147,36 +146,37 @@ public class SignupActivity extends AppCompatActivity {
                 if (binding.jobToggle.isOn()) {
                     // TODO employer
                 } else {
-                    JobSeeker jobSeeker = new JobSeeker(user.getUid(), email, name, finalBirthdayDate.getTime(), new ArrayList<>());
+                    JobSeeker jobSeeker = new JobSeeker(user.getUid(),
+                            email,
+                            "",
+                            name,
+                            finalBirthdayDate.getTime(),
+                            new ArrayList<>(),
+                            new ArrayList<>(),
+                            "",
+                            "");
 
                     // what a mess
-                    JobHubClient.signUpJobSeeker(jobSeeker, new Callback() {
+                    JobHubClient.signUpJobSeeker(jobSeeker, new JobHubClient.JobHubCallbackVoid() {
                         @Override
-                        public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        public void onFailure() {
                             Toast.makeText(SignupActivity.this, "Failed to sign up", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
-                        public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                            if (!response.isSuccessful()) {
-                                Toast.makeText(SignupActivity.this, "Failed to sign up", Toast.LENGTH_SHORT).show();
-                            }
-
+                        public void onSuccess() {
                             // force refresh token with new claims
 
                             AuthManager.getIdToken(true).addOnSuccessListener(getTokenResult -> {
-                                JobHubClient.login(getTokenResult.getToken(), new Callback() {
+                                JobHubClient.login(getTokenResult.getToken(), user.getUid(), new JobHubClient.JobHubCallbackVoid() {
+
                                     @Override
-                                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                    public void onFailure() {
 
                                     }
 
                                     @Override
-                                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                        if (!response.isSuccessful()) {
-                                            return;
-                                        }
-
+                                    public void onSuccess() {
                                         Intent intent = new Intent(SignupActivity.this, JsNavigatorActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);

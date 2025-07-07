@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.R;
+import com.oppenablers.jobhub.api.AuthInterceptor;
 import com.oppenablers.jobhub.api.JobHubClient;
 import com.oppenablers.jobhub.databinding.ActivityMainBinding;
 
@@ -48,11 +49,16 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preferences_key), Context.MODE_PRIVATE);
 
         JobHubClient.setHostName(sharedPreferences.getString("host_name", "localhost"));
 
         if (AuthManager.isLoggedIn()) {
+            JobHubClient.setUserId(AuthManager.getCurrentUser().getUid());
+            AuthManager.getIdToken(false).addOnSuccessListener(getTokenResult -> {
+                AuthInterceptor.setToken(getTokenResult.getToken());
+            });
             Intent navigatorIntent = new Intent(this, JsNavigatorActivity.class);
             navigatorIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(navigatorIntent);
