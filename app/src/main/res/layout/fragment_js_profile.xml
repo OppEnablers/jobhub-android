@@ -1,139 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:padding="12dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/profile_title"
+    <!-- Profile Picture Container -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/bg_header_rounded"
-        android:fontFamily="@font/montserrat_extrabold"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="16dp"
-        android:text="PROFILE"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#4682A9"
-        android:textFontWeight="800"
-        android:textSize="19sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:translationY="-15dp" />
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
-    <ScrollView
-        android:id="@+id/profile_scroll_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/profile_title"
-        android:background="@drawable/bg_content_rounded"
-        android:padding="12dp"
-        android:layout_marginTop="-30dp"
-        android:fillViewport="true">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_margin="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hugh_l"
+            app:shapeAppearanceOverlay="@style/circleImageView" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/profile_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceHeadlineMedium"
+            android:textStyle="bold"
+            tools:text="Name" />
+    </LinearLayout>
 
-            <!-- Profile Picture Container -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_top_rounded_white"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:paddingTop="24dp"
-                android:paddingBottom="12dp"
-                android:layout_marginBottom="7dp">
+    <!-- Profile Sections -->
+    <!-- Repeat this layout block for each section: Personal Info, Objectives, etc. -->
 
-                <FrameLayout
-                    android:layout_width="137dp"
-                    android:layout_height="125dp">
+<!--    <include-->
+<!--        android:id="@+id/personal_info"-->
+<!--        layout="@layout/item_profile"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
 
-                    <ImageView
-                        android:id="@+id/profile_picture"
-                        android:layout_width="match_parent"
-                        android:layout_height="97dp"
-                        android:scaleType="centerCrop"
-                        android:layout_margin="2dp"
-                        android:src="@drawable/pfp" />
+    <include
+        android:id="@+id/objectives"
+        layout="@layout/item_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-                    <ImageView
-                        android:id="@+id/edit_profile_picture"
-                        android:layout_width="69dp"
-                        android:layout_height="77dp"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="2dp"
-                        android:padding="6dp"
-                        android:src="@drawable/edit_icon" />
-                </FrameLayout>
-            </LinearLayout>
+    <include
+        android:id="@+id/education"
+        layout="@layout/item_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-            <!-- Profile Sections -->
-            <!-- Repeat this layout block for each section: Personal Info, Objectives, etc. -->
+    <include
+        android:id="@+id/experience"
+        layout="@layout/item_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:id="@+id/personal_info_section_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <include layout="@layout/profile_section_row"
-                    android:id="@+id/section_personal_info"
-                    tools:text="Personal Information" />
-            </LinearLayout>
+    <include
+        android:id="@+id/skills"
+        layout="@layout/item_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:id="@+id/objectives_section_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/personal_info_section_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+<!--        <include layout="@layout/profile_section_row"-->
+<!--            android:id="@+id/section_personal_info"-->
+<!--            tools:text="Personal Information" />-->
+<!--    </LinearLayout>-->
 
-                <include
-                    layout="@layout/profile_section_row"
-                    android:id="@+id/section_objectives"
-                    tools:text="Objectives" />
-            </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/objectives_section_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
 
-            <LinearLayout
-                android:id="@+id/education_section_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--        <include-->
+<!--            layout="@layout/profile_section_row"-->
+<!--            android:id="@+id/section_objectives"-->
+<!--            tools:text="Objectives" />-->
+<!--    </LinearLayout>-->
 
-                <include
-                    layout="@layout/profile_section_row"
-                    android:id="@+id/section_education"
-                    tools:text="Educational Attainment" />
-            </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/education_section_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
 
-            <LinearLayout
-                android:id="@+id/experience_section_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--        <include-->
+<!--            layout="@layout/profile_section_row"-->
+<!--            android:id="@+id/section_education"-->
+<!--            tools:text="Educational Attainment" />-->
+<!--    </LinearLayout>-->
 
-                <include
-                    layout="@layout/profile_section_row"
-                    android:id="@+id/section_experience"
-                    tools:text="Work Experience" />
-            </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/experience_section_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
 
-            <LinearLayout
-                android:id="@+id/skills_section_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--        <include-->
+<!--            layout="@layout/profile_section_row"-->
+<!--            android:id="@+id/section_experience"-->
+<!--            tools:text="Work Experience" />-->
+<!--    </LinearLayout>-->
 
-                <include
-                    layout="@layout/profile_section_row"
-                    android:id="@+id/section_skills"
-                    tools:text="Skills" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/skills_section_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
 
-</RelativeLayout>
+<!--        <include-->
+<!--            layout="@layout/profile_section_row"-->
+<!--            android:id="@+id/section_skills"-->
+<!--            tools:text="Skills" />-->
+<!--    </LinearLayout>-->
+</LinearLayout>
