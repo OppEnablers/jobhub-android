@@ -43,7 +43,7 @@ public class JsJobFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         List<Job> jobs = new ArrayList<>();
-        jobs.add(new Job("Software Engineer", "Some company"));
+        jobs.add(new Job("Software Engineer", "Makati"));
         jobs.add(new Job("Software Engineer", "Some company"));
         jobs.add(new Job("Software Engineer", "Some company"));
         jobs.add(new Job("Software Engineer", "Some company"));
@@ -74,7 +74,13 @@ public class JsJobFragment extends Fragment {
 //        layoutManager.setTranslationInterval(0.9f);
 //        layoutManager.setScaleInterval(0.9f);
         layoutManager.setStackFrom(StackFrom.Top);
-//        layoutManager.setCanScrollVertical(false);
+
+        ArrayList<Direction> directions = new ArrayList<>();
+        directions.add(Direction.Left);
+        directions.add(Direction.Right);
+
+        layoutManager.setDirections(directions);
+        layoutManager.setCanScrollVertical(false);
 
         CardStackView cardStackView = binding.cardStackView;
 

@@ -17,33 +17,54 @@
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/gradation_black"
-        android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingTop="36dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="120dp">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradation_black">
 
-        <TextView
-            android:id="@+id/jobPosition"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/md_theme_inverseOnSurface"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            tools:text="Job Position" />
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingTop="36dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="240dp">
 
-        <TextView
-            android:id="@+id/companyName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/md_theme_inverseOnSurface"
-            tools:text="Company name" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/job_position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_theme_inverseOnSurface"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="Job Position" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_location" />
+
+                <TextView
+                    android:id="@+id/job_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/md_theme_inverseOnSurface"
+                    tools:text="Location" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/left_overlay"
