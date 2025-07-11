@@ -2,7 +2,6 @@ package com.oppenablers.jobhub.activity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -14,18 +13,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.adapter.NotificationAdapter;
 import com.oppenablers.jobhub.databinding.ActivityJsNotificationsBinding;
-import com.oppenablers.jobhub.databinding.ActivityJsSettingsInterestsBinding;
 import com.oppenablers.jobhub.model.Notification;
 
-import java.time.Instant;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class JsNotificationActivity extends AppCompatActivity {
+public class JsNotificationsActivity extends AppCompatActivity {
 
     ActivityJsNotificationsBinding binding;
 

@@ -12,18 +12,18 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.R;
-import com.oppenablers.jobhub.databinding.ActivityJsSettingBinding;
+import com.oppenablers.jobhub.databinding.ActivityJsSettingsBinding;
 import com.oppenablers.jobhub.fragment.JsSettingsFragment;
 
 public class JsSettingsActivity extends AppCompatActivity {
 
-    ActivityJsSettingBinding binding;
+    ActivityJsSettingsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        binding = ActivityJsSettingBinding.inflate(getLayoutInflater());
+        binding = ActivityJsSettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

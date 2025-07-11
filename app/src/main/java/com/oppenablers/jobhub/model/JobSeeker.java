@@ -15,6 +15,7 @@ public class JobSeeker extends User {
     private final List<String> skills;
     private final List<Integer> interests;
     private String objectives;
+    private String education;
     private String workExperience;
 
     public JobSeeker(String userId, String email, String phoneNumber) {
@@ -73,5 +74,13 @@ public class JobSeeker extends User {
 
     public void setWorkExperience(String workExperience) {
         this.workExperience = workExperience;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
     }
 }

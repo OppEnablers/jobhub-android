@@ -58,7 +58,7 @@ public class JsNavigatorActivity extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.notifications) {
-                Intent intent = new Intent(this, JsNotificationActivity.class);
+                Intent intent = new Intent(this, JsNotificationsActivity.class);
                 startActivity(intent);
             } else if (itemId == R.id.settings) {
                 Intent intent = new Intent(this, JsSettingsActivity.class);

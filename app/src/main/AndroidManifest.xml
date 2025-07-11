@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JobHub">
         <activity
+            android:name=".activity.JsProfileSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.EmpNotificationsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.EmpNavigatorActivity"
             android:exported="false" />
         <activity
@@ -40,22 +46,7 @@
             android:name=".activity.JsNavigatorActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.JsProfilePersonalInfo"
-            android:exported="false" />
-        <activity
-            android:name=".activity.JsProfileObjectives"
-            android:exported="false" />
-        <activity
-            android:name=".activity.JsProfileEducAttainment"
-            android:exported="false" />
-        <activity
-            android:name=".activity.JsProfileWorkExp"
-            android:exported="false" />
-        <activity
-            android:name=".activity.JsProfileSkills"
-            android:exported="false" />
-        <activity
-            android:name=".activity.JsNotificationActivity"
+            android:name=".activity.JsNotificationsActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
@@ -63,6 +54,7 @@
             android:theme="@style/Theme.JobHub.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
