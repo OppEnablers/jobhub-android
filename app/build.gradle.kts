@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.core.splashscreen)
     implementation(libs.preference)
+    implementation(libs.firebase.bom)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
