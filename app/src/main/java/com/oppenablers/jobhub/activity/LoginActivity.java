@@ -54,11 +54,18 @@ public class LoginActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess() {
 
-                                                    String userType = (String)getTokenResult.getClaims().get("user_type");
+                                                    String userType = (String) getTokenResult.getClaims().get("user_type");
 
-                                                    Intent intent = new Intent(LoginActivity.this, JsNavigatorActivity.class);
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    startActivity(intent);
+                                                    if (userType.contentEquals("jobseeker")) {
+                                                        Intent intent = new Intent(LoginActivity.this, JsNavigatorActivity.class);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                        startActivity(intent);
+                                                    } else if (userType.contentEquals("employer")) {
+                                                        Intent intent = new Intent(LoginActivity.this, EmpNavigatorActivity.class);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                        startActivity(intent);
+                                                    }
+
                                                 }
                                             }));
                         }

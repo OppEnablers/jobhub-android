@@ -58,6 +58,18 @@ public class MainActivity extends AppCompatActivity {
             JobHubClient.setUserId(AuthManager.getCurrentUser().getUid());
             AuthManager.getIdToken(false).addOnSuccessListener(getTokenResult -> {
                 AuthInterceptor.setToken(getTokenResult.getToken());
+
+                String userType = (String) getTokenResult.getClaims().get("user_type");
+
+                if (userType.contentEquals("jobseeker")) {
+                    Intent intent = new Intent(MainActivity.this, JsNavigatorActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } else if (userType.contentEquals("employer")) {
+                    Intent intent = new Intent(MainActivity.this, EmpNavigatorActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
             });
             Intent navigatorIntent = new Intent(this, JsNavigatorActivity.class);
             navigatorIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
