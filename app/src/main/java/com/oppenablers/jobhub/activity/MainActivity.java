@@ -49,10 +49,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preferences_key), Context.MODE_PRIVATE);
-
-        JobHubClient.setHostName(sharedPreferences.getString("host_name", "localhost"));
+        updateClientHostName(sharedPreferences);
 
         if (AuthManager.isLoggedIn()) {
             JobHubClient.setUserId(AuthManager.getCurrentUser().getUid());
@@ -71,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-            Intent navigatorIntent = new Intent(this, JsNavigatorActivity.class);
-            navigatorIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(navigatorIntent);
         }
 
         binding.loginButton.setOnClickListener(v -> {
@@ -133,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (!newHostName.isEmpty()) {
                                         sharedPreferences.edit().putString("host_name", newHostName)
                                                 .apply();
+                                        updateClientHostName(sharedPreferences);
                                     }
                                 }
                             })
@@ -143,5 +139,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void updateClientHostName(SharedPreferences sharedPreferences) {
+        JobHubClient.setHostName(sharedPreferences.getString("host_name", "localhost"));
     }
 }
