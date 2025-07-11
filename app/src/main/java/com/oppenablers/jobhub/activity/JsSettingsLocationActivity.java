@@ -8,18 +8,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.oppenablers.jobhub.databinding.ActivityJsSettingsEmailBinding;
-import com.oppenablers.jobhub.databinding.ActivityJsSettingsInterestsBinding;
+import com.oppenablers.jobhub.databinding.ActivitySettingsLocationBinding;
 
-public class JsSettingsInterests extends AppCompatActivity {
+public class JsSettingsLocationActivity extends AppCompatActivity {
 
-    ActivityJsSettingsInterestsBinding binding;
+    ActivitySettingsLocationBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        binding = ActivityJsSettingsInterestsBinding.inflate(getLayoutInflater());
+        binding = ActivitySettingsLocationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

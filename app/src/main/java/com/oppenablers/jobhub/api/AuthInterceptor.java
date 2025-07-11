@@ -16,10 +16,10 @@ import okhttp3.Response;
 
 public class AuthInterceptor implements Interceptor {
 
-    private String token;
+    private static String token;
 
-    public void setToken(String token) {
-        this.token = token;
+    public static void setToken(String token) {
+        AuthInterceptor.token = token;
     }
 
     @NonNull
@@ -33,26 +33,24 @@ public class AuthInterceptor implements Interceptor {
 
         request = builder.build();
 
-        try (Response response = chain.proceed(request)) {
+        Response response = chain.proceed(request);
 
-            // for refreshing tokens
-            if (response.code() == 401) {
-                synchronized (this) {
-                    Task<GetTokenResult> task = AuthManager.getIdToken(false);
-                    try {
-                        token = Tasks.await(task).getToken();
-                        builder = request.newBuilder();
-                        setAuthHeader(builder, token);
-                        request = builder.build();
-                        return chain.proceed(request);
-                    } catch (ExecutionException | InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+        // for refreshing tokens
+        if (response.code() == 401) {
+            synchronized (this) {
+                Task<GetTokenResult> task = AuthManager.getIdToken(false);
+                try {
+                    token = Tasks.await(task).getToken();
+                    builder = request.newBuilder();
+                    setAuthHeader(builder, token);
+                    request = builder.build();
+                    return chain.proceed(request);
+                } catch (ExecutionException | InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
-
-            return response;
         }
+        return response;
     }
 
     private void setAuthHeader(Request.Builder builder, String token) {

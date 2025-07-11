@@ -3,18 +3,18 @@ package com.oppenablers.jobhub.model;
 public class Job {
 
     private final String jobPosition;
-    private final String companyName;
+    private final String location;
 
-    public Job(String jobPosition, String companyName) {
+    public Job(String jobPosition, String location) {
         this.jobPosition = jobPosition;
-        this.companyName = companyName;
+        this.location = location;
     }
 
     public String getJobPosition() {
         return jobPosition;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getLocation() {
+        return location;
     }
 }

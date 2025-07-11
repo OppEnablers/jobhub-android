@@ -6,7 +6,10 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.core.os.HandlerCompat;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.oppenablers.jobhub.model.Employer;
 import com.oppenablers.jobhub.model.JobSeeker;
 
@@ -30,9 +33,11 @@ public class JobHubClient {
             .hostnameVerifier((hostname, session) -> hostname.contentEquals(hostName))
             .addInterceptor(INTERCEPTOR)
             .build();
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create();
 
-    private static String token;
+    private static String userId = "";
 
     public static String getHostName() {
         return hostName;
@@ -43,24 +48,40 @@ public class JobHubClient {
         JobHubClient.hostName = hostName;
     }
 
-    public static void ping(Callback callback) {
+    public static void ping(JobHubCallbackVoid callback) {
         CLIENT.newCall(get("/ping")).enqueue(createNotifyCallback(callback));
     }
 
-    public static void login(String idToken, Callback callback) {
-        INTERCEPTOR.setToken(idToken);
+    public static void login(String idToken, String userId, JobHubCallbackVoid callback) {
+        setUserId(userId);
+        AuthInterceptor.setToken(idToken);
         CLIENT.newCall(get("/auth/login")).enqueue(createNotifyCallback(callback));
     }
 
-    public static void signUpJobSeeker(JobSeeker jobSeeker, Callback callback) {
+    public static void setUserId(String userId) {
+        JobHubClient.userId = userId;
+    }
+
+    public static void signUpJobSeeker(JobSeeker jobSeeker, JobHubCallbackVoid callback) {
         String jobSeekerJson = GSON.toJson(jobSeeker);
         CLIENT.newCall(post("/auth/signup/jobseeker", jobSeekerJson))
                 .enqueue(createNotifyCallback(callback));
     }
 
-    public static void signUpEmployer(Employer employer, Callback callback) {
-        String jobSeekerJson = GSON.toJson(employer);
-        CLIENT.newCall(post("/auth/signup/employer", jobSeekerJson))
+    public static void signUpEmployer(Employer employer, JobHubCallbackVoid callback) {
+        String employerJson = GSON.toJson(employer);
+        CLIENT.newCall(post("/auth/signup/employer", employerJson))
+                .enqueue(createNotifyCallback(callback));
+    }
+
+    public static void getAccountInfoJobSeeker(JobHubCallback<JobSeeker> callback) {
+        CLIENT.newCall(get("/jobseeker/account_info"))
+                .enqueue(createNotifyCallback(JobSeeker.class, callback));
+    }
+
+    public static void updateAccountInfoJobSeeker(JobSeeker accountInfo, JobHubCallbackVoid callback) {
+        String accountInfoJson = GSON.toJson(accountInfo);
+        CLIENT.newCall(post("/jobseeker/update_info", accountInfoJson))
                 .enqueue(createNotifyCallback(callback));
     }
 
@@ -78,26 +99,68 @@ public class JobHubClient {
 
     private static Request.Builder startRequest(String endpoint) {
         return new Request.Builder()
-                .url(baseUrl + endpoint);
+                .url(baseUrl + endpoint)
+                .header("user_id", userId);
+    }
+
+    public interface JobHubCallback<T> {
+        void onFailure();
+
+        void onSuccess(T result);
+    }
+
+    public interface JobHubCallbackVoid {
+        void onFailure();
+
+        void onSuccess();
     }
 
     /**
      * this is the stupidest hack i've ever had to write
      */
-    private static Callback createNotifyCallback(Callback originalCallback) {
+
+    private static Callback createNotifyCallback(JobHubCallbackVoid originalCallback) {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                HANDLER.post(() -> originalCallback.onFailure(call, e));
+                HANDLER.post(originalCallback::onFailure);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                HANDLER.post(() -> {
+                    if (response.body() == null) {
+                        originalCallback.onFailure();
+                        return;
+                    }
+
+                    originalCallback.onSuccess();
+                });
+            }
+        };
+    }
+
+    private static <T> Callback createNotifyCallback(Class<T> type, JobHubCallback<T> originalCallback) {
+        return new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                HANDLER.post(originalCallback::onFailure);
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 HANDLER.post(() -> {
                     try {
-                        originalCallback.onResponse(call, response);
+
+                        if (response.body() == null) {
+                            originalCallback.onFailure();
+                            return;
+                        }
+
+                        T result = GSON.fromJson(response.body().string(), type);
+                        originalCallback.onSuccess(result);
                     } catch (IOException e) {
-                        originalCallback.onFailure(call, e);
+                        originalCallback.onFailure();
                     }
                 });
             }

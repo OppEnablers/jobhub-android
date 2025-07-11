@@ -30,4 +30,9 @@
     <string name="preferences_key">com.oppenablers.jobhub.PREFERENCES</string>
     <string name="signup_all_fields_required">All fields are required</string>
     <string name="signup_passwords_not_match">Passwords do not match</string>
+    <string name="none">None</string>
+    <string name="education">Education</string>
+    <string name="work_experience">Work Experience</string>
+    <string name="update_button">UPDATE</string>
+    <string name="objectives">Objectives</string>
 </resources>

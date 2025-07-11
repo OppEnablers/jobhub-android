@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.oppenablers.jobhub.R;
 
-public class JsProfileObjectives extends AppCompatActivity {
+public class EmpNotificationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_js_profile_objectives);
+        setContentView(R.layout.activity_emp_notifications);
 
         ImageView returnButton = findViewById(R.id.return_button);
         returnButton.setOnClickListener(v -> finish());

@@ -55,10 +55,10 @@ public class EmpNavigatorActivity extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.notifications) {
-                Intent intent = new Intent(this, EmpNotificationActivity.class);
+                Intent intent = new Intent(this, EmpNotificationsActivity.class);
                 startActivity(intent);
             } else if (itemId == R.id.settings) {
-                Intent intent = new Intent(this, JsSettingsTabActivity.class);
+                Intent intent = new Intent(this, JsSettingsActivity.class);
                 startActivity(intent);
             } else {
                 return false;

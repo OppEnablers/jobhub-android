@@ -50,14 +50,14 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
         public JobCardViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            jobPosition = itemView.findViewById(R.id.jobPosition);
-            companyName = itemView.findViewById(R.id.companyName);
+            jobPosition = itemView.findViewById(R.id.job_position);
+            companyName = itemView.findViewById(R.id.job_location);
             backgroundImage = itemView.findViewById(R.id.backgroundImage);
         }
 
         public void setItems(Job job) {
             jobPosition.setText(job.getJobPosition());
-            companyName.setText(job.getCompanyName());
+            companyName.setText(job.getLocation());
             backgroundImage.setImageResource(R.drawable.ic_launcher_foreground);
         }
     }

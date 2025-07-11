@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.core.splashscreen)
+    implementation(libs.preference)
     implementation(libs.firebase.bom)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

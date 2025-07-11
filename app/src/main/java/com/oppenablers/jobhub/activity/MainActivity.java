@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.R;
+import com.oppenablers.jobhub.api.AuthInterceptor;
 import com.oppenablers.jobhub.api.JobHubClient;
 import com.oppenablers.jobhub.databinding.ActivityMainBinding;
 
@@ -49,13 +50,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preferences_key), Context.MODE_PRIVATE);
-
-        JobHubClient.setHostName(sharedPreferences.getString("host_name", "localhost"));
+        updateClientHostName(sharedPreferences);
 
         if (AuthManager.isLoggedIn()) {
-            Intent navigatorIntent = new Intent(this, JsNavigatorActivity.class);
-            navigatorIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(navigatorIntent);
+            JobHubClient.setUserId(AuthManager.getCurrentUser().getUid());
+            AuthManager.getIdToken(false).addOnSuccessListener(getTokenResult -> {
+                AuthInterceptor.setToken(getTokenResult.getToken());
+
+                String userType = (String) getTokenResult.getClaims().get("user_type");
+
+                if (userType.contentEquals("jobseeker")) {
+                    Intent intent = new Intent(MainActivity.this, JsNavigatorActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } else if (userType.contentEquals("employer")) {
+                    Intent intent = new Intent(MainActivity.this, EmpNavigatorActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            });
         }
 
         binding.loginButton.setOnClickListener(v -> {
@@ -115,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (!newHostName.isEmpty()) {
                                         sharedPreferences.edit().putString("host_name", newHostName)
                                                 .apply();
+                                        updateClientHostName(sharedPreferences);
                                     }
                                 }
                             })
@@ -125,5 +139,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void updateClientHostName(SharedPreferences sharedPreferences) {
+        JobHubClient.setHostName(sharedPreferences.getString("host_name", "localhost"));
     }
 }

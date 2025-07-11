@@ -39,24 +39,33 @@ public class LoginActivity extends AppCompatActivity {
             AuthManager.login(email, password)
                     .addOnSuccessListener(authResult -> {
                         FirebaseUser user = authResult.getUser();
+
                         if (user != null) {
                             user.getIdToken(false)
                                     .addOnSuccessListener(getTokenResult ->
-                                            JobHubClient.login(getTokenResult.getToken(), new Callback() {
+
+
+                                            JobHubClient.login(getTokenResult.getToken(), user.getUid(), new JobHubClient.JobHubCallbackVoid() {
                                                 @Override
-                                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                                    Toast.makeText(LoginActivity.this, "Failed to contact server", Toast.LENGTH_SHORT).show();
+                                                public void onFailure() {
+                                                    Toast.makeText(LoginActivity.this, "Log in failed", Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override
-                                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                                    if (response.isSuccessful()) {
+                                                public void onSuccess() {
+
+                                                    String userType = (String) getTokenResult.getClaims().get("user_type");
+
+                                                    if (userType.contentEquals("jobseeker")) {
                                                         Intent intent = new Intent(LoginActivity.this, JsNavigatorActivity.class);
                                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                         startActivity(intent);
-                                                    } else {
-                                                        Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                                    } else if (userType.contentEquals("employer")) {
+                                                        Intent intent = new Intent(LoginActivity.this, EmpNavigatorActivity.class);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                        startActivity(intent);
                                                     }
+
                                                 }
                                             }));
                         }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="Account Settings">
+
+        <EditTextPreference
+            android:title="Email address"
+            app:iconSpaceReserved="false"
+            app:key="email_address"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:title="Phone number"
+            app:iconSpaceReserved="false"
+            app:key="phone_number"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="Discovery">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:title="Interests">
+            <intent
+                android:targetPackage="com.oppenablers.jobhub"
+                android:targetClass="com.oppenablers.jobhub.activity.JsSettingsInterestsActivity" />
+        </Preference>
+        <EditTextPreference
+            app:iconSpaceReserved="false"
+            app:title="Location" />
+        <SeekBarPreference
+            app:iconSpaceReserved="false"
+            app:title="Maximum Distance" />
+    </PreferenceCategory>
+
+    <!--    <PreferenceCategory app:title="Dummy">-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--        <Preference app:title="Dummy" />-->
+    <!--    </PreferenceCategory>-->
+
+</androidx.preference.PreferenceScreen>

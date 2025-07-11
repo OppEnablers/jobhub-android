@@ -2,16 +2,13 @@ package com.oppenablers.jobhub.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.oppenablers.jobhub.R;
@@ -61,10 +58,10 @@ public class JsNavigatorActivity extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.notifications) {
-                Intent intent = new Intent(this, JsNotificationActivity.class);
+                Intent intent = new Intent(this, JsNotificationsActivity.class);
                 startActivity(intent);
             } else if (itemId == R.id.settings) {
-                Intent intent = new Intent(this, JsSettingsTabActivity.class);
+                Intent intent = new Intent(this, JsSettingsActivity.class);
                 startActivity(intent);
             } else {
                 return false;
@@ -83,13 +80,9 @@ public class JsNavigatorActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment, String selected) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
-
         getSupportFragmentManager()
                 .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.fragment_container, fragment)
                 .commit();
     }
