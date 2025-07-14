@@ -17,7 +17,7 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_emp_messages_direct);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.layout.activity_emp_messages_direct), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_emp_messages_direct), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;

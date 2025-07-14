@@ -16,10 +16,6 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activity.EmpDirectMessageActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".activity.JsProfileSettingsActivity"
             android:exported="false" />
         <activity
@@ -28,6 +24,10 @@
         <activity
             android:name=".activity.EmpNavigatorActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.EmpDirectMessageActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.JsSettingsInterestsActivity"
             android:exported="false" />
