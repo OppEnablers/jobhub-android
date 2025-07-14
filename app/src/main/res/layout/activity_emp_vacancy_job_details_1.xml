@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#ffffff">
 
     <LinearLayout
@@ -117,7 +118,7 @@
                         android:id="@+id/editable_border"
                         android:layout_width="271dp"
                         android:layout_height="35dp"
-                        android:layout_marginHorizontal="45dp"
+                        android:layout_marginHorizontal="55dp"
                         android:layout_marginVertical="318dp"
                         android:background="@drawable/editable_border"
                         android:scaleType="fitXY" />
@@ -126,7 +127,7 @@
                         android:id="@+id/jobpost_title"
                         android:layout_width="269dp"
                         android:layout_height="42dp"
-                        android:layout_marginHorizontal="50dp"
+                        android:layout_marginHorizontal="60dp"
                         android:layout_marginVertical="320dp"
                         android:fontFamily="@font/montserrat_extrabold"
                         android:text="MARKETING ASSOCIATE"
@@ -136,6 +137,67 @@
                         android:textSize="21dp"
                         android:textStyle="bold" />
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="135dp"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_location" />
+
+                        <TextView
+                            android:id="@+id/job_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/md_theme_inverseOnSurface"
+                            tools:text="Location" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="0dp"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:padding="24dp"
+                        >
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_swipe_left_trans"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:clickable="false"
+                            app:shapeAppearance="@style/circleImageView"
+                            app:srcCompat="@drawable/swipe_left" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fap_undo_trans"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginRight="32dp"
+                            android:layout_weight="1"
+                            android:clickable="false"
+                            app:srcCompat="@drawable/swipe_up" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_swipe_right_trans"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:clickable="false"
+                            app:shapeAppearance="@style/circleImageView"
+                            app:srcCompat="@drawable/swipe_right" />
+                    </LinearLayout>
 
 
                 </androidx.cardview.widget.CardView>
