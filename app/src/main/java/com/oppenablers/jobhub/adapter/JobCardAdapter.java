@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.model.Job;
+import com.oppenablers.jobhub.model.Vacancy;
 
 import java.util.List;
 
 public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardViewHolder> {
 
-    private final List<Job> jobs;
+    private final List<Vacancy> jobs;
 
-    public JobCardAdapter(List<Job> jobs) {
+    public JobCardAdapter(List<Vacancy> jobs) {
         this.jobs = jobs;
     }
 
@@ -32,13 +33,17 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
 
     @Override
     public void onBindViewHolder(@NonNull JobCardViewHolder holder, int position) {
-        Job job = jobs.get(position);
+        Vacancy job = jobs.get(position);
         holder.setItems(job);
     }
 
     @Override
     public int getItemCount() {
         return jobs.size();
+    }
+
+    public Vacancy getJob(int index) {
+        return jobs.get(index);
     }
 
     public static class JobCardViewHolder extends RecyclerView.ViewHolder {
@@ -55,8 +60,8 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
             backgroundImage = itemView.findViewById(R.id.backgroundImage);
         }
 
-        public void setItems(Job job) {
-            jobPosition.setText(job.getJobPosition());
+        public void setItems(Vacancy job) {
+            jobPosition.setText(job.getName());
             companyName.setText(job.getLocation());
             backgroundImage.setImageResource(R.drawable.ic_launcher_foreground);
         }

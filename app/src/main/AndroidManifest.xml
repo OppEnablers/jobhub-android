@@ -12,7 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JobHub">
-        <activity android:name=".activity.JsDirectMessageActivity"
+        <service
+            android:name=".NotificationService"
+            android:enabled="true"
+            android:exported="false"></service>
+
+        <activity
+            android:name=".activity.EmpAddVacancyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.JsDirectMessageActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -61,6 +70,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
