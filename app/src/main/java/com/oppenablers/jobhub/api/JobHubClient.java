@@ -102,7 +102,7 @@ public class JobHubClient {
     }
 
     public static void getJobsJobSeeker(JobHubCallback<ArrayList<Vacancy>> callback) {
-        CLIENT.newCall(get("/jobseeker/get_jobs"))
+        CLIENT.newCall(get("/jobseeker/jobs"))
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
     }
 
@@ -116,6 +116,11 @@ public class JobHubClient {
         String jobJson = GSON.toJson(job);
         CLIENT.newCall(post("/jobseeker/decline_job", jobJson))
                 .enqueue(createNotifyCallback(callback));
+    }
+
+    public static void getApplicationsJobSeeker(JobHubCallback<ArrayList<Job>> callback) {
+        CLIENT.newCall(get("/jobseeker/applications"))
+                .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
     }
 
     private static Request post(String endpoint, String body) {

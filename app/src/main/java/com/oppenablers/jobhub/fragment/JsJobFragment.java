@@ -8,11 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.adapter.JobCardAdapter;
 import com.oppenablers.jobhub.api.JobHubClient;
@@ -75,6 +77,18 @@ public class JsJobFragment extends Fragment implements CardStackListener {
             cardStackView.swipe();
         });
 
+        binding.fabSwipe.setOnClickListener(v -> {
+            SwipeRevealLayout srl = layoutManager.getTopView().findViewById(R.id.swipe_layout);
+
+            if (srl == null) return;
+
+            if (srl.isOpened()) {
+                srl.close(true);
+            } else {
+                srl.open(true);
+            }
+        });
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ArrayList<Rect> exclusionRects = new ArrayList<>();
             Rect rect = new Rect();
@@ -89,9 +103,7 @@ public class JsJobFragment extends Fragment implements CardStackListener {
     public void onResume() {
         super.onResume();
 
-        List<Vacancy> jobs = new ArrayList<>();
-
-        JobHubClient.getJobsJobSeeker(new JobHubClient.JobHubCallback<ArrayList<Vacancy>>() {
+        JobHubClient.getJobsJobSeeker(new JobHubClient.JobHubCallback<>() {
             @Override
             public void onFailure() {
 
@@ -99,7 +111,15 @@ public class JsJobFragment extends Fragment implements CardStackListener {
 
             @Override
             public void onSuccess(ArrayList<Vacancy> result) {
+
+                if (result == null) return;
+
                 JobCardAdapter jobCardAdapter = new JobCardAdapter(result);
+                jobCardAdapter.setToggleButton(
+                        binding.fabSwipe,
+                        R.drawable.swipe_up,
+                        R.drawable.swipe_down
+                );
                 binding.cardStackView.setAdapter(jobCardAdapter);
             }
         });
@@ -112,43 +132,74 @@ public class JsJobFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardSwiped(Direction direction) {
-        CardStackLayoutManager layoutManager = (CardStackLayoutManager) binding.cardStackView.getLayoutManager();
-        JobCardAdapter adapter = (JobCardAdapter) binding.cardStackView.getAdapter();
-
-        if (adapter == null || layoutManager == null) return;
+        Vacancy job = getCurrentJob();
 
         if (direction == Direction.Right) {
-            JobHubClient.acceptJobJobSeeker(adapter.getJob(layoutManager.getTopPosition() - 1), new JobHubClient.JobHubCallbackVoid() {
-                @Override
-                public void onFailure() {
-
-                }
-
-                @Override
-                public void onSuccess() {
-                    Toast.makeText(getContext(), "Job accepted", Toast.LENGTH_SHORT).show();
-                }
-            });
+            acceptJob(job);
+        } else if (direction == Direction.Left) {
+            declineJob(job);
         }
     }
 
     @Override
     public void onCardRewound() {
-
     }
 
     @Override
     public void onCardCanceled() {
-
     }
 
     @Override
     public void onCardAppeared(View view, int position) {
-
     }
 
     @Override
     public void onCardDisappeared(View view, int position) {
+    }
 
+    private Vacancy getCurrentJob() {
+        CardStackLayoutManager layoutManager = (CardStackLayoutManager) binding.cardStackView.getLayoutManager();
+        JobCardAdapter adapter = (JobCardAdapter) binding.cardStackView.getAdapter();
+        if (adapter == null || layoutManager == null) return null;
+
+        int index = layoutManager.getTopPosition();
+
+        Log.d("JobSwipe", "Top position: " + index);
+
+        return adapter.getJob(0);
+    }
+
+    private void acceptJob(Vacancy job) {
+
+        if (job == null) return;
+
+        JobHubClient.acceptJobJobSeeker(job, new JobHubClient.JobHubCallbackVoid() {
+            @Override
+            public void onFailure() {
+
+            }
+
+            @Override
+            public void onSuccess() {
+                Toast.makeText(getContext(), "Job accepted", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void declineJob(Vacancy job) {
+
+        if (job == null) return;
+
+        JobHubClient.declineJobJobSeeker(job, new JobHubClient.JobHubCallbackVoid() {
+            @Override
+            public void onFailure() {
+
+            }
+
+            @Override
+            public void onSuccess() {
+                Toast.makeText(getContext(), "Job declined", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
