@@ -92,6 +92,7 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot child : snapshot.getChildren()) {
+                    System.out.println(child);
                     Message msg = child.getValue(Message.class);
                     if (msg != null) {
                         if (msg.senderId.equals(AuthManager.getCurrentUser().getUid())) {
