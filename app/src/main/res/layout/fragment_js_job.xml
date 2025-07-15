@@ -35,7 +35,7 @@
             app:srcCompat="@drawable/swipe_left" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fap_undo"
+            android:id="@+id/fab_swipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"

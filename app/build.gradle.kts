@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -34,6 +35,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 dependencies {
@@ -53,6 +57,9 @@ dependencies {
     implementation(libs.core.splashscreen)
     implementation(libs.preference)
     implementation(libs.firebase.bom)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.core.ktx)
+    implementation(project(":swipe-reveal-layout"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

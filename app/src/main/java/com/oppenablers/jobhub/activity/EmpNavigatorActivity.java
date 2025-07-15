@@ -16,7 +16,7 @@ import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.databinding.ActivityEmpNavigatorBinding;
 import com.oppenablers.jobhub.fragment.EmpJsFragment;
 import com.oppenablers.jobhub.fragment.EmpMessagesFragment;
-import com.oppenablers.jobhub.fragment.EmpVacancyFragment;
+import com.oppenablers.jobhub.fragment.EmpVacanciesFragment;
 
 public class EmpNavigatorActivity extends AppCompatActivity {
     ActivityEmpNavigatorBinding binding;
@@ -33,13 +33,13 @@ public class EmpNavigatorActivity extends AppCompatActivity {
             return insets;
         });
 
-        replaceFragment(new EmpVacancyFragment(), "post");
+        replaceFragment(new EmpVacanciesFragment(), "post");
 
         binding.bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.post) {
-                replaceFragment(new EmpVacancyFragment(), "post");
+                replaceFragment(new EmpVacanciesFragment(), "post");
             } else if (itemId == R.id.match) {
                 replaceFragment(new EmpJsFragment(), "match");
             } else if (itemId == R.id.emp_messages) {

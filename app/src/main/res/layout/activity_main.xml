@@ -35,12 +35,6 @@
                 android:layout_marginTop="20dp"
                 android:src="@drawable/landingpage_logo" />
 
-            <!--            <androidx.constraintlayout.widget.Guideline-->
-            <!--                android:id="@+id/guideline"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:orientation="horizontal" />-->
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="16dp"

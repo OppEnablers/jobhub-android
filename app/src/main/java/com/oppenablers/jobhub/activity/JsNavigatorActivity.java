@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.databinding.ActivityJsNavigatorBinding;
-import com.oppenablers.jobhub.fragment.JsApplicationFragment;
+import com.oppenablers.jobhub.fragment.JsApplicationsFragment;
 import com.oppenablers.jobhub.fragment.JsJobFragment;
 import com.oppenablers.jobhub.fragment.JsMessagesFragment;
 import com.oppenablers.jobhub.fragment.JsProfileFragment;
@@ -42,7 +42,7 @@ public class JsNavigatorActivity extends AppCompatActivity {
             if (itemId == R.id.jobs) {
                 replaceFragment(new JsJobFragment(), "jobs");
             } else if (itemId == R.id.applications) {
-                replaceFragment(new JsApplicationFragment(), "application");
+                replaceFragment(new JsApplicationsFragment(), "application");
             } else if (itemId == R.id.messages) {
                 replaceFragment(new JsMessagesFragment(), "message");
             } else if (itemId == R.id.profile) {
