@@ -1,7 +1,5 @@
 package com.oppenablers.jobhub.activity;
 
-import static androidx.core.util.TypedValueCompat.dpToPx;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
@@ -31,8 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.R;
-import com.oppenablers.jobhub.databinding.ActivityMainBinding;
 import com.oppenablers.jobhub.model.ChatMessage;
+import com.oppenablers.jobhub.model.Message;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -104,7 +102,7 @@ public class JsDirectMessageActivity extends AppCompatActivity {
                         if (msg.senderId.equals(AuthManager.getCurrentUser().getUid())) {
                             addSentMessageBubble(msg.content, msg.timestamp);
                         } else {
-                            //addReceivedMessageBubble(msg.content);
+                            addReceivedMessageBubble(msg.content, msg.timestamp);
                         }
                     }
                 }
@@ -187,18 +185,66 @@ public class JsDirectMessageActivity extends AppCompatActivity {
             scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
         }
     }
-}
 
-class Message {
-    public String content;
-    public String senderId;
-    public long timestamp;
+    private void addReceivedMessageBubble(String messageText, long timestamp) {
+        LinearLayout messagesContainer = findViewById(R.id.messages_container);
 
-    public Message() {}
+        LinearLayout outerLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams outerParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        outerParams.setMargins(0, 0, 0, 8);
+        outerLayout.setLayoutParams(outerParams);
+        outerLayout.setGravity(Gravity.START);
+        outerLayout.setOrientation(LinearLayout.VERTICAL);
 
-    public Message(String content, String senderId, long timestamp) {
-        this.content = content;
-        this.senderId = senderId;
-        this.timestamp = timestamp;
+        LinearLayout bubbleLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        bubbleParams.setMarginEnd(60); // match your sent version 60dp start offset
+        bubbleLayout.setLayoutParams(bubbleParams);
+        bubbleLayout.setOrientation(LinearLayout.VERTICAL);
+        bubbleLayout.setPadding(12, 12, 12, 12); // 12dp all around
+        bubbleLayout.setBackgroundResource(R.drawable.received_message_bubble);
+
+        TextView messageTextView = new TextView(this);
+        messageTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        messageTextView.setText(messageText);
+        messageTextView.setTextColor(Color.parseColor("#333333"));  // dark text
+        messageTextView.setTextSize(16f);
+        messageTextView.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat_medium));
+
+        TextView timeTextView = new TextView(this);
+        LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        timeParams.setMargins(0, 4, 0, 0);
+        timeTextView.setLayoutParams(timeParams);
+        timeTextView.setTextColor(Color.parseColor("#808080"));
+        timeTextView.setTextSize(12f);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+        if (timestamp == 0) {
+            timeTextView.setText(sdf.format(new Date()));
+        } else {
+            timeTextView.setText(sdf.format(new Date(timestamp)));
+        }
+
+        bubbleLayout.addView(messageTextView);
+        bubbleLayout.addView(timeTextView);
+        outerLayout.addView(bubbleLayout);
+        messagesContainer.addView(outerLayout);
+
+        ScrollView scroll = findViewById(R.id.messages_scroll);
+        if (scroll != null) {
+            scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
+        }
     }
 }
