@@ -9,7 +9,16 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="Add Vacancy Info" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -46,21 +55,9 @@
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="24dp">
 
+
+
                     <!--COMPANY -->
-                    <TextView
-                        android:id="@+id/companyTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="COMPANY NAME"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:maxLength="30"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -77,33 +74,24 @@
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_location_city" />
 
-                        <TextView
-                            android:id="@+id/companyTextView"
+                        <EditText
+                            android:id="@+id/companyEditText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="iACADEMY"
+                            android:hint="Enter company name"
                             android:textColor="#333333"
+                            android:textColorHint="#888888"
                             android:textSize="16sp"
                             android:maxLength="30"
                             android:ellipsize="end"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:inputType="text" />
                     </LinearLayout>
 
                     <!--Job Type -->
-                    <TextView
-                        android:id="@+id/jobTypeTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="PREFERRED TIME AND WORK SETTING"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -120,32 +108,24 @@
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_jobduration" />
 
-                        <TextView
-                            android:id="@+id/jobTypeTextView"
+                        <EditText
+                            android:id="@+id/jobTypeEditText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Full Time (Day Shift), On-site"
+                            android:hint="Enter job type (e.g., Full Time, Part Time, Remote)"
                             android:textColor="#333333"
+                            android:textColorHint="#888888"
                             android:textSize="16sp"
                             android:maxLength="40"
                             android:ellipsize="end"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:inputType="text" />
                     </LinearLayout>
 
                     <!--Objectives -->
-                    <TextView
-                        android:id="@+id/objectivesTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="OBJECTIVES"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -155,31 +135,22 @@
                         android:padding="12dp"
                         app:cardElevation="10dp" >
 
-                        <TextView
-                            android:id="@+id/objectivesTextView"
+                        <EditText
+                            android:id="@+id/objectivesEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="120dp"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="-Promote iACADEMY to boost enrollment.&#10;-Provide admissions guidance and collaborate on recruitment.&#10;-Maintain records and support the admissions team"
+                            android:hint="Enter job objectives or description"
                             android:textColor="#333333"
+                            android:textColorHint="#888888"
                             android:textSize="16sp"
-                            android:maxLines="10"
-                            android:ellipsize="end"
+                            android:background="@null"
+                            android:inputType="textMultiLine"
+                            android:gravity="top|start"
                             android:scrollbars="vertical" />
                     </LinearLayout>
 
                     <!--Skills -->
-                    <TextView
-                        android:id="@+id/skillsTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="SKILLS"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -189,31 +160,22 @@
                         android:padding="12dp"
                         app:cardElevation="10dp" >
 
-                        <TextView
-                            android:id="@+id/skillsTextView"
+                        <EditText
+                            android:id="@+id/skillsEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="120dp"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="• Excellent communication and interpersonal skills&#10;• Strong organizational abilities&#10;• Customer service orientation&#10;• Knowledge of educational systems"
+                            android:hint="Enter soft skills and hard skills"
                             android:textColor="#333333"
+                            android:textColorHint="#888888"
                             android:textSize="16sp"
-                            android:maxLines="10"
-                            android:ellipsize="end"
+                            android:background="@null"
+                            android:inputType="textMultiLine"
+                            android:gravity="top|start"
                             android:scrollbars="vertical" />
                     </LinearLayout>
 
                     <!-- Salary -->
-                    <TextView
-                        android:id="@+id/salaryTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="SALARY RANGE"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -230,32 +192,24 @@
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_salarylogo" />
 
-                        <TextView
-                            android:id="@+id/salaryTextView"
+                        <EditText
+                            android:id="@+id/salaryEditText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="₱25,000 - ₱30,000"
+                            android:hint="Enter salary range"
                             android:textColor="#333333"
+                            android:textColorHint="#888888"
                             android:textSize="16sp"
                             android:maxLength="40"
                             android:ellipsize="end"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:inputType="text" />
                     </LinearLayout>
 
                     <!-- Experience -->
-                    <TextView
-                        android:id="@+id/workExpTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="WORK EXPERIENCE"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -272,18 +226,21 @@
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_workexplogo" />
 
-                        <TextView
-                            android:id="@+id/experienceTextView"
+                        <EditText
+                            android:id="@+id/experienceEditText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="2-3 years in admissions or related field"
+                            android:hint="Enter minimum work experience"
                             android:textColor="#333333"
+                            android:textColorHint="#888888"
                             android:textSize="16sp"
                             android:maxLength="40"
                             android:ellipsize="end"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:background="@null"
+                            android:inputType="text" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -292,4 +249,11 @@
 
     </ScrollView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_weight="0"
+        android:text="CONFIRM" />
 </LinearLayout>
