@@ -23,3 +23,4 @@ rootProject.name = "JobHub"
 include(":app")
 include(":mariatoggle")
 include(":cardstackview")
+include(":swipe-reveal-layout")

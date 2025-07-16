@@ -11,10 +11,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.oppenablers.jobhub.model.Employer;
+import com.oppenablers.jobhub.model.Job;
 import com.oppenablers.jobhub.model.JobSeeker;
+import com.oppenablers.jobhub.model.Vacancy;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import kotlinx.coroutines.JobNode;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -76,13 +80,47 @@ public class JobHubClient {
 
     public static void getAccountInfoJobSeeker(JobHubCallback<JobSeeker> callback) {
         CLIENT.newCall(get("/jobseeker/account_info"))
-                .enqueue(createNotifyCallback(JobSeeker.class, callback));
+                .enqueue(createNotifyCallback(new TypeToken<>() {
+                }, callback));
     }
 
     public static void updateAccountInfoJobSeeker(JobSeeker accountInfo, JobHubCallbackVoid callback) {
         String accountInfoJson = GSON.toJson(accountInfo);
         CLIENT.newCall(post("/jobseeker/update_info", accountInfoJson))
                 .enqueue(createNotifyCallback(callback));
+    }
+
+    public static void addVacancy(Vacancy vacancy, JobHubCallbackVoid callback) {
+        String vacancyJson = GSON.toJson(vacancy);
+        CLIENT.newCall(post("/employer/add_vacancy", vacancyJson))
+                .enqueue(createNotifyCallback(callback));
+    }
+
+    public static void getVacanciesEmployer(JobHubCallback<ArrayList<Vacancy>> callback) {
+        CLIENT.newCall(get("/employer/get_vacancies"))
+                .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
+    }
+
+    public static void getJobsJobSeeker(JobHubCallback<ArrayList<Vacancy>> callback) {
+        CLIENT.newCall(get("/jobseeker/jobs"))
+                .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
+    }
+
+    public static void acceptJobJobSeeker(Vacancy job, JobHubCallbackVoid callback) {
+        String jobJson = GSON.toJson(job);
+        CLIENT.newCall(post("/jobseeker/accept_job", jobJson))
+                .enqueue(createNotifyCallback(callback));
+    }
+
+    public static void declineJobJobSeeker(Vacancy job, JobHubCallbackVoid callback) {
+        String jobJson = GSON.toJson(job);
+        CLIENT.newCall(post("/jobseeker/decline_job", jobJson))
+                .enqueue(createNotifyCallback(callback));
+    }
+
+    public static void getApplicationsJobSeeker(JobHubCallback<ArrayList<Job>> callback) {
+        CLIENT.newCall(get("/jobseeker/applications"))
+                .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
     }
 
     private static Request post(String endpoint, String body) {
@@ -140,7 +178,7 @@ public class JobHubClient {
         };
     }
 
-    private static <T> Callback createNotifyCallback(Class<T> type, JobHubCallback<T> originalCallback) {
+    private static <T> Callback createNotifyCallback(TypeToken<T> typeToken, JobHubCallback<T> originalCallback) {
         return new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -157,9 +195,9 @@ public class JobHubClient {
                             return;
                         }
 
-                        T result = GSON.fromJson(response.body().string(), type);
+                        T result = GSON.fromJson(response.body().string(), typeToken);
                         originalCallback.onSuccess(result);
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         originalCallback.onFailure();
                     }
                 });

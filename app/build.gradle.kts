@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.kotlin.android)
 }
 
 val localProperties = Properties()
@@ -49,6 +50,9 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 dependencies {
@@ -70,6 +74,9 @@ dependencies {
     implementation(libs.firebase.bom)
     implementation("com.amazonaws:aws-android-sdk-core:2.81.0")
     implementation("com.amazonaws:aws-android-sdk-s3:2.81.0")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.core.ktx)
+    implementation(project(":swipe-reveal-layout"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
