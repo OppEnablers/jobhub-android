@@ -1,6 +1,16 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
+}
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { stream ->
+        localProperties.load(stream)
+    }
 }
 
 android {
@@ -15,6 +25,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "COGNITO_POOL_ID", "\"${localProperties["COGNITO_POOL_ID"]}\"")
+        buildConfigField("String", "AWS_REGION", "\"${localProperties["AWS_REGION"]}\"")
+        buildConfigField("String", "BUCKET_NAME", "\"${localProperties["BUCKET_NAME"]}\"")
     }
 
     buildTypes {
@@ -33,6 +47,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -53,6 +68,8 @@ dependencies {
     implementation(libs.core.splashscreen)
     implementation(libs.preference)
     implementation(libs.firebase.bom)
+    implementation("com.amazonaws:aws-android-sdk-core:2.81.0")
+    implementation("com.amazonaws:aws-android-sdk-s3:2.81.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
