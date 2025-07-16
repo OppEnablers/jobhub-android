@@ -21,6 +21,7 @@ public class Message {
     public String content;
     public String senderId;
     public long timestamp;
+    public boolean isMediaURL; // true if the content is a URL to media (image, PDF)
 
     public Message() {
     }
@@ -29,6 +30,10 @@ public class Message {
         this.content = content;
         this.senderId = senderId;
         this.timestamp = timestamp;
+    }
+
+    public void setMediaURL(boolean isMediaURL) {
+        this.isMediaURL = isMediaURL;
     }
 
     public static void addSentMessageBubble(Context context, LinearLayout messagesContainer, ScrollView scroll, String messageText, long timestamp) {

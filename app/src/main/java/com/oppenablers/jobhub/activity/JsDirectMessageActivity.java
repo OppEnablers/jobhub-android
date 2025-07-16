@@ -6,6 +6,7 @@ import static com.oppenablers.jobhub.model.Message.addSentMessageBubble;
 import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -43,6 +44,7 @@ import java.util.Map;
 public class JsDirectMessageActivity extends AppCompatActivity {
     LinearLayout messCont;
     ScrollView messScrollCont;
+    private static final int PICK_FILE_REQUEST = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +61,22 @@ public class JsDirectMessageActivity extends AppCompatActivity {
         TextView receiverTextView = findViewById(R.id.application_title);
         EditText messageInput = findViewById(R.id.message_input);
         ImageButton sendBtn = findViewById(R.id.send_button);
+        ImageButton addBtn = findViewById(R.id.add_button);
         String userId = intent.getStringExtra("userId");
 
         messCont = findViewById(R.id.messages_container);
         messScrollCont = findViewById(R.id.messages_scroll);
 
         receiverTextView.setText(intent.getStringExtra("userName"));
+
+        // Add button functionality
+        addBtn.setOnClickListener(v -> {
+            Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            fileIntent.setType("*/*");
+            String[] mimeTypes = {"application/pdf", "image/*"};
+            fileIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+            startActivityForResult(Intent.createChooser(fileIntent, "Select PDF or Image"), PICK_FILE_REQUEST);
+        });
 
         sendBtn.setOnClickListener(v -> {
             String messageText = messageInput.getText().toString().trim();
@@ -122,5 +134,15 @@ public class JsDirectMessageActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri fileUri = data.getData();
+            Intent openIntent = new Intent(Intent.ACTION_VIEW);
+            openIntent.setData(fileUri);
+            openIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(openIntent);
+        }
+    }
 }
