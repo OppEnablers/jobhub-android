@@ -232,26 +232,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/addlogo" />
 
-        <ImageButton
-            android:id="@+id/camera_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Take photo"
-            android:scaleType="centerCrop"
-            android:src="@drawable/photocamlogo" />
-
-        <ImageButton
-            android:id="@+id/image_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Select image"
-            android:scaleType="centerCrop"
-            android:src="@drawable/imagelogo" />
-
         <EditText
             android:fontFamily="@font/montserrat_medium"
             android:id="@+id/message_input"

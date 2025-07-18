@@ -28,7 +28,7 @@ public class EmpMessagesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), com.oppenablers.jobhub.activity.EmpDirectMessageActivity.class);
-                intent.putExtra("userId", "1");
+                intent.putExtra("userId", "xCOv7zBFK0eYoKZZ2gdXEHSUzN83");
                 intent.putExtra("userName", "Mutsuki");
                 startActivity(intent);
             }

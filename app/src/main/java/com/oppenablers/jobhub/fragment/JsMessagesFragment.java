@@ -28,8 +28,8 @@ public class JsMessagesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), com.oppenablers.jobhub.activity.JsDirectMessageActivity.class);
-                intent.putExtra("userId", "1");
-                intent.putExtra("userName", "Mutsuki");
+                intent.putExtra("userId", "yhPaESRBdCct8vphE4b7de0paGo1");
+                intent.putExtra("userName", "iACADEMY");
                 startActivity(intent);
             }
         });
