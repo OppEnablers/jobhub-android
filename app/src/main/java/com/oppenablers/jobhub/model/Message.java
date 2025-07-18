@@ -23,7 +23,9 @@ public class Message {
     public String content;
     public String senderId;
     public long timestamp;
-    public boolean isMediaURL; // true if the content is a URL to media (image, PDF)
+    public boolean isMediaUrl; // true if the content is a URL to media (image, PDF)
+    public String mediaType;
+    public String mediaUrl;
 
     public Message() {
     }
@@ -34,8 +36,26 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public void setMediaURL(boolean isMediaURL) {
-        this.isMediaURL = isMediaURL;
+    public void setMediaUrl(boolean isMediaUrl) {
+        this.isMediaUrl = isMediaUrl;
+    }
+
+    public void setMedia(String mediaType, String mediaUrl) {
+        this.mediaType = mediaType;
+        this.mediaUrl = mediaUrl;
+        this.isMediaUrl = (mediaUrl != null);
+    }
+
+    public boolean hasMedia() {
+        return isMediaUrl && mediaUrl != null;
+    }
+
+    public boolean isImage() {
+        return "image".equals(mediaType);
+    }
+
+    public boolean isPdf() {
+        return "pdf".equals(mediaType);
     }
 
     public static void addSentMessageBubble(Context context, LinearLayout messagesContainer, ScrollView scroll, String messageText, long timestamp) {

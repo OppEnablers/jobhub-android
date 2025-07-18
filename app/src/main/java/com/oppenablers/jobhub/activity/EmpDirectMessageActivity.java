@@ -6,6 +6,7 @@ import com.oppenablers.jobhub.FileUtils;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -111,13 +112,44 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot child : snapshot.getChildren()) {
-                    System.out.println(child);
-                    Message msg = child.getValue(Message.class);
+                    Message msg = new Message();
+                    msg.content = child.child("content").getValue(String.class);
+                    msg.senderId = child.child("senderId").getValue(String.class);
+                    msg.timestamp = child.child("timestamp").getValue(Long.class);
+                    msg.mediaType = child.child("mediaType").getValue(String.class);
+                    msg.mediaUrl = child.child("mediaUrl").getValue(String.class);
+
+                    Object isMediaObj = child.child("isMediaUrl").getValue();
+                    if (isMediaObj instanceof Boolean) {
+                        msg.isMediaUrl = (Boolean) isMediaObj;
+                    } else if (isMediaObj instanceof String) {
+                        msg.isMediaUrl = Boolean.parseBoolean((String) isMediaObj);
+                    } else {
+                        msg.isMediaUrl = false;
+                    }
+
                     if (msg != null) {
-                        if (msg.senderId.equals(AuthManager.getCurrentUser().getUid())) {
-                            addSentMessageBubble(EmpDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp);
+                        boolean isSent = msg.senderId.equals(AuthManager.getCurrentUser().getUid());
+                        if (msg.hasMedia()) {
+                            if (msg.isImage()) {
+                                Message.addSentMessageBubbleWithImage(
+                                        EmpDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                                );
+                            } else if (msg.isPdf()) {
+                                Message.addSentMessageBubbleWithPdf(
+                                        EmpDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                                );
+                            }
                         } else {
-                            addReceivedMessageBubble(EmpDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp);
+                            if (isSent) {
+                                Message.addSentMessageBubble(
+                                        EmpDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                                );
+                            } else {
+                                Message.addReceivedMessageBubble(
+                                        EmpDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                                );
+                            }
                         }
                     }
                 }
@@ -134,13 +166,14 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
         });
     }
 
+    // Java
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri fileUri = data.getData();
             String fileName = System.currentTimeMillis() + "_" + (fileUri.getLastPathSegment() != null ? fileUri.getLastPathSegment() : "file");
-            File file = new File(FileUtils.getPath(this, fileUri)); // You need a FileUtils.getPath() utility
+            File file = new File(FileUtils.getPath(this, fileUri));
 
             fileManager.upload(fileName, file, new FileManager.SimpleListener() {
                 @Override
@@ -150,10 +183,15 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
                         boolean isImage = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
                         boolean isPdf = fileName.endsWith(".pdf");
 
-                        // Show bubble
+                        String mediaType = null;
+                        String content = s3Url;
                         if (isImage) {
+                            mediaType = "image";
+                            content = "Image";
                             Message.addSentMessageBubbleWithImage(EmpDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
                         } else if (isPdf) {
+                            mediaType = "pdf";
+                            content = "PDF Document";
                             Message.addSentMessageBubbleWithPdf(EmpDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
                         }
 
@@ -164,8 +202,8 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
                                 .child(AuthManager.getCurrentUser().getUid())
                                 .child(userId);
 
-                        Message msg = new Message(s3Url, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
-                        msg.setMediaURL(true);
+                        Message msg = new Message(content, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
+                        msg.setMedia(mediaType, s3Url);
 
                         messageRef.push().setValue(msg);
                     }

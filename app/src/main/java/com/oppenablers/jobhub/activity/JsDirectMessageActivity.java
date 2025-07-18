@@ -119,12 +119,44 @@ public class JsDirectMessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot child : snapshot.getChildren()) {
-                    Message msg = child.getValue(Message.class);
+                    Message msg = new Message();
+                    msg.content = child.child("content").getValue(String.class);
+                    msg.senderId = child.child("senderId").getValue(String.class);
+                    msg.timestamp = child.child("timestamp").getValue(Long.class);
+                    msg.mediaType = child.child("mediaType").getValue(String.class);
+                    msg.mediaUrl = child.child("mediaUrl").getValue(String.class);
+
+                    Object isMediaObj = child.child("isMediaUrl").getValue();
+                    if (isMediaObj instanceof Boolean) {
+                        msg.isMediaUrl = (Boolean) isMediaObj;
+                    } else if (isMediaObj instanceof String) {
+                        msg.isMediaUrl = Boolean.parseBoolean((String) isMediaObj);
+                    } else {
+                        msg.isMediaUrl = false;
+                    }
+
                     if (msg != null) {
-                        if (msg.senderId.equals(AuthManager.getCurrentUser().getUid())) {
-                            addSentMessageBubble(JsDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp);
+                        boolean isSent = msg.senderId.equals(AuthManager.getCurrentUser().getUid());
+                        if (msg.hasMedia()) {
+                            if (msg.isImage()) {
+                                Message.addSentMessageBubbleWithImage(
+                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                                );
+                            } else if (msg.isPdf()) {
+                                Message.addSentMessageBubbleWithPdf(
+                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                                );
+                            }
                         } else {
-                            addReceivedMessageBubble(JsDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp);
+                            if (isSent) {
+                                Message.addSentMessageBubble(
+                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                                );
+                            } else {
+                                Message.addReceivedMessageBubble(
+                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                                );
+                            }
                         }
                     }
                 }
@@ -157,10 +189,15 @@ public class JsDirectMessageActivity extends AppCompatActivity {
                         boolean isImage = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
                         boolean isPdf = fileName.endsWith(".pdf");
 
-                        // Show bubble
+                        String mediaType = null;
+                        String content = s3Url;
                         if (isImage) {
+                            mediaType = "image";
+                            content = "Image";
                             Message.addSentMessageBubbleWithImage(JsDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
                         } else if (isPdf) {
+                            mediaType = "pdf";
+                            content = "PDF Document";
                             Message.addSentMessageBubbleWithPdf(JsDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
                         }
 
@@ -171,8 +208,8 @@ public class JsDirectMessageActivity extends AppCompatActivity {
                                 .child(userId)
                                 .child(AuthManager.getCurrentUser().getUid());
 
-                        Message msg = new Message(s3Url, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
-                        msg.setMediaURL(true);
+                        Message msg = new Message(content, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
+                        msg.setMedia(mediaType, s3Url);
 
                         messageRef.push().setValue(msg);
                     }

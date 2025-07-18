@@ -1,6 +1,7 @@
 package com.oppenablers.jobhub;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
@@ -10,13 +11,15 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 
 import java.io.File;
 
 public class FileManager {
     private static final String IDENTITY_POOL_ID = BuildConfig.COGNITO_POOL_ID;
-    private static final Regions REGION          = BuildConfig.AWS_REGION;
-    private static final String BUCKET_NAME      = BuildConfig.BUCKET_NAME;
+    private static final Regions REGION = Regions.fromName(BuildConfig.AWS_REGION);
+    private static final String BUCKET_NAME = BuildConfig.BUCKET_NAME;
 
     private final TransferUtility transferUtility;
 
@@ -38,7 +41,19 @@ public class FileManager {
     }
 
     public TransferObserver upload(String key, File file, TransferListener listener) {
-        TransferObserver ob = transferUtility.upload(BUCKET_NAME, key, file);
+        if (file.length() > 5 * 1024 * 1024) { // 5MB in bytes
+            Toast.makeText(this, "File size exceeds 5MB limit.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ObjectMetadata metadata = new ObjectMetadata();
+        TransferObserver ob = transferUtility.upload(
+                BUCKET_NAME,
+                key,
+                file,
+                metadata,
+                CannedAccessControlList.PublicRead
+        );
         if (listener != null) ob.setTransferListener(listener);
         return ob;
     }
