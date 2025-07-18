@@ -2,6 +2,7 @@ package com.oppenablers.jobhub.activity;
 
 import static com.oppenablers.jobhub.model.Message.addReceivedMessageBubble;
 import static com.oppenablers.jobhub.model.Message.addSentMessageBubble;
+import com.oppenablers.jobhub.FileUtils;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -26,16 +27,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.oppenablers.jobhub.AuthManager;
+import com.oppenablers.jobhub.BuildConfig;
+import com.oppenablers.jobhub.FileManager;
 import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.model.ChatMessage;
 import com.oppenablers.jobhub.model.Message;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EmpDirectMessageActivity extends AppCompatActivity {
+    private static final int PICK_FILE_REQUEST = 1001;
     LinearLayout messCont;
     ScrollView messScrollCont;
+    private FileManager fileManager;
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -60,6 +66,8 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
         messScrollCont = findViewById(R.id.messages_scroll);
 
         employee_name_tv.setText(intent.getStringExtra("userName"));
+
+        fileManager = new FileManager(this);
 
         // Add button functionality
         addBtn.setOnClickListener(v -> {
@@ -131,10 +139,38 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri fileUri = data.getData();
-            Intent openIntent = new Intent(Intent.ACTION_VIEW);
-            openIntent.setData(fileUri);
-            openIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(openIntent);
+            String fileName = System.currentTimeMillis() + "_" + (fileUri.getLastPathSegment() != null ? fileUri.getLastPathSegment() : "file");
+            File file = new File(FileUtils.getPath(this, fileUri)); // You need a FileUtils.getPath() utility
+
+            fileManager.upload(fileName, file, new FileManager.SimpleListener() {
+                @Override
+                public void onStateChanged(int id, com.amazonaws.mobileconnectors.s3.transferutility.TransferState state) {
+                    if (state == com.amazonaws.mobileconnectors.s3.transferutility.TransferState.COMPLETED) {
+                        String s3Url = "https://" + BuildConfig.BUCKET_NAME + ".s3.amazonaws.com/" + fileName;
+                        boolean isImage = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
+                        boolean isPdf = fileName.endsWith(".pdf");
+
+                        // Show bubble
+                        if (isImage) {
+                            Message.addSentMessageBubbleWithImage(EmpDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
+                        } else if (isPdf) {
+                            Message.addSentMessageBubbleWithPdf(EmpDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
+                        }
+
+                        // Send to Firebase
+                        String userId = getIntent().getStringExtra("userId");
+                        DatabaseReference messageRef = FirebaseDatabase.getInstance()
+                                .getReference("messages")
+                                .child(AuthManager.getCurrentUser().getUid())
+                                .child(userId);
+
+                        Message msg = new Message(s3Url, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
+                        msg.setMediaURL(true);
+
+                        messageRef.push().setValue(msg);
+                    }
+                }
+            });
         }
     }
 }

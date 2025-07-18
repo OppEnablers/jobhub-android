@@ -1,8 +1,10 @@
 package com.oppenablers.jobhub.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +100,111 @@ public class Message {
 
         // Optional: auto-scroll to bottom if wrapped in a ScrollView
         //ScrollView scroll = findViewById(R.id.messages_scroll);
+        if (scroll != null) {
+            scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
+        }
+    }
+
+    public static void addSentMessageBubbleWithImage(Context context, LinearLayout messagesContainer, ScrollView scroll, String imageUrl, long timestamp) {
+        LinearLayout outerLayout = new LinearLayout(context);
+        LinearLayout.LayoutParams outerParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        outerParams.setMargins(0, 0, 0,8);
+        outerLayout.setLayoutParams(outerParams);
+        outerLayout.setGravity(Gravity.END);
+        outerLayout.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout bubbleLayout = new LinearLayout(context);
+        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        bubbleParams.setMarginStart(60);
+        bubbleLayout.setLayoutParams(bubbleParams);
+        bubbleLayout.setOrientation(LinearLayout.VERTICAL);
+        bubbleLayout.setPadding(12, 12, 12, 12);
+        bubbleLayout.setBackgroundResource(R.drawable.sent_message_bubble);
+
+        android.widget.ImageView imageView = new android.widget.ImageView(context);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(400, 400));
+        com.bumptech.glide.Glide.with(context).load(imageUrl).into(imageView);
+
+        TextView timeTextView = new TextView(context);
+        LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        timeParams.setMargins(0, 4, 0, 0);
+        timeTextView.setLayoutParams(timeParams);
+        timeTextView.setTextColor(Color.parseColor("#e0e0e0"));
+        timeTextView.setTextSize(12f);
+        timeTextView.setText(new java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault()).format(new java.util.Date(timestamp)));
+
+        bubbleLayout.addView(imageView);
+        bubbleLayout.addView(timeTextView);
+        outerLayout.addView(bubbleLayout);
+        messagesContainer.addView(outerLayout);
+
+        if (scroll != null) {
+            scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
+        }
+    }
+
+    public static void addSentMessageBubbleWithPdf(Context context, LinearLayout messagesContainer, ScrollView scroll, String pdfUrl, long timestamp) {
+        LinearLayout outerLayout = new LinearLayout(context);
+        LinearLayout.LayoutParams outerParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        outerParams.setMargins(0, 0, 0,8);
+        outerLayout.setLayoutParams(outerParams);
+        outerLayout.setGravity(Gravity.END);
+        outerLayout.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout bubbleLayout = new LinearLayout(context);
+        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        bubbleParams.setMarginStart(60);
+        bubbleLayout.setLayoutParams(bubbleParams);
+        bubbleLayout.setOrientation(LinearLayout.VERTICAL);
+        bubbleLayout.setPadding(12, 12, 12, 12);
+        bubbleLayout.setBackgroundResource(R.drawable.sent_message_bubble);
+
+        TextView pdfTextView = new TextView(context);
+        pdfTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        pdfTextView.setText("PDF Document");
+        pdfTextView.setTextColor(Color.WHITE);
+        pdfTextView.setTextSize(16f);
+        pdfTextView.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(context, R.font.montserrat_medium));
+        pdfTextView.setPaintFlags(pdfTextView.getPaintFlags() | android.graphics.Paint.UNDERLINE_TEXT_FLAG);
+        pdfTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl));
+            context.startActivity(intent);
+        });
+
+        TextView timeTextView = new TextView(context);
+        LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        timeParams.setMargins(0, 4, 0, 0);
+        timeTextView.setLayoutParams(timeParams);
+        timeTextView.setTextColor(Color.parseColor("#e0e0e0"));
+        timeTextView.setTextSize(12f);
+        timeTextView.setText(new java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault()).format(new java.util.Date(timestamp)));
+
+        bubbleLayout.addView(pdfTextView);
+        bubbleLayout.addView(timeTextView);
+        outerLayout.addView(bubbleLayout);
+        messagesContainer.addView(outerLayout);
+
         if (scroll != null) {
             scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
         }
