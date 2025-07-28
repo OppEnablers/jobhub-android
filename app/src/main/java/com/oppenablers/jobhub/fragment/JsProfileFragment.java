@@ -40,19 +40,35 @@ public class JsProfileFragment extends Fragment {
         binding.experience.profileItemName.setText("Work Experience");
         binding.skills.profileItemName.setText("Skills");
 
-        binding.objectives.getRoot().setOnClickListener(v -> {
+//        binding.objectives.getRoot().setOnClickListener(v -> {
+//            startActivity(createSettingIntent("Objectives", "objectives"));
+//        });
+//
+//        binding.education.getRoot().setOnClickListener(v -> {
+//            startActivity(createSettingIntent("Education", "education"));
+//        });
+//
+//        binding.experience.getRoot().setOnClickListener(v -> {
+//            startActivity(createSettingIntent("Work Experience", "experience"));
+//        });
+//
+//        binding.skills.getRoot().setOnClickListener(v -> {
+//            startActivity(createSettingIntent("Skills", "skills"));
+//        });
+
+        binding.objectives.btnEditSection.setOnClickListener(v -> {
             startActivity(createSettingIntent("Objectives", "objectives"));
         });
 
-        binding.education.getRoot().setOnClickListener(v -> {
+        binding.education.btnEditSection.setOnClickListener(v -> {
             startActivity(createSettingIntent("Education", "education"));
         });
 
-        binding.experience.getRoot().setOnClickListener(v -> {
+        binding.experience.btnEditSection.setOnClickListener(v -> {
             startActivity(createSettingIntent("Work Experience", "experience"));
         });
 
-        binding.skills.getRoot().setOnClickListener(v -> {
+        binding.skills.btnEditSection.setOnClickListener(v -> {
             startActivity(createSettingIntent("Skills", "skills"));
         });
     }
