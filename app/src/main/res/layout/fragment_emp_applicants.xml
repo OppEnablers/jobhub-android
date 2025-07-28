@@ -5,13 +5,14 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <!-- Header Title -->
     <TextView
         android:id="@+id/messages_title"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="75dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/bg_header_rounded"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_header_rounded_top"
         android:fontFamily="@font/montserrat_extrabold"
         android:gravity="center"
         android:padding="16dp"
@@ -22,14 +23,15 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
-    <!-- Scrollable Content -->
     <ScrollView
         android:id="@+id/messages_list_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/messages_title"
-        android:layout_margin="8dp"
-        android:background="@drawable/bg_content_rounded"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_content_rounded_bottom"
         android:fillViewport="true"
         android:padding="12dp">
 
@@ -38,7 +40,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Card 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
@@ -98,7 +99,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Card 2 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
@@ -156,7 +156,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Card 3 with buttons outside -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
@@ -218,7 +217,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Buttons -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

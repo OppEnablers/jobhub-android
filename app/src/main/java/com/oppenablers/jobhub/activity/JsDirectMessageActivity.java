@@ -62,6 +62,9 @@ public class JsDirectMessageActivity extends AppCompatActivity {
             return insets;
         });
 
+        ImageButton returnButton = findViewById(R.id.return_button);
+        returnButton.setOnClickListener(v -> finish());
+
         Intent intent = getIntent();
         TextView receiverTextView = findViewById(R.id.application_title);
         EditText messageInput = findViewById(R.id.message_input);
