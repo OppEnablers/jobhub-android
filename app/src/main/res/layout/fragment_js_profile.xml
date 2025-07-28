@@ -97,6 +97,16 @@
                 layout="@layout/item_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/award"
+                layout="@layout/item_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/character"
+                layout="@layout/item_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
