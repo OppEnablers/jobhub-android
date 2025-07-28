@@ -35,7 +35,4 @@
     <string name="work_experience">Work Experience</string>
     <string name="update_button">UPDATE</string>
     <string name="objectives">Objectives</string>
-    <string name="work_configuration">Work Configuration</string>
-    <string name="skills">Skills</string>
-    <string name="salary_range">Salary Range</string>
 </resources>
