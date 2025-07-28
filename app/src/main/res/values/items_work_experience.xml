@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="items_work_experience">
+        <item>No experience</item>
+        <item>1 - 5 years</item>
+        <item>6 - 10 years</item>
+        <item>11 - 20 years</item>
+        <item>21 or more years</item>
+    </string-array>
+</resources>
