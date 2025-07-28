@@ -39,6 +39,8 @@ public class JsProfileFragment extends Fragment {
         binding.education.profileItemName.setText("Education");
         binding.experience.profileItemName.setText("Work Experience");
         binding.skills.profileItemName.setText("Skills");
+        binding.award.profileItemName.setText("Award and Certification");
+        binding.character.profileItemName.setText("Character Preference");
 
 //        binding.objectives.getRoot().setOnClickListener(v -> {
 //            startActivity(createSettingIntent("Objectives", "objectives"));
@@ -115,6 +117,14 @@ public class JsProfileFragment extends Fragment {
                 binding.skills.profileItemValue.setText("");
                 binding.skills.getRoot().setOnClickListener(v -> {
                     startActivity(createSettingIntent("Skills", "skills"));
+                });
+                binding.award.profileItemValue.setText("");
+                binding.award.getRoot().setOnClickListener(v -> {
+                    startActivity(createSettingIntent("Award and Certification", "award"));
+                });
+                binding.skills.profileItemValue.setText("");
+                binding.skills.getRoot().setOnClickListener(v -> {
+                    startActivity(createSettingIntent("Character Preference", "character"));
                 });
             }
         });

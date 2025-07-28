@@ -75,7 +75,7 @@
             android:fontFamily="@font/montserrat_extrabold"
             android:gravity="center"
             android:padding="-15dp"
-            android:text="VACANCY"
+            android:text="JOB SEEKER"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#4682A9"
             android:textFontWeight="800"
