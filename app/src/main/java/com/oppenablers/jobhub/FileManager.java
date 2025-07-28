@@ -22,8 +22,11 @@ public class FileManager {
     private static final String BUCKET_NAME = BuildConfig.BUCKET_NAME;
 
     private final TransferUtility transferUtility;
+    private final Context context;
 
     public FileManager(Context context) {
+
+        this.context = context;
 
         CognitoCachingCredentialsProvider creds =
                 new CognitoCachingCredentialsProvider(
@@ -42,8 +45,8 @@ public class FileManager {
 
     public TransferObserver upload(String key, File file, TransferListener listener) {
         if (file.length() > 5 * 1024 * 1024) { // 5MB in bytes
-            Toast.makeText(this, "File size exceeds 5MB limit.", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(context, "File size exceeds 5MB limit.", Toast.LENGTH_SHORT).show();
+            return null;
         }
 
         ObjectMetadata metadata = new ObjectMetadata();

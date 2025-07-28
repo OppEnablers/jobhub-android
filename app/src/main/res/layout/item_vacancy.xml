@@ -4,10 +4,12 @@
     android:id="@+id/vacancy_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:background="@drawable/bg_row_item"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
+    android:elevation="@dimen/cardview_compat_inset_shadow"
+    android:layout_marginBottom="5dp"
     android:padding="16dp">
 
     <TextView
@@ -15,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/md_theme_primary"
+        android:fontFamily="@font/montserrat_extrabold"
         android:textSize="18sp"
         android:textStyle="bold"
         tools:text="Vacancy Title" />

@@ -2,16 +2,19 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_row_item"
     android:padding="16dp">
 
     <TextView
         android:id="@+id/name"
+        android:fontFamily="@font/montserrat_extrabold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name" />
 
     <TextView
         android:id="@+id/value"
+        android:fontFamily="@font/montserrat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
