@@ -1,8 +1,12 @@
 package com.oppenablers.jobhub.activity;
 
+import static com.oppenablers.jobhub.model.Message.addReceivedMessageBubble;
+import static com.oppenablers.jobhub.model.Message.addSentMessageBubble;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -28,10 +32,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.oppenablers.jobhub.AuthManager;
+import com.oppenablers.jobhub.BuildConfig;
+import com.oppenablers.jobhub.FileManager;
+import com.oppenablers.jobhub.FileUtils;
 import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.model.ChatMessage;
 import com.oppenablers.jobhub.model.Message;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -40,6 +48,8 @@ import java.util.Map;
 public class JsDirectMessageActivity extends AppCompatActivity {
     LinearLayout messCont;
     ScrollView messScrollCont;
+    private static final int PICK_FILE_REQUEST = 1001;
+    private FileManager fileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +62,31 @@ public class JsDirectMessageActivity extends AppCompatActivity {
             return insets;
         });
 
+        ImageButton returnButton = findViewById(R.id.return_button);
+        returnButton.setOnClickListener(v -> finish());
+
         Intent intent = getIntent();
         TextView receiverTextView = findViewById(R.id.application_title);
         EditText messageInput = findViewById(R.id.message_input);
         ImageButton sendBtn = findViewById(R.id.send_button);
+        ImageButton addBtn = findViewById(R.id.add_button);
         String userId = intent.getStringExtra("userId");
 
         messCont = findViewById(R.id.messages_container);
         messScrollCont = findViewById(R.id.messages_scroll);
 
         receiverTextView.setText(intent.getStringExtra("userName"));
+
+        fileManager = new FileManager(this);
+
+        // Add button functionality
+        addBtn.setOnClickListener(v -> {
+            Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            fileIntent.setType("*/*");
+            String[] mimeTypes = {"application/pdf", "image/*"};
+            fileIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+            startActivityForResult(Intent.createChooser(fileIntent, "Select PDF or Image"), PICK_FILE_REQUEST);
+        });
 
         sendBtn.setOnClickListener(v -> {
             String messageText = messageInput.getText().toString().trim();
@@ -73,7 +98,7 @@ public class JsDirectMessageActivity extends AppCompatActivity {
                 Map<String, Object> messageData = new HashMap<>();
                 messageData.put("content", messageText);
 
-                addSentMessageBubble(messageText, 0);
+                addSentMessageBubble(this, messCont, messScrollCont, messageText, 0);
 
                 // Send to Firebase
                 ChatMessage chatMessage = new ChatMessage();
@@ -97,12 +122,44 @@ public class JsDirectMessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot child : snapshot.getChildren()) {
-                    Message msg = child.getValue(Message.class);
+                    Message msg = new Message();
+                    msg.content = child.child("content").getValue(String.class);
+                    msg.senderId = child.child("senderId").getValue(String.class);
+                    msg.timestamp = child.child("timestamp").getValue(Long.class);
+                    msg.mediaType = child.child("mediaType").getValue(String.class);
+                    msg.mediaUrl = child.child("mediaUrl").getValue(String.class);
+
+                    Object isMediaObj = child.child("isMediaUrl").getValue();
+                    if (isMediaObj instanceof Boolean) {
+                        msg.isMediaUrl = (Boolean) isMediaObj;
+                    } else if (isMediaObj instanceof String) {
+                        msg.isMediaUrl = Boolean.parseBoolean((String) isMediaObj);
+                    } else {
+                        msg.isMediaUrl = false;
+                    }
+
                     if (msg != null) {
-                        if (msg.senderId.equals(AuthManager.getCurrentUser().getUid())) {
-                            addSentMessageBubble(msg.content, msg.timestamp);
+                        boolean isSent = msg.senderId.equals(AuthManager.getCurrentUser().getUid());
+                        if (msg.hasMedia()) {
+                            if (msg.isImage()) {
+                                Message.addSentMessageBubbleWithImage(
+                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                                );
+                            } else if (msg.isPdf()) {
+                                Message.addSentMessageBubbleWithPdf(
+                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                                );
+                            }
                         } else {
-                            addReceivedMessageBubble(msg.content, msg.timestamp);
+                            if (isSent) {
+                                Message.addSentMessageBubble(
+                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                                );
+                            } else {
+                                Message.addReceivedMessageBubble(
+                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                                );
+                            }
                         }
                     }
                 }
@@ -119,132 +176,48 @@ public class JsDirectMessageActivity extends AppCompatActivity {
         });
     }
 
-    private void addSentMessageBubble(String messageText, long timestamp) {
-        // Find your container
-        LinearLayout messagesContainer = findViewById(R.id.messages_container);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri fileUri = data.getData();
+            String fileName = System.currentTimeMillis() + "_" + (fileUri.getLastPathSegment() != null ? fileUri.getLastPathSegment() : "file");
+            File file = new File(FileUtils.getPath(this, fileUri)); // You need a FileUtils.getPath() utility
 
-        // Outer layout for alignment
-        LinearLayout outerLayout = new LinearLayout(this);
-        LinearLayout.LayoutParams outerParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        outerParams.setMargins(0, 0, 0,8); // match layout_marginBottom="8dp"
-        outerLayout.setLayoutParams(outerParams);
-        outerLayout.setGravity(Gravity.END);
-        outerLayout.setOrientation(LinearLayout.VERTICAL);
+            fileManager.upload(fileName, file, new FileManager.SimpleListener() {
+                @Override
+                public void onStateChanged(int id, com.amazonaws.mobileconnectors.s3.transferutility.TransferState state) {
+                    if (state == com.amazonaws.mobileconnectors.s3.transferutility.TransferState.COMPLETED) {
+                        String s3Url = "https://" + BuildConfig.BUCKET_NAME + ".s3.amazonaws.com/" + fileName;
+                        boolean isImage = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
+                        boolean isPdf = fileName.endsWith(".pdf");
 
-        // Inner message bubble
-        LinearLayout bubbleLayout = new LinearLayout(this);
-        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        bubbleParams.setMarginStart(60); // match layout_marginStart="60dp"
-        bubbleLayout.setLayoutParams(bubbleParams);
-        bubbleLayout.setOrientation(LinearLayout.VERTICAL);
-        bubbleLayout.setPadding(12, 12, 12, 12);
-        bubbleLayout.setBackgroundResource(R.drawable.sent_message_bubble);
+                        String mediaType = null;
+                        String content = s3Url;
+                        if (isImage) {
+                            mediaType = "image";
+                            content = "Image";
+                            Message.addSentMessageBubbleWithImage(JsDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
+                        } else if (isPdf) {
+                            mediaType = "pdf";
+                            content = "PDF Document";
+                            Message.addSentMessageBubbleWithPdf(JsDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
+                        }
 
-        // Message text
-        TextView messageTextView = new TextView(this);
-        messageTextView.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
-        messageTextView.setText(messageText);
-        messageTextView.setTextColor(Color.WHITE);
-        messageTextView.setTextSize(16f);
-        messageTextView.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat_medium));
+                        // Send to Firebase
+                        String userId = getIntent().getStringExtra("userId");
+                        DatabaseReference messageRef = FirebaseDatabase.getInstance()
+                                .getReference("messages")
+                                .child(userId)
+                                .child(AuthManager.getCurrentUser().getUid());
 
-        // Time text
-        TextView timeTextView = new TextView(this);
-        LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        timeParams.setMargins(0, 4, 0, 0);
-        timeTextView.setLayoutParams(timeParams);
-        timeTextView.setTextColor(Color.parseColor("#e0e0e0"));
-        timeTextView.setTextSize(12f);
-        if (timestamp == 0) {
-            timeTextView.setText(new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date()));
-        } else {
-            timeTextView.setText(new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date(timestamp)));
-        }
+                        Message msg = new Message(content, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
+                        msg.setMedia(mediaType, s3Url);
 
-        // Build view hierarchy
-        bubbleLayout.addView(messageTextView);
-        bubbleLayout.addView(timeTextView);
-        outerLayout.addView(bubbleLayout);
-        messagesContainer.addView(outerLayout);
-
-        // Optional: auto-scroll to bottom if wrapped in a ScrollView
-        ScrollView scroll = findViewById(R.id.messages_scroll);
-        if (scroll != null) {
-            scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
-        }
-    }
-
-    private void addReceivedMessageBubble(String messageText, long timestamp) {
-        LinearLayout messagesContainer = findViewById(R.id.messages_container);
-
-        LinearLayout outerLayout = new LinearLayout(this);
-        LinearLayout.LayoutParams outerParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        outerParams.setMargins(0, 0, 0, 8);
-        outerLayout.setLayoutParams(outerParams);
-        outerLayout.setGravity(Gravity.START);
-        outerLayout.setOrientation(LinearLayout.VERTICAL);
-
-        LinearLayout bubbleLayout = new LinearLayout(this);
-        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        bubbleParams.setMarginEnd(60); // match your sent version 60dp start offset
-        bubbleLayout.setLayoutParams(bubbleParams);
-        bubbleLayout.setOrientation(LinearLayout.VERTICAL);
-        bubbleLayout.setPadding(12, 12, 12, 12); // 12dp all around
-        bubbleLayout.setBackgroundResource(R.drawable.received_message_bubble);
-
-        TextView messageTextView = new TextView(this);
-        messageTextView.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
-        messageTextView.setText(messageText);
-        messageTextView.setTextColor(Color.parseColor("#333333"));  // dark text
-        messageTextView.setTextSize(16f);
-        messageTextView.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat_medium));
-
-        TextView timeTextView = new TextView(this);
-        LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        timeParams.setMargins(0, 4, 0, 0);
-        timeTextView.setLayoutParams(timeParams);
-        timeTextView.setTextColor(Color.parseColor("#808080"));
-        timeTextView.setTextSize(12f);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
-        if (timestamp == 0) {
-            timeTextView.setText(sdf.format(new Date()));
-        } else {
-            timeTextView.setText(sdf.format(new Date(timestamp)));
-        }
-
-        bubbleLayout.addView(messageTextView);
-        bubbleLayout.addView(timeTextView);
-        outerLayout.addView(bubbleLayout);
-        messagesContainer.addView(outerLayout);
-
-        ScrollView scroll = findViewById(R.id.messages_scroll);
-        if (scroll != null) {
-            scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
+                        messageRef.push().setValue(msg);
+                    }
+                }
+            });
         }
     }
 }
