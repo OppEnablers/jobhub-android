@@ -9,7 +9,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.oppenablers.jobhub.R;
@@ -19,6 +18,7 @@ import com.oppenablers.jobhub.fragment.EmpMessagesFragment;
 import com.oppenablers.jobhub.fragment.EmpVacanciesFragment;
 
 public class EmpNavigatorActivity extends AppCompatActivity {
+
     ActivityEmpNavigatorBinding binding;
 
     @Override
@@ -70,13 +70,9 @@ public class EmpNavigatorActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment, String selected) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
-
         getSupportFragmentManager()
                 .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.fragment_container, fragment)
                 .commit();
     }

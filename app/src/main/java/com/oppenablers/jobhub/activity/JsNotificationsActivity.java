@@ -40,16 +40,16 @@ public class JsNotificationsActivity extends AppCompatActivity {
 
         ArrayList<Notification> notifications = new ArrayList<>();
         notifications.add(new Notification(
-                "JobHub 1",
+                "JobHub",
                 "You haven't swiped in a while!",
                 new Date()));
         notifications.add(new Notification(
-                "JobHub 2",
-                "You haven't swiped in a while!",
+                "JobHub",
+                "Your application has been sent!",
                 new Date()));
         notifications.add(new Notification(
-                "JobHub 3",
-                "You haven't swiped in a while!",
+                "JobHub",
+                "Your application has been accepted!",
                 new Date()));
 
         NotificationAdapter adapter = new NotificationAdapter(notifications);

@@ -70,11 +70,6 @@ public class JsNavigatorActivity extends AppCompatActivity {
             return true;
         });
 
-//        ImageView bellIcon = findViewById(R.id.notification);
-//        bellIcon.setOnClickListener(v -> {
-//            Intent intent = new Intent(JsNavigatorActivity.this, JsNotificationActivity.class);
-//            startActivity(intent);
-//        });
 
 
     }
