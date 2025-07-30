@@ -1,6 +1,5 @@
 package com.oppenablers.jobhub.fragment;
 
-import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,8 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.oppenablers.jobhub.R;
-import com.oppenablers.jobhub.activity.EmpAddVacancyActivity;
+import com.oppenablers.jobhub.activity.EmpVacancyEditorActivity;
 import com.oppenablers.jobhub.adapter.VacancyAdapter;
 import com.oppenablers.jobhub.api.JobHubClient;
 import com.oppenablers.jobhub.databinding.FragmentEmpVacanciesBinding;
@@ -44,7 +42,7 @@ public class EmpVacanciesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonAddVacancy.setOnClickListener(v -> {
-            startActivity(new Intent(requireContext(), EmpAddVacancyActivity.class));
+            startActivity(new Intent(requireContext(), EmpVacancyEditorActivity.class));
         });
     }
 
@@ -62,6 +60,16 @@ public class EmpVacanciesFragment extends Fragment {
             public void onSuccess(ArrayList<Vacancy> result) {
                 result.sort(Comparator.comparing(Vacancy::getName));
                 VacancyAdapter vacancyAdapter = new VacancyAdapter(result);
+                vacancyAdapter.setOnClickListener(vacancyId -> {
+                    Intent intent = new Intent(getContext(), EmpVacancyEditorActivity.class);
+                    intent.putExtra(
+                            EmpVacancyEditorActivity.EXTRA_MODE,
+                            EmpVacancyEditorActivity.MODE_EDIT);
+                    intent.putExtra(
+                            EmpVacancyEditorActivity.EXTRA_VACANCY_ID,
+                            vacancyId);
+                    startActivity(intent);
+                });
 
                 binding.vacancyList.setAdapter(vacancyAdapter);
                 binding.vacancyList.setLayoutManager(

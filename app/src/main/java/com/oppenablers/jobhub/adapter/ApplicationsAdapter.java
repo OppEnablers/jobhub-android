@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oppenablers.jobhub.R;
+import com.oppenablers.jobhub.databinding.ItemVacancyBinding;
 import com.oppenablers.jobhub.model.Job;
 
 import java.util.List;
@@ -48,21 +49,20 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
 
     public static class ApplicationViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView jobPosition;
-        private final TextView companyName;
+        ItemVacancyBinding binding;
 
         public ApplicationViewHolder(@NonNull View itemView, View.OnClickListener onClickListener) {
             super(itemView);
 
-            itemView.findViewById(R.id.vacancy_container)
-                    .setOnClickListener(onClickListener);
-            jobPosition = itemView.findViewById(R.id.vacancy_title);
-            companyName = itemView.findViewById(R.id.vacancy_description);
+            binding = ItemVacancyBinding.bind(itemView);
+
+            binding.vacancyContainer.setOnClickListener(onClickListener);
         }
 
         public void setItems(Job job) {
-            jobPosition.setText(job.getName());
-            companyName.setText(job.getCompanyName());
+
+            binding.vacancyTitle.setText(job.getName());
+            binding.vacancyDescription.setText(job.getCompanyName());
         }
     }
 }

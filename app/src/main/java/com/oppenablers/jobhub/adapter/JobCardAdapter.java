@@ -1,34 +1,34 @@
 package com.oppenablers.jobhub.adapter;
 
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oppenablers.jobhub.R;
+import com.oppenablers.jobhub.databinding.ItemJobBinding;
 import com.oppenablers.jobhub.model.Job;
-import com.oppenablers.jobhub.model.Vacancy;
+import com.oppenablers.jobhub.model.JobModality;
+import com.oppenablers.jobhub.model.JobShift;
+import com.oppenablers.jobhub.model.JobTime;
 
 import java.util.List;
+import java.util.Locale;
 
 public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardViewHolder> {
 
-    private final List<Vacancy> jobs;
+    private final List<Job> jobs;
 
     private ImageButton toggleButton;
     private int swipeUpId;
     private int swipeDownId;
 
-    public JobCardAdapter(List<Vacancy> jobs) {
+    public JobCardAdapter(List<Job> jobs) {
         this.jobs = jobs;
     }
 
@@ -45,7 +45,7 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
 
     @Override
     public void onBindViewHolder(@NonNull JobCardViewHolder holder, int position) {
-        Vacancy job = jobs.get(position);
+        Job job = jobs.get(position);
         holder.setItems(job);
     }
 
@@ -54,7 +54,7 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
         return jobs.size();
     }
 
-    public Vacancy getJob(int index) {
+    public Job getJob(int index) {
         if (index < 0 && jobs.isEmpty()) return null;
         return jobs.get(index);
     }
@@ -67,9 +67,7 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
 
     public static class JobCardViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView jobPosition;
-        private final TextView companyName;
-        private final ImageView backgroundImage;
+        ItemJobBinding binding;
 
         public JobCardViewHolder(
                 @NonNull View itemView,
@@ -78,7 +76,13 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
                 int swipeDownId) {
             super(itemView);
 
-            SwipeRevealLayout srl = itemView.findViewById(R.id.swipe_layout);
+            binding = ItemJobBinding.bind(itemView);
+
+            ScrollView scrollView = binding.detailsScrollView;
+            SwipeRevealLayout srl = binding.swipeLayout;
+
+            scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> srl.setLockDrag(scrollY > 0));
+
             srl.setSwipeListener(new SwipeRevealLayout.SwipeListener() {
                 @Override
                 public void onClosed(SwipeRevealLayout view) {
@@ -91,18 +95,54 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
                 }
 
                 @Override
-                public void onSlide(SwipeRevealLayout view, float slideOffset) {}
+                public void onSlide(SwipeRevealLayout view, float slideOffset) {
+                }
             });
-
-            jobPosition = itemView.findViewById(R.id.job_position);
-            companyName = itemView.findViewById(R.id.job_location);
-            backgroundImage = itemView.findViewById(R.id.backgroundImage);
         }
 
-        public void setItems(Vacancy job) {
-            jobPosition.setText(job.getName());
-            companyName.setText(job.getLocation());
-            backgroundImage.setImageResource(R.drawable.sample_bg);
+        public void setItems(Job job) {
+            binding.jobPosition.setText(job.getName());
+            binding.jobLocation.setText(job.getLocation());
+            binding.companyName.setText(job.getCompanyName());
+            // time, shift, location
+
+            String time = "";
+            if (job.getTime() == JobTime.FULL_TIME) time = "Full-Time";
+            else if (job.getTime() == JobTime.PART_TIME) time = "Part-TIme";
+
+            String shift = "";
+            if ((job.getShift() & JobShift.DAY_SHIFT) == JobShift.DAY_SHIFT) shift += "Day Shift";
+            if (!shift.isEmpty()) shift += ", ";
+            if ((job.getShift() & JobShift.NIGHT_SHIFT) == JobShift.NIGHT_SHIFT)
+                shift += "Night Shift";
+
+            String location = "";
+            if ((job.getModality() & JobModality.ON_SITE) == JobModality.ON_SITE)
+                location = "On-Site";
+            if ((job.getModality() & JobModality.WORK_FROM_HOME) == JobModality.WORK_FROM_HOME) {
+                if (location.isEmpty()) {
+                    location = "Work from Home";
+                } else {
+                    location = "Hybrid";
+                }
+            }
+
+            String jobType = String.format(Locale.getDefault(),
+                    "%s (%s), %s", time, shift, location);
+
+            binding.jobObjectives.setText(job.getObjectives());
+            binding.jobSkills.setText(job.getSkills());
+
+            String salaryRange = String.format(
+                    Locale.getDefault(), "₱%,.2f - ₱%,.2f",
+                    job.getMinimumSalary(), job.getMaximumSalary());
+            binding.jobSalary.setText(salaryRange);
+            binding.jobWorkExperience.setText(
+                    itemView.getResources()
+                            .getStringArray(R.array.items_work_experience)[job.getWorkExperience()]
+            );
+
+            binding.backgroundImage.setImageResource(R.drawable.sample_bg);
         }
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.VacancyViewHolder> {
 
     private final List<Vacancy> vacancies;
-    private View.OnClickListener onClickListener;
+    private OnClickListener onClickListener;
 
     public VacancyAdapter(List<Vacancy> jobs) {
         this.vacancies = jobs;
@@ -30,6 +30,7 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.VacancyV
 
         return new VacancyViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_vacancy, parent, false),
+                vacancies,
                 onClickListener);
     }
 
@@ -44,7 +45,7 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.VacancyV
         return vacancies.size();
     }
 
-    public void setOnClickListener(View.OnClickListener onClickListener) {
+    public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 
@@ -53,11 +54,14 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.VacancyV
         private final TextView jobPosition;
         private final TextView companyName;
 
-        public VacancyViewHolder(@NonNull View itemView, View.OnClickListener onClickListener) {
+        public VacancyViewHolder(@NonNull View itemView, List<Vacancy> vacancies, OnClickListener onClickListener) {
             super(itemView);
 
             itemView.findViewById(R.id.vacancy_container)
-                    .setOnClickListener(onClickListener);
+                    .setOnClickListener(v -> {
+                        int position = getAbsoluteAdapterPosition();
+                        onClickListener.onClick(vacancies.get(position).getId());
+                    });
             jobPosition = itemView.findViewById(R.id.vacancy_title);
             companyName = itemView.findViewById(R.id.vacancy_description);
         }
@@ -66,5 +70,9 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.VacancyV
             jobPosition.setText(vacancy.getName());
             companyName.setText(vacancy.getLocation());
         }
+    }
+
+    public interface OnClickListener {
+        void onClick(String vacancyId);
     }
 }

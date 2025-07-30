@@ -52,7 +52,7 @@ public class JsSettingsActivity extends AppCompatActivity {
 //        });
 
         binding.content.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
-//
+
         binding.logoutButton.setOnClickListener(v -> {
             AuthManager.logout();
 

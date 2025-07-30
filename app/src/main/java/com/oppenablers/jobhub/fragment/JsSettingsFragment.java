@@ -2,6 +2,7 @@ package com.oppenablers.jobhub.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceDataStore;
@@ -74,5 +75,19 @@ class DummyDataStore extends PreferenceDataStore {
             default:
                 break;
         }
+
+        updateInfo();
+    }
+
+    public void updateInfo() {
+        JobHubClient.updateAccountInfoJobSeeker(accountDetails, new JobHubClient.JobHubCallbackVoid() {
+            @Override
+            public void onFailure() {
+            }
+
+            @Override
+            public void onSuccess() {
+            }
+        });
     }
 }
