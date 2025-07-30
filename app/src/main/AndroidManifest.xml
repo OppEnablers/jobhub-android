@@ -17,10 +17,10 @@
         <service
             android:name=".NotificationService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity
-            android:name=".activity.EmpAddVacancyActivity"
+            android:name=".activity.EmpVacancyEditorActivity"
             android:exported="false" />
         <activity
             android:name=".activity.JsDirectMessageActivity"

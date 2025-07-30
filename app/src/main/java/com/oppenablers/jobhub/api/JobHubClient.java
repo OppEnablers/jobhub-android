@@ -96,23 +96,34 @@ public class JobHubClient {
                 .enqueue(createNotifyCallback(callback));
     }
 
-    public static void getVacanciesEmployer(JobHubCallback<ArrayList<Vacancy>> callback) {
-        CLIENT.newCall(get("/employer/get_vacancies"))
+    public static void updateVacancy(Vacancy vacancy, JobHubCallbackVoid callback) {
+        String vacancyJson = GSON.toJson(vacancy);
+        CLIENT.newCall(post("/employer/update_vacancy", vacancyJson))
+                .enqueue(createNotifyCallback(callback));
+    }
+
+    public static void getVacancy(String vacancyId, JobHubCallback<Vacancy> callback) {
+        CLIENT.newCall(get("/employer/vacancy/" + vacancyId))
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
     }
 
-    public static void getJobsJobSeeker(JobHubCallback<ArrayList<Vacancy>> callback) {
+    public static void getVacanciesEmployer(JobHubCallback<ArrayList<Vacancy>> callback) {
+        CLIENT.newCall(get("/employer/vacancies"))
+                .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
+    }
+
+    public static void getJobsJobSeeker(JobHubCallback<ArrayList<Job>> callback) {
         CLIENT.newCall(get("/jobseeker/jobs"))
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
     }
 
-    public static void acceptJobJobSeeker(Vacancy job, JobHubCallbackVoid callback) {
+    public static void acceptJobJobSeeker(Job job, JobHubCallbackVoid callback) {
         String jobJson = GSON.toJson(job);
         CLIENT.newCall(post("/jobseeker/accept_job", jobJson))
                 .enqueue(createNotifyCallback(callback));
     }
 
-    public static void declineJobJobSeeker(Vacancy job, JobHubCallbackVoid callback) {
+    public static void declineJobJobSeeker(Job job, JobHubCallbackVoid callback) {
         String jobJson = GSON.toJson(job);
         CLIENT.newCall(post("/jobseeker/decline_job", jobJson))
                 .enqueue(createNotifyCallback(callback));

@@ -2,37 +2,28 @@ package com.oppenablers.jobhub.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.common.internal.FallbackServiceBroker;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseUser;
 import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.R;
-import com.oppenablers.jobhub.Util;
+import com.oppenablers.jobhub.Utility;
 import com.oppenablers.jobhub.api.JobHubClient;
 import com.oppenablers.jobhub.databinding.ActivitySignupBinding;
 import com.oppenablers.jobhub.model.Employer;
 import com.oppenablers.jobhub.model.JobSeeker;
-import java.io.IOException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -70,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         birthdayInput.setStartIconOnClickListener(v -> {
-            String toFormat = Util.getTextFromTextInputLayout(birthdayInput);
+            String toFormat = Utility.getTextFromTextInputLayout(birthdayInput);
             Date initialDate;
             try {
                 initialDate = dateFormat.parse(toFormat);
@@ -87,23 +78,23 @@ public class SignupActivity extends AppCompatActivity {
 
             picker.addOnPositiveButtonClickListener(selection -> {
                 Date date = new Date(selection);
-                Util.setTextFromTextInputLayout(birthdayInput, dateFormat.format(date));
+                Utility.setTextFromTextInputLayout(birthdayInput, dateFormat.format(date));
             });
 
             picker.show(getSupportFragmentManager(), null);
         });
 
         binding.signupButton.setOnClickListener(v -> {
-            String name = Util.getTextFromTextInputLayout(nameInput);
+            String name = Utility.getTextFromTextInputLayout(nameInput);
             String addressOrBirthday;
             if (binding.jobToggle.isOn()) {
-                addressOrBirthday = Util.getTextFromTextInputLayout(companyAddressInput);
+                addressOrBirthday = Utility.getTextFromTextInputLayout(companyAddressInput);
             } else {
-                addressOrBirthday = Util.getTextFromTextInputLayout(birthdayInput);
+                addressOrBirthday = Utility.getTextFromTextInputLayout(birthdayInput);
             }
-            String email = Util.getTextFromTextInputLayout(emailInput);
-            String password = Util.getTextFromTextInputLayout(passwordInput);
-            String confirmPassword = Util.getTextFromTextInputLayout(confirmPasswordInput);
+            String email = Utility.getTextFromTextInputLayout(emailInput);
+            String password = Utility.getTextFromTextInputLayout(passwordInput);
+            String confirmPassword = Utility.getTextFromTextInputLayout(confirmPasswordInput);
 
             binding.ErrorText.setVisibility(View.GONE);  // hide previous errors
 
@@ -113,12 +104,12 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
-            String toFormat = Util.getTextFromTextInputLayout(birthdayInput);
+            String toFormat = Utility.getTextFromTextInputLayout(birthdayInput);
             Date birthdayDate = new Date();
             try {
                 birthdayDate = dateFormat.parse(toFormat);
                 if (birthdayDate != null) {
-                    Util.setTextFromTextInputLayout(birthdayInput, dateFormat.format(birthdayDate));
+                    Utility.setTextFromTextInputLayout(birthdayInput, dateFormat.format(birthdayDate));
                     birthdayInput.setError("");
                     birthdayInput.setErrorEnabled(false);
                 } else {

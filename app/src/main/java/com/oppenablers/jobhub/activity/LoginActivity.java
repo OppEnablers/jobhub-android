@@ -5,20 +5,13 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.oppenablers.jobhub.AuthManager;
-import com.oppenablers.jobhub.Util;
+import com.oppenablers.jobhub.Utility;
 import com.oppenablers.jobhub.api.JobHubClient;
 import com.oppenablers.jobhub.databinding.ActivityLoginBinding;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.loginButton.setOnClickListener(v -> {
 
-            String email = Util.getTextFromTextInputLayout(binding.email);
-            String password = Util.getTextFromTextInputLayout(binding.password);
+            String email = Utility.getTextFromTextInputLayout(binding.email);
+            String password = Utility.getTextFromTextInputLayout(binding.password);
 
             AuthManager.login(email, password)
                     .addOnSuccessListener(authResult -> {

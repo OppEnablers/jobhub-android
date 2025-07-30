@@ -110,7 +110,7 @@ public class JsJobFragment extends Fragment implements CardStackListener {
             }
 
             @Override
-            public void onSuccess(ArrayList<Vacancy> result) {
+            public void onSuccess(ArrayList<Job> result) {
 
                 if (result == null) return;
 
@@ -132,7 +132,7 @@ public class JsJobFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardSwiped(Direction direction) {
-        Vacancy job = getCurrentJob();
+        Job job = getCurrentJob();
 
         if (direction == Direction.Right) {
             acceptJob(job);
@@ -157,7 +157,7 @@ public class JsJobFragment extends Fragment implements CardStackListener {
     public void onCardDisappeared(View view, int position) {
     }
 
-    private Vacancy getCurrentJob() {
+    private Job getCurrentJob() {
         CardStackLayoutManager layoutManager = (CardStackLayoutManager) binding.cardStackView.getLayoutManager();
         JobCardAdapter adapter = (JobCardAdapter) binding.cardStackView.getAdapter();
         if (adapter == null || layoutManager == null) return null;
@@ -169,7 +169,7 @@ public class JsJobFragment extends Fragment implements CardStackListener {
         return adapter.getJob(0);
     }
 
-    private void acceptJob(Vacancy job) {
+    private void acceptJob(Job job) {
 
         if (job == null) return;
 
@@ -186,7 +186,7 @@ public class JsJobFragment extends Fragment implements CardStackListener {
         });
     }
 
-    private void declineJob(Vacancy job) {
+    private void declineJob(Job job) {
 
         if (job == null) return;
 

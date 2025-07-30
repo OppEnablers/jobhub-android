@@ -1,16 +1,10 @@
 package com.oppenablers.jobhub;
 
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-public class Util {
+public class Utility {
 
     public static String getTextFromTextInputLayout(TextInputLayout textInputLayout) {
         EditText editText = textInputLayout.getEditText();
@@ -26,5 +20,9 @@ public class Util {
         if (editText != null) {
             editText.setText(text.trim());
         }
+    }
+
+    public static boolean hasFlag(int value, int flag) {
+        return (value & flag) == flag;
     }
 }

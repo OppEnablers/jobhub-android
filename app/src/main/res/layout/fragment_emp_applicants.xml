@@ -16,7 +16,7 @@
         android:fontFamily="@font/montserrat_extrabold"
         android:gravity="center"
         android:padding="16dp"
-        android:text="VACANCY"
+        android:text="JOB SEEKER"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#4682A9"
         android:textFontWeight="800"
@@ -33,215 +33,220 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/bg_content_rounded_bottom"
         android:fillViewport="true"
-        android:padding="12dp">
-
-        <LinearLayout
+        android:padding="16dp">
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/applicant_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:layout_marginBottom="8dp">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="105dp"
-                    android:background="@drawable/jobcard_bg"
-                    android:elevation="5dp"
-                    android:orientation="vertical"
-                    android:padding="10dp"
-                    android:layout_marginBottom="12dp">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="110dp"-->
+<!--                android:layout_marginBottom="8dp">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="SOFTWARE ENGINEERING"
-                        android:textColor="#6C7282"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:fontFamily="@font/montserrat" />
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="105dp"-->
+<!--                    android:background="@drawable/jobcard_bg"-->
+<!--                    android:elevation="5dp"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:layout_marginBottom="12dp">-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="2dp"
-                        android:background="#6C7282" />
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="SOFTWARE ENGINEERING"-->
+<!--                        android:textColor="#6C7282"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:gravity="center"-->
+<!--                        android:fontFamily="@font/montserrat" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0.5dp"-->
+<!--                        android:layout_marginTop="3dp"-->
+<!--                        android:layout_marginBottom="2dp"-->
+<!--                        android:background="#6C7282" />-->
 
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/circleborder"
-                            android:padding="4dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_nav_profile"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="6dp"/>
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Takuya Nakasone\n22 years old\nBachelor of Science in Information Tech.."
-                            android:textColor="#6C7282"
-                            android:textSize="12sp"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/montserrat_medium" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
+<!--                        <ImageView-->
+<!--                            android:layout_width="48dp"-->
+<!--                            android:layout_height="48dp"-->
+<!--                            android:layout_marginRight="8dp"-->
+<!--                            android:background="@drawable/circleborder"-->
+<!--                            android:padding="4dp"-->
+<!--                            android:scaleType="centerCrop"-->
+<!--                            android:src="@drawable/ic_nav_profile"-->
+<!--                            android:layout_marginLeft="10dp"-->
+<!--                            android:layout_marginTop="6dp"/>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:layout_marginBottom="8dp">
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Takuya Nakasone\n22 years old\nBachelor of Science in Information Tech.."-->
+<!--                            android:textColor="#6C7282"-->
+<!--                            android:textSize="12sp"-->
+<!--                            android:layout_marginTop="8dp"-->
+<!--                            android:fontFamily="@font/montserrat_medium" />-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="105dp"
-                    android:background="@drawable/jobcard_bg"
-                    android:elevation="5dp"
-                    android:orientation="vertical"
-                    android:padding="10dp"
-                    android:layout_marginBottom="12dp">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="110dp"-->
+<!--                android:layout_marginBottom="8dp">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="SOFTWARE ENGINEERING"
-                        android:textColor="#6C7282"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:fontFamily="@font/montserrat" />
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="105dp"-->
+<!--                    android:background="@drawable/jobcard_bg"-->
+<!--                    android:elevation="5dp"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:layout_marginBottom="12dp">-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="2dp"
-                        android:background="#6C7282" />
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="SOFTWARE ENGINEERING"-->
+<!--                        android:textColor="#6C7282"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:gravity="center"-->
+<!--                        android:fontFamily="@font/montserrat" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="58dp"
-                        android:orientation="horizontal">
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0.5dp"-->
+<!--                        android:layout_marginTop="3dp"-->
+<!--                        android:layout_marginBottom="2dp"-->
+<!--                        android:background="#6C7282" />-->
 
-                        <ImageView
-                            android:layout_width="71dp"
-                            android:layout_height="73dp"
-                            android:layout_marginTop="-5dp"
-                            android:layout_marginRight="2dp"
-                            android:padding="2dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/pfp" />
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="58dp"-->
+<!--                        android:orientation="horizontal">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="Nash Jerby Joo\n21 years old\nBachelor of Science in Computer Science"
-                            android:textColor="#6C7282"
-                            android:textSize="12sp"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
+<!--                        <ImageView-->
+<!--                            android:layout_width="71dp"-->
+<!--                            android:layout_height="73dp"-->
+<!--                            android:layout_marginTop="-5dp"-->
+<!--                            android:layout_marginRight="2dp"-->
+<!--                            android:padding="2dp"-->
+<!--                            android:scaleType="centerCrop"-->
+<!--                            android:src="@drawable/pfp" />-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal">
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:fontFamily="@font/montserrat_medium"-->
+<!--                            android:text="Nash Jerby Joo\n21 years old\nBachelor of Science in Computer Science"-->
+<!--                            android:textColor="#6C7282"-->
+<!--                            android:textSize="12sp"-->
+<!--                            android:layout_marginTop="8dp"/>-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
 
-                <!-- Card Content -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="102dp"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/jobcard_bg"
-                    android:elevation="5dp"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="110dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:orientation="horizontal">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat"
-                        android:gravity="center"
-                        android:text="MARKETING ASSOCIATE"
-                        android:textColor="#6C7282"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+<!--                &lt;!&ndash; Card Content &ndash;&gt;-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="102dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:background="@drawable/jobcard_bg"-->
+<!--                    android:elevation="5dp"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="10dp">-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="2dp"
-                        android:background="#6C7282" />
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="@font/montserrat"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="MARKETING ASSOCIATE"-->
+<!--                        android:textColor="#6C7282"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:textStyle="bold" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0.5dp"-->
+<!--                        android:layout_marginTop="3dp"-->
+<!--                        android:layout_marginBottom="2dp"-->
+<!--                        android:background="#6C7282" />-->
 
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/circleborder"
-                            android:padding="4dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_nav_profile"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="6dp"/>
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="Jacob Bes Tarun\n23 years old\nBachelor of Science in Business..."
-                            android:textColor="#6C7282"
-                            android:textSize="12sp"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-                </LinearLayout>
+<!--                        <ImageView-->
+<!--                            android:layout_width="48dp"-->
+<!--                            android:layout_height="48dp"-->
+<!--                            android:layout_marginRight="8dp"-->
+<!--                            android:background="@drawable/circleborder"-->
+<!--                            android:padding="4dp"-->
+<!--                            android:scaleType="centerCrop"-->
+<!--                            android:src="@drawable/ic_nav_profile"-->
+<!--                            android:layout_marginLeft="10dp"-->
+<!--                            android:layout_marginTop="6dp"/>-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="5dp">
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:fontFamily="@font/montserrat_medium"-->
+<!--                            android:text="Jacob Bes Tarun\n23 years old\nBachelor of Science in Business..."-->
+<!--                            android:textColor="#6C7282"-->
+<!--                            android:textSize="12sp"-->
+<!--                            android:layout_marginTop="8dp"/>-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
 
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:src="@drawable/message_button"
-                        android:elevation="4dp"
-                        android:translationZ="4dp"/>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_marginTop="5dp">-->
 
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginLeft="8dp"
-                        android:gravity="center"
-                        android:elevation="4dp"
-                        android:translationZ="4dp"
-                        android:src="@drawable/delete_button"/>
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="44dp"-->
+<!--                        android:layout_height="44dp"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:gravity="center"-->
+<!--                        android:src="@drawable/message_button"-->
+<!--                        android:elevation="4dp"-->
+<!--                        android:translationZ="4dp"/>-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="48dp"-->
+<!--                        android:layout_height="48dp"-->
+<!--                        android:layout_marginLeft="8dp"-->
+<!--                        android:gravity="center"-->
+<!--                        android:elevation="4dp"-->
+<!--                        android:translationZ="4dp"-->
+<!--                        android:src="@drawable/delete_button"/>-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
     </ScrollView>
 </RelativeLayout>

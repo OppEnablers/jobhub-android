@@ -12,284 +12,250 @@
         android:layout_height="wrap_content"/>
 
     <ScrollView
+        android:id="@+id/details_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:background="@color/md_theme_primary">
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Material3.CardView.Elevated"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="1dp"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true">
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
 
-            <ImageView
-                android:id="@+id/backgroundImage"
+            <!--COMPANY -->
+            <TextView
+                android:id="@+id/companyTextViewLabel"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:text="COMPANY NAME"
+                android:textColor="@color/ic_launcher_background"
+                android:textSize="14sp"
+                android:maxLength="30"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/details_bubble"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_location_city"
+                    app:tint="@color/md_theme_outline"/>
+
+                <TextView
+                    android:id="@+id/company_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="iACADEMY"
+                    android:textColor="@color/md_theme_outline"
+                    android:textSize="16sp"
+                    android:maxLength="30"
+                    android:ellipsize="end"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <!--Job Type -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="4dp"
+                android:text="PREFERRED TIME AND WORK SETTING"
+                android:textColor="@color/ic_launcher_background"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/details_bubble"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_jobduration"
+                    app:tint="@color/md_theme_outline"/>
+
+                <TextView
+                    android:id="@+id/job_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Full Time (Day Shift), On-site"
+                    android:textColor="@color/md_theme_outline"
+                    android:textSize="16sp"
+                    android:maxLength="40"
+                    android:ellipsize="end"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <!--Objectives -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:text="OBJECTIVES"
+                android:textColor="@color/ic_launcher_background"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:singleLine="true" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/details_bubble"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/job_objectives"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-Promote iACADEMY to boost enrollment.&#10;-Provide admissions guidance and collaborate on recruitment.&#10;-Maintain records and support the admissions team"
+                    android:textColor="@color/md_theme_outline"
+                    android:textSize="16sp"
+                    android:maxLines="10"
+                    android:ellipsize="end"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
+
+            <!--Skills -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:text="SKILLS"
+                android:textColor="@color/ic_launcher_background"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:singleLine="true" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/details_bubble"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/job_skills"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• Excellent communication and interpersonal skills&#10;• Strong organizational abilities&#10;• Customer service orientation&#10;• Knowledge of educational systems"
+                    android:textColor="@color/md_theme_outline"
+                    android:textSize="16sp"
+                    android:maxLines="10"
+                    android:ellipsize="end"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
+
+            <!-- Salary -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:text="SALARY RANGE"
+                android:textColor="@color/ic_launcher_background"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:singleLine="true" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/details_bubble"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_salarylogo"
+                    app:tint="@color/md_theme_outline"/>
+
+                <TextView
+                    android:id="@+id/job_salary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="₱25,000 - ₱30,000"
+                    android:textColor="@color/md_theme_outline"
+                    android:textSize="16sp"
+                    android:maxLength="40"
+                    android:ellipsize="end"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <!-- Experience -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:text="WORK EXPERIENCE"
+                android:textColor="@color/ic_launcher_background"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/details_bubble"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_workexplogo"
+                    app:tint="@color/md_theme_outline"/>
+
+                <TextView
+                    android:id="@+id/job_work_experience"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2-3 years in admissions or related field"
+                    android:textColor="@color/md_theme_outline"
+                    android:textSize="16sp"
+                    android:maxLength="40"
+                    android:ellipsize="end"
+                    android:singleLine="true" />
+            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/gradation_black">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="24dp">
-
-                    <!--COMPANY -->
-                    <TextView
-                        android:id="@+id/companyTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="COMPANY NAME"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:maxLength="30"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/details_bubble"
-                        android:orientation="horizontal"
-                        android:padding="12dp"
-                        android:gravity="center_vertical"
-                        app:cardElevation="10dp" >
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginEnd="12dp"
-                            android:src="@drawable/ic_location_city" />
-
-                        <TextView
-                            android:id="@+id/companyTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="iACADEMY"
-                            android:textColor="#333333"
-                            android:textSize="16sp"
-                            android:maxLength="30"
-                            android:ellipsize="end"
-                            android:singleLine="true" />
-                    </LinearLayout>
-
-                    <!--Job Type -->
-                    <TextView
-                        android:id="@+id/jobTypeTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="PREFERRED TIME AND WORK SETTING"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/details_bubble"
-                        android:orientation="horizontal"
-                        android:padding="12dp"
-                        android:gravity="center_vertical"
-                        app:cardElevation="10dp" >
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginEnd="12dp"
-                            android:src="@drawable/ic_jobduration" />
-
-                        <TextView
-                            android:id="@+id/jobTypeTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="Full Time (Day Shift), On-site"
-                            android:textColor="#333333"
-                            android:textSize="16sp"
-                            android:maxLength="40"
-                            android:ellipsize="end"
-                            android:singleLine="true" />
-                    </LinearLayout>
-
-                    <!--Objectives -->
-                    <TextView
-                        android:id="@+id/objectivesTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="OBJECTIVES"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/details_bubble"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="16dp"
-                        android:padding="12dp"
-                        app:cardElevation="10dp" >
-
-                        <TextView
-                            android:id="@+id/objectivesTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="-Promote iACADEMY to boost enrollment.&#10;-Provide admissions guidance and collaborate on recruitment.&#10;-Maintain records and support the admissions team"
-                            android:textColor="#333333"
-                            android:textSize="16sp"
-                            android:maxLines="10"
-                            android:ellipsize="end"
-                            android:scrollbars="vertical" />
-                    </LinearLayout>
-
-                    <!--Skills -->
-                    <TextView
-                        android:id="@+id/skillsTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="SKILLS"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/details_bubble"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="16dp"
-                        android:padding="12dp"
-                        app:cardElevation="10dp" >
-
-                        <TextView
-                            android:id="@+id/skillsTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="• Excellent communication and interpersonal skills&#10;• Strong organizational abilities&#10;• Customer service orientation&#10;• Knowledge of educational systems"
-                            android:textColor="#333333"
-                            android:textSize="16sp"
-                            android:maxLines="10"
-                            android:ellipsize="end"
-                            android:scrollbars="vertical" />
-                    </LinearLayout>
-
-                    <!-- Salary -->
-                    <TextView
-                        android:id="@+id/salaryTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="SALARY RANGE"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/details_bubble"
-                        android:orientation="horizontal"
-                        android:padding="12dp"
-                        android:gravity="center_vertical"
-                        app:cardElevation="10dp" >
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginEnd="12dp"
-                            android:src="@drawable/ic_salarylogo" />
-
-                        <TextView
-                            android:id="@+id/salaryTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="₱25,000 - ₱30,000"
-                            android:textColor="#333333"
-                            android:textSize="16sp"
-                            android:maxLength="40"
-                            android:ellipsize="end"
-                            android:singleLine="true" />
-                    </LinearLayout>
-
-                    <!-- Experience -->
-                    <TextView
-                        android:id="@+id/workExpTextViewLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="WORK EXPERIENCE"
-                        android:textColor="@color/ic_launcher_background"
-                        android:textSize="14sp"
-                        android:ellipsize="end"
-                        android:singleLine="true" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/details_bubble"
-                        android:orientation="horizontal"
-                        android:padding="12dp"
-                        android:gravity="center_vertical"
-                        app:cardElevation="10dp" >
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginEnd="12dp"
-                            android:src="@drawable/ic_workexplogo" />
-
-                        <TextView
-                            android:id="@+id/experienceTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="2-3 years in admissions or related field"
-                            android:textColor="#333333"
-                            android:textSize="16sp"
-                            android:maxLength="40"
-                            android:ellipsize="end"
-                            android:singleLine="true" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </FrameLayout>
-        </com.google.android.material.card.MaterialCardView>
-
+                android:layout_height="120dp" />
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>
