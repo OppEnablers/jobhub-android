@@ -166,7 +166,7 @@ public class JsJobFragment extends Fragment implements CardStackListener {
 
         Log.d("JobSwipe", "Top position: " + index);
 
-        return adapter.getJob(0);
+        return adapter.getJob(index - 1);
     }
 
     private void acceptJob(Job job) {

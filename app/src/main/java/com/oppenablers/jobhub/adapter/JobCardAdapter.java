@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.oppenablers.jobhub.R;
+import com.oppenablers.jobhub.Utility;
 import com.oppenablers.jobhub.databinding.ItemJobBinding;
 import com.oppenablers.jobhub.model.Job;
 import com.oppenablers.jobhub.model.JobModality;
@@ -104,32 +105,35 @@ public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.JobCardV
             binding.jobPosition.setText(job.getName());
             binding.jobLocation.setText(job.getLocation());
             binding.companyName.setText(job.getCompanyName());
-            // time, shift, location
+            // time, shift, modality
 
             String time = "";
             if (job.getTime() == JobTime.FULL_TIME) time = "Full-Time";
             else if (job.getTime() == JobTime.PART_TIME) time = "Part-TIme";
 
+            int shiftFlags = job.getShift();
             String shift = "";
-            if ((job.getShift() & JobShift.DAY_SHIFT) == JobShift.DAY_SHIFT) shift += "Day Shift";
+            if (Utility.hasFlag(shiftFlags, JobShift.DAY_SHIFT))
+                shift += "Day Shift";
             if (!shift.isEmpty()) shift += ", ";
-            if ((job.getShift() & JobShift.NIGHT_SHIFT) == JobShift.NIGHT_SHIFT)
+            if (Utility.hasFlag(shiftFlags, JobShift.NIGHT_SHIFT))
                 shift += "Night Shift";
 
-            String location = "";
-            if ((job.getModality() & JobModality.ON_SITE) == JobModality.ON_SITE)
-                location = "On-Site";
-            if ((job.getModality() & JobModality.WORK_FROM_HOME) == JobModality.WORK_FROM_HOME) {
-                if (location.isEmpty()) {
-                    location = "Work from Home";
+            int modalityFlags = job.getModality();
+            String modality = "";
+            if (Utility.hasFlag(modalityFlags, JobModality.ON_SITE))
+                modality = "On-Site";
+            if (Utility.hasFlag(modalityFlags, JobModality.WORK_FROM_HOME)) {
+                if (modality.isEmpty()) {
+                    modality = "Work from Home";
                 } else {
-                    location = "Hybrid";
+                    modality = "Hybrid";
                 }
             }
 
             String jobType = String.format(Locale.getDefault(),
-                    "%s (%s), %s", time, shift, location);
-
+                    "%s (%s), %s", time, shift, modality);
+            binding.jobType.setText(jobType);
             binding.jobObjectives.setText(job.getObjectives());
             binding.jobSkills.setText(job.getSkills());
 

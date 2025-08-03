@@ -23,7 +23,7 @@
             android:name=".activity.EmpVacancyEditorActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.JsDirectMessageActivity"
+            android:name=".activity.JsMessagesDirectActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -36,7 +36,7 @@
             android:name=".activity.EmpNavigatorActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.EmpDirectMessageActivity"
+            android:name=".activity.EmpMessagesDirectActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity

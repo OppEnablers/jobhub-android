@@ -1,12 +1,10 @@
 package com.oppenablers.jobhub.activity;
 
-import static com.oppenablers.jobhub.model.Message.addReceivedMessageBubble;
 import static com.oppenablers.jobhub.model.Message.addSentMessageBubble;
 import com.oppenablers.jobhub.FileUtils;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,6 +29,7 @@ import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.BuildConfig;
 import com.oppenablers.jobhub.FileManager;
 import com.oppenablers.jobhub.R;
+import com.oppenablers.jobhub.databinding.ActivityEmpMessagesDirectBinding;
 import com.oppenablers.jobhub.model.ChatMessage;
 import com.oppenablers.jobhub.model.Message;
 
@@ -38,37 +37,46 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EmpDirectMessageActivity extends AppCompatActivity {
+public class EmpMessagesDirectActivity extends AppCompatActivity {
+    public static final String EXTRA_USER_ID = "USER_ID";
+    public static final String EXTRA_USER_NAME = "USER_NAME";
     private static final int PICK_FILE_REQUEST = 1001;
+    ActivityEmpMessagesDirectBinding binding;
     LinearLayout messCont;
     ScrollView messScrollCont;
-    private FileManager fileManager;
+//    private FileManager fileManager;
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityEmpMessagesDirectBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_emp_messages_direct);
+        setContentView(binding.getRoot());
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_emp_messages_direct), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
         Intent intent = getIntent();
-        TextView employee_name_tv = findViewById(R.id.application_title);
-        EditText messageInput = findViewById(R.id.message_input);
-        ImageButton sendBtn = findViewById(R.id.send_button);
-        ImageButton addBtn = findViewById(R.id.add_button);
-        String userId = intent.getStringExtra("userId");
+        TextView employee_name_tv = binding.applicationTitle;
+        EditText messageInput = binding.messageInput;
+        ImageButton sendBtn = binding.sendButton;
+        ImageButton addBtn = binding.addButton;
 
-        messCont = findViewById(R.id.messages_container);
-        messScrollCont = findViewById(R.id.messages_scroll);
+        if (!intent.hasExtra(EXTRA_USER_ID) || !intent.hasExtra(EXTRA_USER_NAME)) {
+            finish();
+        }
 
-        employee_name_tv.setText(intent.getStringExtra("userName"));
+        String userId = intent.getStringExtra(EXTRA_USER_ID);
 
-        fileManager = new FileManager(this);
+        messCont = binding.messagesContainer;
+        messScrollCont = binding.messagesScroll;
+
+        employee_name_tv.setText(intent.getStringExtra(EXTRA_USER_NAME));
+
+//        fileManager = new FileManager(this);
 
         // Add button functionality
         addBtn.setOnClickListener(v -> {
@@ -89,7 +97,7 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
                 Map<String, Object> messageData = new HashMap<>();
                 messageData.put("content", messageText);
 
-                addSentMessageBubble(EmpDirectMessageActivity.this, messCont, messScrollCont, messageText, 0);
+                addSentMessageBubble(EmpMessagesDirectActivity.this, messCont, messScrollCont, messageText, 0);
 
                 // Send to Firebase
                 ChatMessage chatMessage = new ChatMessage();
@@ -128,40 +136,38 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
                         msg.isMediaUrl = false;
                     }
 
-                    if (msg != null) {
-                        boolean isSent = msg.senderId.equals(AuthManager.getCurrentUser().getUid());
-                        if (msg.hasMedia()) {
-                            if (msg.isImage()) {
-                                Message.addSentMessageBubbleWithImage(
-                                        EmpDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
-                                );
-                            } else if (msg.isPdf()) {
-                                Message.addSentMessageBubbleWithPdf(
-                                        EmpDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
-                                );
-                            }
+                    boolean isSent = msg.senderId.equals(AuthManager.getCurrentUser().getUid());
+                    if (msg.hasMedia()) {
+                        if (msg.isImage()) {
+                            Message.addSentMessageBubbleWithImage(
+                                    EmpMessagesDirectActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                            );
+                        } else if (msg.isPdf()) {
+                            Message.addSentMessageBubbleWithPdf(
+                                    EmpMessagesDirectActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                            );
+                        }
+                    } else {
+                        if (isSent) {
+                            Message.addSentMessageBubble(
+                                    EmpMessagesDirectActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                            );
                         } else {
-                            if (isSent) {
-                                Message.addSentMessageBubble(
-                                        EmpDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
-                                );
-                            } else {
-                                Message.addReceivedMessageBubble(
-                                        EmpDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
-                                );
-                            }
+                            Message.addReceivedMessageBubble(
+                                    EmpMessagesDirectActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                            );
                         }
                     }
                 }
 
                 // Scroll to bottom
-                ScrollView scroll = findViewById(R.id.messages_scroll);
+                ScrollView scroll = binding.messagesScroll;
                 scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(EmpDirectMessageActivity.this, "Failed to load messages.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EmpMessagesDirectActivity.this, "Failed to load messages.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -175,40 +181,40 @@ public class EmpDirectMessageActivity extends AppCompatActivity {
             String fileName = System.currentTimeMillis() + "_" + (fileUri.getLastPathSegment() != null ? fileUri.getLastPathSegment() : "file");
             File file = new File(FileUtils.getPath(this, fileUri));
 
-            fileManager.upload(fileName, file, new FileManager.SimpleListener() {
-                @Override
-                public void onStateChanged(int id, com.amazonaws.mobileconnectors.s3.transferutility.TransferState state) {
-                    if (state == com.amazonaws.mobileconnectors.s3.transferutility.TransferState.COMPLETED) {
-                        String s3Url = "https://" + BuildConfig.BUCKET_NAME + ".s3.amazonaws.com/" + fileName;
-                        boolean isImage = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
-                        boolean isPdf = fileName.endsWith(".pdf");
-
-                        String mediaType = null;
-                        String content = s3Url;
-                        if (isImage) {
-                            mediaType = "image";
-                            content = "Image";
-                            Message.addSentMessageBubbleWithImage(EmpDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
-                        } else if (isPdf) {
-                            mediaType = "pdf";
-                            content = "PDF Document";
-                            Message.addSentMessageBubbleWithPdf(EmpDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
-                        }
-
-                        // Send to Firebase
-                        String userId = getIntent().getStringExtra("userId");
-                        DatabaseReference messageRef = FirebaseDatabase.getInstance()
-                                .getReference("messages")
-                                .child(AuthManager.getCurrentUser().getUid())
-                                .child(userId);
-
-                        Message msg = new Message(content, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
-                        msg.setMedia(mediaType, s3Url);
-
-                        messageRef.push().setValue(msg);
-                    }
-                }
-            });
+//            fileManager.upload(fileName, file, new FileManager.SimpleListener() {
+//                @Override
+//                public void onStateChanged(int id, com.amazonaws.mobileconnectors.s3.transferutility.TransferState state) {
+//                    if (state == com.amazonaws.mobileconnectors.s3.transferutility.TransferState.COMPLETED) {
+//                        String s3Url = "https://" + BuildConfig.BUCKET_NAME + ".s3.amazonaws.com/" + fileName;
+//                        boolean isImage = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
+//                        boolean isPdf = fileName.endsWith(".pdf");
+//
+//                        String mediaType = null;
+//                        String content = s3Url;
+//                        if (isImage) {
+//                            mediaType = "image";
+//                            content = "Image";
+//                            Message.addSentMessageBubbleWithImage(EmpMessagesDirectActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
+//                        } else if (isPdf) {
+//                            mediaType = "pdf";
+//                            content = "PDF Document";
+//                            Message.addSentMessageBubbleWithPdf(EmpMessagesDirectActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
+//                        }
+//
+//                        // Send to Firebase
+//                        String userId = getIntent().getStringExtra("userId");
+//                        DatabaseReference messageRef = FirebaseDatabase.getInstance()
+//                                .getReference("messages")
+//                                .child(AuthManager.getCurrentUser().getUid())
+//                                .child(userId);
+//
+//                        Message msg = new Message(content, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
+//                        msg.setMedia(mediaType, s3Url);
+//
+//                        messageRef.push().setValue(msg);
+//                    }
+//                }
+//            });
         }
     }
 }
