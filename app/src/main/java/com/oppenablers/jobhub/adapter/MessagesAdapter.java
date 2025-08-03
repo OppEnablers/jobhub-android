@@ -13,13 +13,17 @@ import com.oppenablers.jobhub.model.JobSeeker;
 
 import java.util.ArrayList;
 
-public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.ApplicantsViewHolder> {
+public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ApplicantsViewHolder> {
 
-    private ArrayList<JobSeeker> applicants;
+    private final ArrayList<JobSeeker> applicants;
     private OnClickListener onClickListener;
 
-    public ApplicantsAdapter(ArrayList<JobSeeker> applicants) {
+    public MessagesAdapter(ArrayList<JobSeeker> applicants) {
         this.applicants = applicants;
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -27,34 +31,39 @@ public class ApplicantsAdapter extends RecyclerView.Adapter<ApplicantsAdapter.Ap
     public ApplicantsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ApplicantsViewHolder(
                 LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_jobseeker, parent, false));
+                        .inflate(R.layout.item_jobseeker, parent, false),
+                onClickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ApplicantsViewHolder holder, int position) {
-
+        JobSeeker jobSeeker = applicants.get(position);
+        holder.setJobSeeker(jobSeeker, onClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return applicants.size();
     }
 
-    public class ApplicantsViewHolder extends RecyclerView.ViewHolder {
+    public static class ApplicantsViewHolder extends RecyclerView.ViewHolder {
 
         ItemJobseekerBinding binding;
 
-        public ApplicantsViewHolder(@NonNull View itemView) {
+        public ApplicantsViewHolder(@NonNull View itemView, OnClickListener onClickListener) {
             super(itemView);
             binding = ItemJobseekerBinding.bind(itemView);
         }
 
         public void setJobSeeker(JobSeeker jobSeeker, OnClickListener onClickListener) {
             binding.vacancyTitle.setText(jobSeeker.getName());
+            binding.vacancyContainer.setOnClickListener(v -> {
+                onClickListener.onClick(jobSeeker.getUserId(), jobSeeker.getName());
+            });
         }
     }
 
     public interface OnClickListener {
-        void onClick(String userId);
+        void onClick(String userId, String userName);
     }
 }

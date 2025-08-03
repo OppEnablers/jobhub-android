@@ -1,16 +1,11 @@
 package com.oppenablers.jobhub.activity;
 
-import static com.oppenablers.jobhub.model.Message.addReceivedMessageBubble;
 import static com.oppenablers.jobhub.model.Message.addSentMessageBubble;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -21,7 +16,6 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -40,12 +34,10 @@ import com.oppenablers.jobhub.model.ChatMessage;
 import com.oppenablers.jobhub.model.Message;
 
 import java.io.File;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-public class JsDirectMessageActivity extends AppCompatActivity {
+public class JsMessagesDirectActivity extends AppCompatActivity {
     LinearLayout messCont;
     ScrollView messScrollCont;
     private static final int PICK_FILE_REQUEST = 1001;
@@ -143,21 +135,21 @@ public class JsDirectMessageActivity extends AppCompatActivity {
                         if (msg.hasMedia()) {
                             if (msg.isImage()) {
                                 Message.addSentMessageBubbleWithImage(
-                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                                        JsMessagesDirectActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
                                 );
                             } else if (msg.isPdf()) {
                                 Message.addSentMessageBubbleWithPdf(
-                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
+                                        JsMessagesDirectActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
                                 );
                             }
                         } else {
                             if (isSent) {
                                 Message.addSentMessageBubble(
-                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                                        JsMessagesDirectActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
                                 );
                             } else {
                                 Message.addReceivedMessageBubble(
-                                        JsDirectMessageActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
+                                        JsMessagesDirectActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
                                 );
                             }
                         }
@@ -171,7 +163,7 @@ public class JsDirectMessageActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(JsDirectMessageActivity.this, "Failed to load messages.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(JsMessagesDirectActivity.this, "Failed to load messages.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -197,11 +189,11 @@ public class JsDirectMessageActivity extends AppCompatActivity {
                         if (isImage) {
                             mediaType = "image";
                             content = "Image";
-                            Message.addSentMessageBubbleWithImage(JsDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
+                            Message.addSentMessageBubbleWithImage(JsMessagesDirectActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
                         } else if (isPdf) {
                             mediaType = "pdf";
                             content = "PDF Document";
-                            Message.addSentMessageBubbleWithPdf(JsDirectMessageActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
+                            Message.addSentMessageBubbleWithPdf(JsMessagesDirectActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
                         }
 
                         // Send to Firebase

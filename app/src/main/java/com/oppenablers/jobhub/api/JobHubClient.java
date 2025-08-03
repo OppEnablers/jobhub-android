@@ -112,6 +112,11 @@ public class JobHubClient {
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
     }
 
+    public static void getChatsEmployer(JobHubCallback<ArrayList<JobSeeker>> callback) {
+        CLIENT.newCall(get("/employer/chats"))
+                .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
+    }
+
     public static void getJobsJobSeeker(JobHubCallback<ArrayList<Job>> callback) {
         CLIENT.newCall(get("/jobseeker/jobs"))
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
