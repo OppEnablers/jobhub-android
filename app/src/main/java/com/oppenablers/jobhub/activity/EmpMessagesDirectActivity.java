@@ -1,16 +1,10 @@
 package com.oppenablers.jobhub.activity;
 
-import static com.oppenablers.jobhub.model.Message.addSentMessageBubble;
-import com.oppenablers.jobhub.FileUtils;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,35 +13,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.oppenablers.jobhub.AuthManager;
-import com.oppenablers.jobhub.BuildConfig;
-import com.oppenablers.jobhub.FileManager;
-import com.oppenablers.jobhub.R;
+import com.oppenablers.jobhub.adapter.MessageAdapter;
 import com.oppenablers.jobhub.databinding.ActivityEmpMessagesDirectBinding;
-import com.oppenablers.jobhub.model.ChatMessage;
 import com.oppenablers.jobhub.model.Message;
+import com.oppenablers.jobhub.MessageRepository;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class EmpMessagesDirectActivity extends AppCompatActivity {
     public static final String EXTRA_USER_ID = "USER_ID";
     public static final String EXTRA_USER_NAME = "USER_NAME";
     private static final int PICK_FILE_REQUEST = 1001;
-    ActivityEmpMessagesDirectBinding binding;
-    LinearLayout messCont;
-    ScrollView messScrollCont;
-//    private FileManager fileManager;
+
+    private ActivityEmpMessagesDirectBinding binding;
+    private MessageAdapter messageAdapter;
+    private MessageRepository messageRepository;
+    private String currentUserId;
+    private String otherUserId;
+    private String conversationId;
+    private String currentUserName;
+    private String otherUserName;
+    private List<Message> messageList = new ArrayList<>();
 
     @Override
-    protected void onCreate(android.os.Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityEmpMessagesDirectBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
@@ -59,162 +58,215 @@ public class EmpMessagesDirectActivity extends AppCompatActivity {
             return insets;
         });
 
-        Intent intent = getIntent();
-        TextView employee_name_tv = binding.applicationTitle;
-        EditText messageInput = binding.messageInput;
-        ImageButton sendBtn = binding.sendButton;
-        ImageButton addBtn = binding.addButton;
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        messageRepository = new MessageRepository();
 
-        if (!intent.hasExtra(EXTRA_USER_ID) || !intent.hasExtra(EXTRA_USER_NAME)) {
+        Intent intent = getIntent();
+        if (!intent.hasExtra(EXTRA_USER_ID)) {
             finish();
+            return;
         }
 
-        String userId = intent.getStringExtra(EXTRA_USER_ID);
+        otherUserId = intent.getStringExtra(EXTRA_USER_ID);
+        otherUserName = intent.getStringExtra(EXTRA_USER_NAME);
+        conversationId = messageRepository.generateConversationId(currentUserId, otherUserId);
 
-        messCont = binding.messagesContainer;
-        messScrollCont = binding.messagesScroll;
+        fetchCurrentUserName();
 
-        employee_name_tv.setText(intent.getStringExtra(EXTRA_USER_NAME));
+        updateTitle();
+        binding.returnButton.setOnClickListener(v -> finish());
 
-//        fileManager = new FileManager(this);
+        messageAdapter = new MessageAdapter(currentUserId, messageList);
+        binding.messagesList.setLayoutManager(new LinearLayoutManager(this));
+        binding.messagesList.setAdapter(messageAdapter);
 
-        // Add button functionality
-        addBtn.setOnClickListener(v -> {
+        setupMessageInput();
+
+        loadMessages();
+
+        observeNewMessages();
+    }
+
+    private void fetchCurrentUserName() {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        currentUserName = prefs.getString("currentUserName", null);
+
+        if (currentUserName == null) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUserId);
+            userRef.child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String name = snapshot.getValue(String.class);
+                    if (name != null && !name.isEmpty()) {
+                        currentUserName = name;
+                        prefs.edit().putString("currentUserName", name).apply();
+                        updateTitle();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    currentUserName = "Employer";
+                    updateTitle();
+                }
+            });
+        }
+    }
+
+    private void updateTitle() {
+        if (otherUserName != null && !otherUserName.isEmpty()) {
+            binding.applicationTitle.setText(otherUserName);
+        } else {
+            binding.applicationTitle.setText("User");
+        }
+    }
+
+    private void setupMessageInput() {
+        binding.sendButton.setOnClickListener(v -> {
+            String messageText = binding.messageInput.getText().toString().trim();
+            if (!messageText.isEmpty()) {
+                binding.sendButton.setEnabled(false);
+                sendMessage(messageText);
+            } else {
+                Toast.makeText(this, "Message cannot be empty", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.addButton.setOnClickListener(v -> {
             Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
             fileIntent.setType("*/*");
             String[] mimeTypes = {"application/pdf", "image/*"};
             fileIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
             startActivityForResult(Intent.createChooser(fileIntent, "Select PDF or Image"), PICK_FILE_REQUEST);
         });
+    }
 
-        sendBtn.setOnClickListener(v -> {
-            String messageText = messageInput.getText().toString().trim();
+    private void sendMessage(String messageText) {
+        if (currentUserName == null || currentUserName.isEmpty()) {
+            currentUserName = "Employer";
+        }
+        if (otherUserName == null || otherUserName.isEmpty()) {
+            otherUserName = "User";
+        }
 
-            if (!messageText.isEmpty()) {
-                String dateKey = "date_" + System.currentTimeMillis(); // or use actual date
+        Message message = new Message(
+                currentUserId,
+                otherUserId,
+                currentUserName,
+                otherUserName,
+                messageText,
+                Message.MessageType.TEXT
+        );
 
-                // Message object
-                Map<String, Object> messageData = new HashMap<>();
-                messageData.put("content", messageText);
+        messageRepository.sendMessage(conversationId, message, task -> {
+            binding.sendButton.setEnabled(true);
 
-                addSentMessageBubble(EmpMessagesDirectActivity.this, messCont, messScrollCont, messageText, 0);
-
-                // Send to Firebase
-                ChatMessage chatMessage = new ChatMessage();
-                //chatMessage.setSenderId(AuthManager.getCurrentUser());
-                chatMessage.sendMessageAsEmployee(userId, AuthManager.getCurrentUser().getUid(), messageText);
-
-                messageInput.setText("");
-            }
-        });
-
-        String employeeId = AuthManager.getCurrentUser().getUid();
-
-        // Firebase path
-        DatabaseReference messageRef = FirebaseDatabase.getInstance()
-                .getReference("messages")
-                .child(employeeId)
-                .child(userId);
-
-        messageRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    Message msg = new Message();
-                    msg.content = child.child("content").getValue(String.class);
-                    msg.senderId = child.child("senderId").getValue(String.class);
-                    msg.timestamp = child.child("timestamp").getValue(Long.class);
-                    msg.mediaType = child.child("mediaType").getValue(String.class);
-                    msg.mediaUrl = child.child("mediaUrl").getValue(String.class);
-
-                    Object isMediaObj = child.child("isMediaUrl").getValue();
-                    if (isMediaObj instanceof Boolean) {
-                        msg.isMediaUrl = (Boolean) isMediaObj;
-                    } else if (isMediaObj instanceof String) {
-                        msg.isMediaUrl = Boolean.parseBoolean((String) isMediaObj);
-                    } else {
-                        msg.isMediaUrl = false;
-                    }
-
-                    boolean isSent = msg.senderId.equals(AuthManager.getCurrentUser().getUid());
-                    if (msg.hasMedia()) {
-                        if (msg.isImage()) {
-                            Message.addSentMessageBubbleWithImage(
-                                    EmpMessagesDirectActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
-                            );
-                        } else if (msg.isPdf()) {
-                            Message.addSentMessageBubbleWithPdf(
-                                    EmpMessagesDirectActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
-                            );
-                        }
-                    } else {
-                        if (isSent) {
-                            Message.addSentMessageBubble(
-                                    EmpMessagesDirectActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
-                            );
-                        } else {
-                            Message.addReceivedMessageBubble(
-                                    EmpMessagesDirectActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
-                            );
-                        }
-                    }
-                }
-
-                // Scroll to bottom
-                ScrollView scroll = binding.messagesScroll;
-                scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(EmpMessagesDirectActivity.this, "Failed to load messages.", Toast.LENGTH_SHORT).show();
+            if (task.isSuccessful()) {
+                binding.messageInput.setText("");
+            } else {
+                Toast.makeText(
+                        EmpMessagesDirectActivity.this,
+                        "Failed to send: " + task.getException().getMessage(),
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
     }
 
-    // Java
+    private void loadMessages() {
+        Toast.makeText(this, "Loading messages...", Toast.LENGTH_SHORT).show();
+
+        messageRepository.getMessages(conversationId, new MessageRepository.MessageListener() {
+            @Override
+            public void onMessagesLoaded(List<Message> messages) {
+                Collections.sort(messages, (m1, m2) ->
+                        Long.compare(m1.getTimestamp(), m2.getTimestamp()));
+
+                if (!messages.isEmpty()) {
+                    // Update names from existing messages if needed
+                    Message firstMessage = messages.get(0);
+                    if (firstMessage.getSenderId().equals(currentUserId)) {
+                        currentUserName = firstMessage.getSenderName();
+                        otherUserName = firstMessage.getReceiverName();
+                    } else {
+                        currentUserName = firstMessage.getReceiverName();
+                        otherUserName = firstMessage.getSenderName();
+                    }
+                    updateTitle();
+                }
+
+                messageList.clear();
+                messageList.addAll(messages);
+                messageAdapter.updateMessages(messageList);
+
+                if (!messageList.isEmpty()) {
+                    binding.messagesList.postDelayed(() ->
+                                    binding.messagesList.smoothScrollToPosition(messageList.size() - 1),
+                            100);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(EmpMessagesDirectActivity.this,
+                        "Failed to load messages: " + error,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void observeNewMessages() {
+        messageRepository.observeNewMessages(conversationId, new MessageRepository.MessageListener() {
+            @Override
+            public void onMessagesLoaded(List<Message> messages) {
+                for (Message newMessage : messages) {
+                    boolean exists = false;
+                    for (Message existing : messageList) {
+                        if (existing.getMessageId() != null &&
+                                existing.getMessageId().equals(newMessage.getMessageId())) {
+                            exists = true;
+                            break;
+                        }
+                    }
+
+                    if (!exists) {
+                        messageList.add(newMessage);
+                        messageAdapter.addMessage(newMessage);
+                    }
+                }
+
+                binding.messagesList.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+                messageRepository.markMessagesAsRead(conversationId, currentUserId);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(EmpMessagesDirectActivity.this,
+                        "Connection error: " + error,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri fileUri = data.getData();
-            String fileName = System.currentTimeMillis() + "_" + (fileUri.getLastPathSegment() != null ? fileUri.getLastPathSegment() : "file");
-            File file = new File(FileUtils.getPath(this, fileUri));
-
-//            fileManager.upload(fileName, file, new FileManager.SimpleListener() {
-//                @Override
-//                public void onStateChanged(int id, com.amazonaws.mobileconnectors.s3.transferutility.TransferState state) {
-//                    if (state == com.amazonaws.mobileconnectors.s3.transferutility.TransferState.COMPLETED) {
-//                        String s3Url = "https://" + BuildConfig.BUCKET_NAME + ".s3.amazonaws.com/" + fileName;
-//                        boolean isImage = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
-//                        boolean isPdf = fileName.endsWith(".pdf");
-//
-//                        String mediaType = null;
-//                        String content = s3Url;
-//                        if (isImage) {
-//                            mediaType = "image";
-//                            content = "Image";
-//                            Message.addSentMessageBubbleWithImage(EmpMessagesDirectActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
-//                        } else if (isPdf) {
-//                            mediaType = "pdf";
-//                            content = "PDF Document";
-//                            Message.addSentMessageBubbleWithPdf(EmpMessagesDirectActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
-//                        }
-//
-//                        // Send to Firebase
-//                        String userId = getIntent().getStringExtra("userId");
-//                        DatabaseReference messageRef = FirebaseDatabase.getInstance()
-//                                .getReference("messages")
-//                                .child(AuthManager.getCurrentUser().getUid())
-//                                .child(userId);
-//
-//                        Message msg = new Message(content, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
-//                        msg.setMedia(mediaType, s3Url);
-//
-//                        messageRef.push().setValue(msg);
-//                    }
-//                }
-//            });
+            Toast.makeText(this, "File selected", Toast.LENGTH_SHORT).show();
+            // TODO: Implement file upload
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        messageRepository.removeConversationListener();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        messageRepository.removeConversationListener();
     }
 }

@@ -1,294 +1,170 @@
 package com.oppenablers.jobhub.model;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.icu.text.SimpleDateFormat;
-import android.net.Uri;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
-import androidx.core.content.res.ResourcesCompat;
-
-import com.oppenablers.jobhub.R;
+import androidx.annotation.NonNull;
 
 import java.util.Date;
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Message {
-    public String content;
-    public String senderId;
-    public long timestamp;
-    public boolean isMediaUrl; // true if the content is a URL to media (image, PDF)
-    public String mediaType;
-    public String mediaUrl;
+    public enum MessageType {
+        TEXT,
+        IMAGE,
+        PDF,
+        // Add more if needed
+    }
+
+    private String messageId;
+    private String senderId;
+    private String receiverId;
+    private String content;
+    private long timestamp;
+    private MessageType type;
+    private Map<String, String> metadata;
+    private boolean isRead;
+    private String senderName;
+    private String receiverName;
 
     public Message() {
+        this.metadata = new HashMap<>();
+        this.timestamp = new Date().getTime();
     }
 
-    public Message(String content, String senderId, long timestamp) {
-        this.content = content;
+    public Message(String senderId, String receiverId, String senderName, String receiverName,
+                   String content, MessageType type) {
+        this();
         this.senderId = senderId;
-        this.timestamp = timestamp;
+        this.receiverId = receiverId;
+        this.senderName = senderName;
+        this.receiverName = receiverName;
+        this.content = content;
+        this.type = type;
     }
 
-    public void setMediaUrl(boolean isMediaUrl) {
-        this.isMediaUrl = isMediaUrl;
+    public Message(String senderId, String receiverId, String content, MessageType type) {
+        this();
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.content = content;
+        this.type = type;
+        this.senderName = "";
+        this.receiverName = "";
     }
 
-    public void setMedia(String mediaType, String mediaUrl) {
-        this.mediaType = mediaType;
-        this.mediaUrl = mediaUrl;
-        this.isMediaUrl = (mediaUrl != null);
+    public String getMessageId() {
+        return messageId;
     }
 
-    public boolean hasMedia() {
-        return isMediaUrl && mediaUrl != null;
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
-    public boolean isImage() {
-        return "image".equals(mediaType);
+    public String getSenderId() {
+        return senderId;
     }
 
-    public boolean isPdf() {
-        return "pdf".equals(mediaType);
+    public String getReceiverId() {
+        return receiverId;
     }
 
-    public static void addSentMessageBubble(Context context, LinearLayout messagesContainer, ScrollView scroll, String messageText, long timestamp) {
-        // Find your container
-        //LinearLayout messagesContainer = findViewById(R.id.messages_container);
+    public String getContent() {
+        return content;
+    }
 
-        // Outer layout for alignment
-        LinearLayout outerLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams outerParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        outerParams.setMargins(0, 0, 0,8); // match layout_marginBottom="8dp"
-        outerLayout.setLayoutParams(outerParams);
-        outerLayout.setGravity(Gravity.END);
-        outerLayout.setOrientation(LinearLayout.VERTICAL);
+    public long getTimestamp() {
+        return timestamp;
+    }
 
-        // Inner message bubble
-        LinearLayout bubbleLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        bubbleParams.setMarginStart(60); // match layout_marginStart="60dp"
-        bubbleLayout.setLayoutParams(bubbleParams);
-        bubbleLayout.setOrientation(LinearLayout.VERTICAL);
-        bubbleLayout.setPadding(12, 12, 12, 12);
-        bubbleLayout.setBackgroundResource(R.drawable.sent_message_bubble);
+    public MessageType getType() {
+        return type;
+    }
 
-        // Message text
-        TextView messageTextView = new TextView(context);
-        messageTextView.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
-        messageTextView.setText(messageText);
-        messageTextView.setTextColor(Color.WHITE);
-        messageTextView.setTextSize(16f);
-        messageTextView.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_medium));
+    public Map<String, String> getMetadata() {
+        if (metadata == null) {
+            metadata = new HashMap<>();
+        }
+        return metadata;
+    }
 
-        // Time text
-        TextView timeTextView = new TextView(context);
-        LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        timeParams.setMargins(0, 4, 0, 0);
-        timeTextView.setLayoutParams(timeParams);
-        timeTextView.setTextColor(Color.parseColor("#e0e0e0"));
-        timeTextView.setTextSize(12f);
-        if (timestamp == 0) {
-            timeTextView.setText(new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date()));
-        } else {
-            timeTextView.setText(new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date(timestamp)));
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
+    public String getSenderName() {
+        return senderName != null ? senderName : "";
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName != null ? receiverName : "";
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public void addMetadata(String key, String value) {
+        getMetadata().put(key, value);
+    }
+
+    public String getMetadataValue(String key) {
+        return getMetadata().get(key);
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("messageId", messageId);
+        result.put("senderId", senderId);
+        result.put("receiverId", receiverId);
+        result.put("senderName", getSenderName());
+        result.put("receiverName", getReceiverName());
+        result.put("content", content);
+        result.put("timestamp", timestamp);
+        result.put("type", type != null ? type.name() : MessageType.TEXT.name());
+        result.put("metadata", getMetadata());
+        result.put("isRead", isRead);
+        return result;
+    }
+
+    public static Message fromMap(Map<String, Object> map) {
+        Message message = new Message();
+        if (map == null) return message;
+
+        message.messageId = (String) map.get("messageId");
+        message.senderId = (String) map.get("senderId");
+        message.receiverId = (String) map.get("receiverId");
+        message.senderName = (String) map.get("senderName");
+        message.receiverName = (String) map.get("receiverName");
+        message.content = (String) map.get("content");
+
+        Object timestamp = map.get("timestamp");
+        if (timestamp instanceof Long) {
+            message.timestamp = (Long) timestamp;
         }
 
-        // Build view hierarchy
-        bubbleLayout.addView(messageTextView);
-        bubbleLayout.addView(timeTextView);
-        outerLayout.addView(bubbleLayout);
-        messagesContainer.addView(outerLayout);
-
-        // Optional: auto-scroll to bottom if wrapped in a ScrollView
-        //ScrollView scroll = findViewById(R.id.messages_scroll);
-        if (scroll != null) {
-            scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
-        }
-    }
-
-    public static void addSentMessageBubbleWithImage(Context context, LinearLayout messagesContainer, ScrollView scroll, String imageUrl, long timestamp) {
-        LinearLayout outerLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams outerParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        outerParams.setMargins(0, 0, 0,8);
-        outerLayout.setLayoutParams(outerParams);
-        outerLayout.setGravity(Gravity.END);
-        outerLayout.setOrientation(LinearLayout.VERTICAL);
-
-        LinearLayout bubbleLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        bubbleParams.setMarginStart(60);
-        bubbleLayout.setLayoutParams(bubbleParams);
-        bubbleLayout.setOrientation(LinearLayout.VERTICAL);
-        bubbleLayout.setPadding(12, 12, 12, 12);
-        bubbleLayout.setBackgroundResource(R.drawable.sent_message_bubble);
-
-        android.widget.ImageView imageView = new android.widget.ImageView(context);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(400, 400));
-        com.bumptech.glide.Glide.with(context).load(imageUrl).into(imageView);
-
-        TextView timeTextView = new TextView(context);
-        LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        timeParams.setMargins(0, 4, 0, 0);
-        timeTextView.setLayoutParams(timeParams);
-        timeTextView.setTextColor(Color.parseColor("#e0e0e0"));
-        timeTextView.setTextSize(12f);
-        timeTextView.setText(new java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault()).format(new java.util.Date(timestamp)));
-
-        bubbleLayout.addView(imageView);
-        bubbleLayout.addView(timeTextView);
-        outerLayout.addView(bubbleLayout);
-        messagesContainer.addView(outerLayout);
-
-        if (scroll != null) {
-            scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
-        }
-    }
-
-    public static void addSentMessageBubbleWithPdf(Context context, LinearLayout messagesContainer, ScrollView scroll, String pdfUrl, long timestamp) {
-        LinearLayout outerLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams outerParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        outerParams.setMargins(0, 0, 0,8);
-        outerLayout.setLayoutParams(outerParams);
-        outerLayout.setGravity(Gravity.END);
-        outerLayout.setOrientation(LinearLayout.VERTICAL);
-
-        LinearLayout bubbleLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        bubbleParams.setMarginStart(60);
-        bubbleLayout.setLayoutParams(bubbleParams);
-        bubbleLayout.setOrientation(LinearLayout.VERTICAL);
-        bubbleLayout.setPadding(12, 12, 12, 12);
-        bubbleLayout.setBackgroundResource(R.drawable.sent_message_bubble);
-
-        TextView pdfTextView = new TextView(context);
-        pdfTextView.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
-        pdfTextView.setText("PDF Document");
-        pdfTextView.setTextColor(Color.WHITE);
-        pdfTextView.setTextSize(16f);
-        pdfTextView.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(context, R.font.montserrat_medium));
-        pdfTextView.setPaintFlags(pdfTextView.getPaintFlags() | android.graphics.Paint.UNDERLINE_TEXT_FLAG);
-        pdfTextView.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl));
-            context.startActivity(intent);
-        });
-
-        TextView timeTextView = new TextView(context);
-        LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        timeParams.setMargins(0, 4, 0, 0);
-        timeTextView.setLayoutParams(timeParams);
-        timeTextView.setTextColor(Color.parseColor("#e0e0e0"));
-        timeTextView.setTextSize(12f);
-        timeTextView.setText(new java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault()).format(new java.util.Date(timestamp)));
-
-        bubbleLayout.addView(pdfTextView);
-        bubbleLayout.addView(timeTextView);
-        outerLayout.addView(bubbleLayout);
-        messagesContainer.addView(outerLayout);
-
-        if (scroll != null) {
-            scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
-        }
-    }
-
-    public static void addReceivedMessageBubble(Context context, LinearLayout messagesContainer, ScrollView scroll, String messageText, long timestamp) {
-        //LinearLayout messagesContainer = findViewById(R.id.messages_container);
-
-        LinearLayout outerLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams outerParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        outerParams.setMargins(0, 0, 0, 8);
-        outerLayout.setLayoutParams(outerParams);
-        outerLayout.setGravity(Gravity.START);
-        outerLayout.setOrientation(LinearLayout.VERTICAL);
-
-        LinearLayout bubbleLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        bubbleParams.setMarginEnd(60); // match your sent version 60dp start offset
-        bubbleLayout.setLayoutParams(bubbleParams);
-        bubbleLayout.setOrientation(LinearLayout.VERTICAL);
-        bubbleLayout.setPadding(12, 12, 12, 12); // 12dp all around
-        bubbleLayout.setBackgroundResource(R.drawable.received_message_bubble);
-
-        TextView messageTextView = new TextView(context);
-        messageTextView.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
-        messageTextView.setText(messageText);
-        messageTextView.setTextColor(Color.parseColor("#333333"));  // dark text
-        messageTextView.setTextSize(16f);
-        messageTextView.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_medium));
-
-        TextView timeTextView = new TextView(context);
-        LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        timeParams.setMargins(0, 4, 0, 0);
-        timeTextView.setLayoutParams(timeParams);
-        timeTextView.setTextColor(Color.parseColor("#808080"));
-        timeTextView.setTextSize(12f);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
-        if (timestamp == 0) {
-            timeTextView.setText(sdf.format(new Date()));
-        } else {
-            timeTextView.setText(sdf.format(new Date(timestamp)));
+        try {
+            message.type = MessageType.valueOf((String) map.get("type"));
+        } catch (Exception e) {
+            message.type = MessageType.TEXT;
         }
 
-        bubbleLayout.addView(messageTextView);
-        bubbleLayout.addView(timeTextView);
-        outerLayout.addView(bubbleLayout);
-        messagesContainer.addView(outerLayout);
-
-        //ScrollView scroll = findViewById(R.id.messages_scroll);
-        if (scroll != null) {
-            scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
+        Object metadata = map.get("metadata");
+        if (metadata instanceof Map) {
+            message.metadata = (Map<String, String>) metadata;
         }
+
+        Object isRead = map.get("isRead");
+        if (isRead instanceof Boolean) {
+            message.isRead = (Boolean) isRead;
+        }
+
+        return message;
     }
 }

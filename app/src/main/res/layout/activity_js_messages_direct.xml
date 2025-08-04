@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_js_messages_direct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,284 +9,94 @@
     <LinearLayout
         android:id="@+id/header_container"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="#FFFFFF"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp">
 
-        <LinearLayout
-            android:layout_width="44dp"
-            android:layout_height="51dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="56dp"
-                android:layout_height="52dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center">
-
-                <ImageButton
-                    android:id="@+id/return_button"
-                    android:layout_width="46dp"
-                    android:layout_height="42dp"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Back button"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/arrowback" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/return_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/arrowback" />
 
         <TextView
             android:id="@+id/application_title"
-            android:layout_width="319dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
             android:fontFamily="@font/montserrat_bold"
-            android:gravity="left"
-            android:padding="1dp"
-            android:text="iACADEMY"
+            android:maxLines="1"
             android:textColor="@color/md_theme_primary"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </LinearLayout>
 
-    <!-- Chat Messages Container -->
-    <ScrollView
-        android:id="@+id/messages_scroll"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:layout_below="@id/header_container"
-        android:layout_above="@id/chatbox"
+        android:background="@android:color/darker_gray" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messages_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
-
-        <LinearLayout
-            android:id="@+id/messages_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Received Message Bubble -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:gravity="start">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/received_message_bubble"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:fontFamily="@font/montserrat_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hello, this is Maria, the Hiring Manager of iACADEMY."
-                        android:textColor="#333333"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="10:30 AM"
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Sent Message Bubble -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:gravity="end">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
-                    android:background="@drawable/sent_message_bubble"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:fontFamily="@font/montserrat_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Good day! Ms. Maria, I'm looking forward to the interview."
-                        android:textColor="#ffffff"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="10:32 AM"
-                        android:textColor="#e0e0e0"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Another Received Message -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:gravity="start">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/received_message_bubble"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:fontFamily="@font/montserrat_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="We'll see you later at 3pm. We'd also like to request for your resume."
-                        android:textColor="#333333"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="10:35 AM"
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Another Sent Message -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:gravity="end">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
-                    android:background="@drawable/sent_message_bubble"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:fontFamily="@font/montserrat_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sure, I will send my resume right away. Thanks!"
-                        android:textColor="#ffffff"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="10:37 AM"
-                        android:textColor="#e0e0e0"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:layout_above="@id/chatbox"
+        android:layout_below="@id/header_container"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:scrollbars="vertical" />
 
     <LinearLayout
         android:id="@+id/chatbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/md_theme_surfaceVariant"
         android:orientation="horizontal"
-        android:padding="8dp"
-        android:background="#f5f5f5"
-        android:gravity="center_vertical">
+        android:padding="8dp">
 
         <ImageButton
             android:id="@+id/add_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Add attachment"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/add_attachment"
             android:scaleType="centerCrop"
             android:src="@drawable/addlogo" />
 
-        <EditText
-            android:fontFamily="@font/montserrat_medium"
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/message_input"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginHorizontal="8dp"
             android:background="@drawable/edittext_background"
-            android:hint="Type a message..."
-            android:inputType="textMultiLine|textCapSentences"
+            android:hint="@string/type_message"
+            android:inputType="textCapSentences|textMultiLine"
             android:maxLines="3"
+            android:minHeight="48dp"
             android:padding="12dp"
-            android:textColor="#333333"
-            android:textColorHint="#999999"
+            android:textColor="@color/md_theme_onSurface"
+            android:textColorHint="@color/md_theme_onSurfaceVariant"
             android:textSize="16sp" />
 
         <ImageButton
             android:id="@+id/send_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Send message"
-            android:scaleType="centerCrop"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/send_message"
+            android:scaleType="centerInside"
             android:src="@android:drawable/ic_menu_send" />
-
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/bottom_nav"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/grayline"
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:layout_marginTop="55dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/grayline" />
-
-    <LinearLayout
-        android:id="@+id/textarea"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-    </LinearLayout>
 </RelativeLayout>
