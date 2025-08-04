@@ -1,169 +1,179 @@
 package com.oppenablers.jobhub.activity;
 
-import static com.oppenablers.jobhub.model.Message.addSentMessageBubble;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.oppenablers.jobhub.AuthManager;
-import com.oppenablers.jobhub.BuildConfig;
-import com.oppenablers.jobhub.FileManager;
-import com.oppenablers.jobhub.FileUtils;
-import com.oppenablers.jobhub.R;
-import com.oppenablers.jobhub.model.ChatMessage;
+import com.google.firebase.auth.FirebaseAuth;
+import com.oppenablers.jobhub.adapter.MessageAdapter;
+import com.oppenablers.jobhub.databinding.ActivityJsMessagesDirectBinding;
 import com.oppenablers.jobhub.model.Message;
+import com.oppenablers.jobhub.MessageRepository;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class JsMessagesDirectActivity extends AppCompatActivity {
-    LinearLayout messCont;
-    ScrollView messScrollCont;
+    public static final String EXTRA_USER_ID = "USER_ID";
+    public static final String EXTRA_USER_NAME = "USER_NAME";
     private static final int PICK_FILE_REQUEST = 1001;
-    private FileManager fileManager;
+
+    private ActivityJsMessagesDirectBinding binding;
+    private MessageAdapter messageAdapter;
+    private MessageRepository messageRepository;
+    private String currentUserId;
+    private String otherUserId;
+    private String conversationId;
+    private String currentUserName;
+    private String otherUserName;
+    private List<Message> messageList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_js_messages_direct);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_js_messages_direct), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        binding = ActivityJsMessagesDirectBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        ImageButton returnButton = findViewById(R.id.return_button);
-        returnButton.setOnClickListener(v -> finish());
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        messageRepository = new MessageRepository();
 
         Intent intent = getIntent();
-        TextView receiverTextView = findViewById(R.id.application_title);
-        EditText messageInput = findViewById(R.id.message_input);
-        ImageButton sendBtn = findViewById(R.id.send_button);
-        ImageButton addBtn = findViewById(R.id.add_button);
-        String userId = intent.getStringExtra("userId");
+        if (!intent.hasExtra(EXTRA_USER_ID)) {
+            finish();
+            return;
+        }
 
-        messCont = findViewById(R.id.messages_container);
-        messScrollCont = findViewById(R.id.messages_scroll);
+        otherUserId = intent.getStringExtra(EXTRA_USER_ID);
+        otherUserName = intent.getStringExtra(EXTRA_USER_NAME);
+        conversationId = messageRepository.generateConversationId(currentUserId, otherUserId);
+        currentUserName = "Current User Name";
 
-        receiverTextView.setText(intent.getStringExtra("userName"));
+        binding.applicationTitle.setText(otherUserName);
+        binding.returnButton.setOnClickListener(v -> finish());
 
-        fileManager = new FileManager(this);
+        messageAdapter = new MessageAdapter(currentUserId, messageList);
+        binding.messagesList.setLayoutManager(new LinearLayoutManager(this));
+        binding.messagesList.setAdapter(messageAdapter);
 
-        // Add button functionality
-        addBtn.setOnClickListener(v -> {
+        setupMessageInput();
+
+        Toast.makeText(this, "Loading messages...", Toast.LENGTH_SHORT).show();
+        loadMessages();
+
+        observeNewMessages();
+    }
+
+    private void setupMessageInput() {
+        binding.sendButton.setOnClickListener(v -> {
+            String messageText = binding.messageInput.getText().toString().trim();
+            if (!messageText.isEmpty()) {
+                binding.sendButton.setEnabled(false);
+                sendMessage(messageText);
+            } else {
+                Toast.makeText(this, "Message cannot be empty", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.addButton.setOnClickListener(v -> {
             Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
             fileIntent.setType("*/*");
             String[] mimeTypes = {"application/pdf", "image/*"};
             fileIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
             startActivityForResult(Intent.createChooser(fileIntent, "Select PDF or Image"), PICK_FILE_REQUEST);
         });
+    }
 
-        sendBtn.setOnClickListener(v -> {
-            String messageText = messageInput.getText().toString().trim();
+    private void sendMessage(String messageText) {
+        Message message = new Message(
+                currentUserId,
+                otherUserId,
+                currentUserName,
+                otherUserName,
+                messageText,
+                Message.MessageType.TEXT
+        );
 
-            if (!messageText.isEmpty()) {
-                String dateKey = "date_" + System.currentTimeMillis(); // or use actual date
+        messageRepository.sendMessage(conversationId, message, task -> {
+            binding.sendButton.setEnabled(true);
 
-                // Message object
-                Map<String, Object> messageData = new HashMap<>();
-                messageData.put("content", messageText);
-
-                addSentMessageBubble(this, messCont, messScrollCont, messageText, 0);
-
-                // Send to Firebase
-                ChatMessage chatMessage = new ChatMessage();
-                //chatMessage.setSenderId(AuthManager.getCurrentUser());
-                chatMessage.sendMessageAsEmployee(userId, AuthManager.getCurrentUser().getUid(), messageText);
-
-                messageInput.setText("");
+            if (task.isSuccessful()) {
+                binding.messageInput.setText("");
+            } else {
+                Toast.makeText(
+                        JsMessagesDirectActivity.this,
+                        "Failed to send: " + task.getException().getLocalizedMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
             }
         });
+    }
 
-        String employeeId = AuthManager.getCurrentUser().getUid();
-
-        // Firebase path
-        DatabaseReference messageRef = FirebaseDatabase.getInstance()
-                .getReference("messages")
-                .child(userId)
-                .child(employeeId);
-
-        // Load messages
-        messageRef.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void loadMessages() {
+        messageRepository.getMessages(conversationId, new MessageRepository.MessageListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    Message msg = new Message();
-                    msg.content = child.child("content").getValue(String.class);
-                    msg.senderId = child.child("senderId").getValue(String.class);
-                    msg.timestamp = child.child("timestamp").getValue(Long.class);
-                    msg.mediaType = child.child("mediaType").getValue(String.class);
-                    msg.mediaUrl = child.child("mediaUrl").getValue(String.class);
+            public void onMessagesLoaded(List<Message> messages) {
+                Collections.sort(messages, (m1, m2) ->
+                        Long.compare(m1.getTimestamp(), m2.getTimestamp()));
 
-                    Object isMediaObj = child.child("isMediaUrl").getValue();
-                    if (isMediaObj instanceof Boolean) {
-                        msg.isMediaUrl = (Boolean) isMediaObj;
-                    } else if (isMediaObj instanceof String) {
-                        msg.isMediaUrl = Boolean.parseBoolean((String) isMediaObj);
-                    } else {
-                        msg.isMediaUrl = false;
+                messageList.clear();
+                messageList.addAll(messages);
+                messageAdapter.updateMessages(messageList);
+
+                if (!messageList.isEmpty()) {
+                    binding.messagesList.postDelayed(() ->
+                                    binding.messagesList.smoothScrollToPosition(messageList.size() - 1),
+                            100);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(
+                        JsMessagesDirectActivity.this,
+                        "Error loading messages: " + error,
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+    }
+
+    private void observeNewMessages() {
+        messageRepository.observeNewMessages(conversationId, new MessageRepository.MessageListener() {
+            @Override
+            public void onMessagesLoaded(List<Message> messages) {
+                for (Message newMessage : messages) {
+                    boolean messageExists = false;
+                    for (Message existingMessage : messageList) {
+                        if (existingMessage.getMessageId() != null &&
+                                existingMessage.getMessageId().equals(newMessage.getMessageId())) {
+                            messageExists = true;
+                            break;
+                        }
                     }
 
-                    if (msg != null) {
-                        boolean isSent = msg.senderId.equals(AuthManager.getCurrentUser().getUid());
-                        if (msg.hasMedia()) {
-                            if (msg.isImage()) {
-                                Message.addSentMessageBubbleWithImage(
-                                        JsMessagesDirectActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
-                                );
-                            } else if (msg.isPdf()) {
-                                Message.addSentMessageBubbleWithPdf(
-                                        JsMessagesDirectActivity.this, messCont, messScrollCont, msg.mediaUrl, msg.timestamp
-                                );
-                            }
-                        } else {
-                            if (isSent) {
-                                Message.addSentMessageBubble(
-                                        JsMessagesDirectActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
-                                );
-                            } else {
-                                Message.addReceivedMessageBubble(
-                                        JsMessagesDirectActivity.this, messCont, messScrollCont, msg.content, msg.timestamp
-                                );
-                            }
-                        }
+                    if (!messageExists) {
+                        messageList.add(newMessage);
+                        messageAdapter.addMessage(newMessage);
                     }
                 }
 
-                // Scroll to bottom
-                ScrollView scroll = findViewById(R.id.messages_scroll);
-                scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
+                binding.messagesList.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+                messageRepository.markMessagesAsRead(conversationId, currentUserId);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(JsMessagesDirectActivity.this, "Failed to load messages.", Toast.LENGTH_SHORT).show();
+            public void onError(String error) {
+                Toast.makeText(
+                        JsMessagesDirectActivity.this,
+                        "Connection error: " + error,
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
     }
@@ -173,43 +183,23 @@ public class JsMessagesDirectActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri fileUri = data.getData();
-            String fileName = System.currentTimeMillis() + "_" + (fileUri.getLastPathSegment() != null ? fileUri.getLastPathSegment() : "file");
-            File file = new File(FileUtils.getPath(this, fileUri)); // You need a FileUtils.getPath() utility
+            Toast.makeText(this, "Preparing file...", Toast.LENGTH_SHORT).show();
 
-            fileManager.upload(fileName, file, new FileManager.SimpleListener() {
-                @Override
-                public void onStateChanged(int id, com.amazonaws.mobileconnectors.s3.transferutility.TransferState state) {
-                    if (state == com.amazonaws.mobileconnectors.s3.transferutility.TransferState.COMPLETED) {
-                        String s3Url = "https://" + BuildConfig.BUCKET_NAME + ".s3.amazonaws.com/" + fileName;
-                        boolean isImage = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
-                        boolean isPdf = fileName.endsWith(".pdf");
-
-                        String mediaType = null;
-                        String content = s3Url;
-                        if (isImage) {
-                            mediaType = "image";
-                            content = "Image";
-                            Message.addSentMessageBubbleWithImage(JsMessagesDirectActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
-                        } else if (isPdf) {
-                            mediaType = "pdf";
-                            content = "PDF Document";
-                            Message.addSentMessageBubbleWithPdf(JsMessagesDirectActivity.this, messCont, messScrollCont, s3Url, System.currentTimeMillis());
-                        }
-
-                        // Send to Firebase
-                        String userId = getIntent().getStringExtra("userId");
-                        DatabaseReference messageRef = FirebaseDatabase.getInstance()
-                                .getReference("messages")
-                                .child(userId)
-                                .child(AuthManager.getCurrentUser().getUid());
-
-                        Message msg = new Message(content, AuthManager.getCurrentUser().getUid(), System.currentTimeMillis());
-                        msg.setMedia(mediaType, s3Url);
-
-                        messageRef.push().setValue(msg);
-                    }
-                }
-            });
+            // TODO: Implement actual file upload logic here
+        } else if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(this, "File selection cancelled", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        messageRepository.removeConversationListener();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        messageRepository.removeConversationListener();
     }
 }
