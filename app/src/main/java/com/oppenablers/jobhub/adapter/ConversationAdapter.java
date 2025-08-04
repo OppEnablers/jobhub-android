@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oppenablers.jobhub.R;
+import com.oppenablers.jobhub.api.JobHubClient;
 import com.oppenablers.jobhub.databinding.ItemConversationBinding;
 import com.oppenablers.jobhub.model.Conversation;
 import com.bumptech.glide.Glide;
@@ -100,15 +101,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 binding.unreadIndicator.setVisibility(View.GONE);
             }
 
-            if (conversation.getOtherUserPhotoUrl() != null && !conversation.getOtherUserPhotoUrl().isEmpty()) {
-                Glide.with(binding.getRoot())
-                        .load(conversation.getOtherUserPhotoUrl())
-                        .placeholder(R.drawable.hugh_l)
-                        .transform(new CircleCrop())
-                        .into(binding.profileImage);
-            } else {
-                binding.profileImage.setImageResource(R.drawable.hugh_l);
-            }
+//            if (conversation.getOtherUserPhotoUrl() != null && !conversation.getOtherUserPhotoUrl().isEmpty()) {
+//                Glide.with(binding.getRoot())
+//                        .load(conversation.getOtherUserPhotoUrl())
+//                        .placeholder(R.drawable.hugh_l)
+//                        .transform(new CircleCrop())
+//                        .into(binding.profileImage);
+//            } else {
+//                binding.profileImage.setImageResource(R.drawable.hugh_l);
+//            }
+
+            JobHubClient.getProfilePicture(conversation.getOtherUserId(), new JobHubClient.JobHubCallback<byte[]>() {
+                @Override
+                public void onFailure() {
+
+                }
+
+                @Override
+                public void onSuccess(byte[] result) {
+                    Glide.with(itemView).load(result)
+                            .into(binding.profileImage);
+                }
+            });
 
             binding.getRoot().setOnClickListener(v -> {
                 if (onClickListener != null) {

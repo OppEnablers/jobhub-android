@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -134,10 +136,12 @@ public class JsJobFragment extends Fragment implements CardStackListener {
     public void onCardSwiped(Direction direction) {
         Job job = getCurrentJob();
 
+        if (job == null) return;
+
         if (direction == Direction.Right) {
-            acceptJob(job);
+            acceptJob(job.getId());
         } else if (direction == Direction.Left) {
-            declineJob(job);
+            declineJob(job.getId());
         }
     }
 
@@ -169,11 +173,11 @@ public class JsJobFragment extends Fragment implements CardStackListener {
         return adapter.getJob(index - 1);
     }
 
-    private void acceptJob(Job job) {
+    private void acceptJob(String jobId) {
 
-        if (job == null) return;
+        if (jobId == null) return;
 
-        JobHubClient.acceptJobJobSeeker(job, new JobHubClient.JobHubCallbackVoid() {
+        JobHubClient.acceptJobJobSeeker(jobId, new JobHubClient.JobHubCallbackVoid() {
             @Override
             public void onFailure() {
 
@@ -186,11 +190,11 @@ public class JsJobFragment extends Fragment implements CardStackListener {
         });
     }
 
-    private void declineJob(Job job) {
+    private void declineJob(String jobId) {
 
-        if (job == null) return;
+        if (jobId == null) return;
 
-        JobHubClient.declineJobJobSeeker(job, new JobHubClient.JobHubCallbackVoid() {
+        JobHubClient.declineJobJobSeeker(jobId, new JobHubClient.JobHubCallbackVoid() {
             @Override
             public void onFailure() {
 

@@ -59,16 +59,36 @@ public class EmpVacanciesFragment extends Fragment {
             @Override
             public void onSuccess(ArrayList<Vacancy> result) {
                 result.sort(Comparator.comparing(Vacancy::getName));
-                VacancyAdapter vacancyAdapter = new VacancyAdapter(result);
-                vacancyAdapter.setOnClickListener(vacancyId -> {
-                    Intent intent = new Intent(getContext(), EmpVacancyEditorActivity.class);
-                    intent.putExtra(
-                            EmpVacancyEditorActivity.EXTRA_MODE,
-                            EmpVacancyEditorActivity.MODE_EDIT);
-                    intent.putExtra(
-                            EmpVacancyEditorActivity.EXTRA_VACANCY_ID,
-                            vacancyId);
-                    startActivity(intent);
+                ArrayList<Vacancy> vacancies = result;
+                VacancyAdapter vacancyAdapter = new VacancyAdapter(vacancies);
+                vacancyAdapter.setOnClickListener(new VacancyAdapter.OnClickListener() {
+                    @Override
+                    public void onClick(String vacancyId) {
+                        Intent intent = new Intent(getContext(), EmpVacancyEditorActivity.class);
+                        intent.putExtra(
+                                EmpVacancyEditorActivity.EXTRA_MODE,
+                                EmpVacancyEditorActivity.MODE_EDIT);
+                        intent.putExtra(
+                                EmpVacancyEditorActivity.EXTRA_VACANCY_ID,
+                                vacancyId);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onDeleteClick(String vacancyId, int position) {
+                        JobHubClient.deleteVacancy(vacancyId, new JobHubClient.JobHubCallback<Vacancy>() {
+                            @Override
+                            public void onFailure() {
+
+                            }
+
+                            @Override
+                            public void onSuccess(Vacancy result) {
+                                vacancies.remove(position);
+                                vacancyAdapter.notifyItemRemoved(position);
+                            }
+                        });
+                    }
                 });
 
                 binding.vacancyList.setAdapter(vacancyAdapter);

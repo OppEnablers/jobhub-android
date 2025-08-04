@@ -53,9 +53,7 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
 
         public ApplicationViewHolder(@NonNull View itemView, View.OnClickListener onClickListener) {
             super(itemView);
-
             binding = ItemVacancyBinding.bind(itemView);
-
             binding.vacancyContainer.setOnClickListener(onClickListener);
         }
 

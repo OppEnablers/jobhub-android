@@ -5,10 +5,9 @@
     android:id="@+id/conversation_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:background="@drawable/bg_row_item"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/jobcard_bg"
     android:clickable="true"
-    android:elevation="@dimen/cardview_compat_inset_shadow"
     android:focusable="true"
     android:orientation="horizontal"
     android:padding="16dp">

@@ -78,6 +78,8 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(project(":swipe-reveal-layout"))
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.glide)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

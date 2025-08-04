@@ -1,15 +1,22 @@
 package com.oppenablers.jobhub.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.oppenablers.jobhub.adapter.MessageAdapter;
 import com.oppenablers.jobhub.databinding.ActivityJsMessagesDirectBinding;
 import com.oppenablers.jobhub.model.Message;
@@ -41,7 +48,7 @@ public class JsMessagesDirectActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        messageRepository = new MessageRepository();
+        messageRepository = MessageRepository.getInstance();
 
         Intent intent = getIntent();
         if (!intent.hasExtra(EXTRA_USER_ID)) {
@@ -67,6 +74,13 @@ public class JsMessagesDirectActivity extends AppCompatActivity {
         loadMessages();
 
         observeNewMessages();
+
+        fetchCurrentUserName();
+    }
+
+    private void fetchCurrentUserName() {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        currentUserName = prefs.getString("currentUserName", null);
     }
 
     private void setupMessageInput() {

@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MessageRepository {
+
+    private static MessageRepository instance;
     private static final String MESSAGES_PATH = "messages";
     private static final String USER_CONVERSATIONS_PATH = "user_conversations";
     private final DatabaseReference databaseReference;
@@ -30,8 +32,14 @@ public class MessageRepository {
         this.databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
+    public static MessageRepository getInstance() {
+        if (instance == null) instance = new MessageRepository();
+        return instance;
+    }
+
     public interface MessageListener {
         void onMessagesLoaded(List<Message> messages);
+
         void onError(String error);
     }
 
@@ -174,6 +182,7 @@ public class MessageRepository {
 
     public interface ConversationListener {
         void onConversationsLoaded(List<Conversation> conversations);
+
         void onError(String error);
     }
 
@@ -259,7 +268,41 @@ public class MessageRepository {
 
     public interface TestConversationCallback {
         void onSuccess();
+
         void onFailure(String error);
+    }
+
+    public void createEmptyConversation(String user1Id, String user2Id,
+                                        String user1Name, String user2Name,
+                                        TestConversationCallback callback) {
+        String conversationId = generateConversationId(user1Id, user2Id);
+        DatabaseReference convRef = databaseReference.child(MESSAGES_PATH).child(conversationId);
+        Message initialMessage = new Message(
+                user1Id,
+                user2Id,
+                user1Name,
+                user2Name,
+                "Hello, you have been accepted.",
+                Message.MessageType.TEXT
+        );
+
+        String messageId = convRef.push().getKey();
+
+        if (messageId == null) {
+            callback.onFailure("Message ID was null.");
+            return;
+        }
+
+        initialMessage.setMessageId(messageId);
+        convRef.child(messageId).setValue(initialMessage.toMap())
+                .addOnFailureListener(e -> {
+                    callback.onFailure(e.getMessage());
+                });
+
+        updateConversationMetadata(user1Id, user2Id, initialMessage);
+        updateConversationMetadata(user2Id, user1Id, initialMessage);
+
+        callback.onSuccess();
     }
 
     public void createTestConversation(String user1Id, String user2Id,

@@ -2,6 +2,7 @@ package com.oppenablers.jobhub.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.activity.JsProfileSettingsActivity;
 import com.oppenablers.jobhub.api.JobHubClient;
 import com.oppenablers.jobhub.databinding.FragmentJsProfileBinding;
@@ -90,6 +93,20 @@ public class JsProfileFragment extends Fragment {
     }
 
     private void updateInfo() {
+        Fragment fragment = this;
+
+        JobHubClient.getProfilePicture(AuthManager.getCurrentUser().getUid(), new JobHubClient.JobHubCallback<byte[]>() {
+            @Override
+            public void onFailure() {
+                Log.d("profile pic", "failed");
+            }
+
+            @Override
+            public void onSuccess(byte[] result) {
+                Glide.with(fragment).load(result).into(binding.profilePicture);
+            }
+        });
+
         JobHubClient.getAccountInfoJobSeeker(new JobHubClient.JobHubCallback<JobSeeker>() {
             @Override
             public void onFailure() {
@@ -98,6 +115,7 @@ public class JsProfileFragment extends Fragment {
 
             @Override
             public void onSuccess(JobSeeker result) {
+
                 binding.profileName.setText(result.getName());
                 binding.profileName.setOnClickListener(v -> {
                     startActivity(createSettingIntent("Personal Info", "personal"));
