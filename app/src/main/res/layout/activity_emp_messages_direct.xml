@@ -69,9 +69,9 @@
             android:id="@+id/add_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="@drawable/addlogo"
             android:contentDescription="@string/add_attachment"
-            android:scaleType="centerCrop"
-            android:src="@drawable/addlogo" />
+            android:scaleType="centerCrop" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/message_input"
@@ -93,10 +93,9 @@
             android:id="@+id/send_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@android:drawable/ic_menu_send"
             android:contentDescription="@string/send_message"
-            android:scaleType="centerInside"
-            android:src="@android:drawable/ic_menu_send" />
+            android:scaleType="centerInside" />
     </LinearLayout>
 
 </RelativeLayout>

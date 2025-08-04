@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_messages"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/messages_title"
@@ -40,8 +38,8 @@
         android:textColor="@color/md_theme_outline"
         android:visibility="gone" />
 
-    <ScrollView
-        android:id="@+id/messages_list_scroll"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messages_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/messages_title"
@@ -49,14 +47,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/bg_content_rounded_bottom"
-        android:fillViewport="true"
-        android:padding="12dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/messages_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:paddingTop="4dp"
+        android:paddingHorizontal="4dp"/>
 
     <Button
         android:id="@+id/btn_create_test"
@@ -65,7 +59,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:text="Test Message" />
+        android:text="Test Message"
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

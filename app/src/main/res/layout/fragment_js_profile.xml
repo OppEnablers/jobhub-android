@@ -59,7 +59,6 @@
                     android:layout_height="130dp"
                     android:layout_margin="4dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/hugh_l"
                     app:shapeAppearanceOverlay="@style/circleImageView" />
 
                 <TextView

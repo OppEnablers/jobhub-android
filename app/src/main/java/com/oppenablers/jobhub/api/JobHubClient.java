@@ -10,6 +10,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.oppenablers.jobhub.model.ApplicantData;
 import com.oppenablers.jobhub.model.Employer;
 import com.oppenablers.jobhub.model.Job;
 import com.oppenablers.jobhub.model.JobSeeker;
@@ -18,7 +19,6 @@ import com.oppenablers.jobhub.model.Vacancy;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import kotlinx.coroutines.JobNode;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -107,14 +107,34 @@ public class JobHubClient {
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
     }
 
+    public static void deleteVacancy(String vacancyId, JobHubCallback<Vacancy> callback) {
+        CLIENT.newCall(get("/employer/delete_vacancy/" + vacancyId))
+                .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
+    }
+
     public static void getVacanciesEmployer(JobHubCallback<ArrayList<Vacancy>> callback) {
         CLIENT.newCall(get("/employer/vacancies"))
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
     }
 
-    public static void getChatsEmployer(JobHubCallback<ArrayList<JobSeeker>> callback) {
+    public static void getApplicantsEmployer(JobHubCallback<ArrayList<ApplicantData>> callback) {
+        CLIENT.newCall(get("/employer/applicants"))
+                .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
+    }
+
+    public static void getChatsEmployer(JobHubCallback<ArrayList<ApplicantData>> callback) {
         CLIENT.newCall(get("/employer/chats"))
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
+    }
+
+    public static void acceptApplicantEmployer(String jobSeekerId, String vacancyId, JobHubCallbackVoid callback) {
+        CLIENT.newCall(get("/employer/accept_applicant/" + jobSeekerId + "/" + vacancyId))
+                .enqueue(createNotifyCallback(callback));
+    }
+
+    public static void declineApplicantEmployer(String jobSeekerId, String vacancyId, JobHubCallbackVoid callback) {
+        CLIENT.newCall(get("/employer/decline_applicant/" + jobSeekerId + "/" + vacancyId))
+                .enqueue(createNotifyCallback(callback));
     }
 
     public static void getJobsJobSeeker(JobHubCallback<ArrayList<Job>> callback) {
@@ -122,21 +142,47 @@ public class JobHubClient {
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
     }
 
-    public static void acceptJobJobSeeker(Job job, JobHubCallbackVoid callback) {
-        String jobJson = GSON.toJson(job);
-        CLIENT.newCall(post("/jobseeker/accept_job", jobJson))
+    public static void acceptJobJobSeeker(String jobId, JobHubCallbackVoid callback) {
+        CLIENT.newCall(get("/jobseeker/accept_job/" + jobId))
                 .enqueue(createNotifyCallback(callback));
     }
 
-    public static void declineJobJobSeeker(Job job, JobHubCallbackVoid callback) {
-        String jobJson = GSON.toJson(job);
-        CLIENT.newCall(post("/jobseeker/decline_job", jobJson))
+    public static void declineJobJobSeeker(String jobId, JobHubCallbackVoid callback) {
+        CLIENT.newCall(get("/jobseeker/decline_job/" + jobId))
                 .enqueue(createNotifyCallback(callback));
     }
 
     public static void getApplicationsJobSeeker(JobHubCallback<ArrayList<Job>> callback) {
         CLIENT.newCall(get("/jobseeker/applications"))
                 .enqueue(createNotifyCallback(new TypeToken<>(){}, callback));
+    }
+
+    public static void getProfilePicture(String userId, JobHubCallback<byte[]> callback) {
+        CLIENT.newCall(get("/profile_picture/" + userId))
+                .enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        HANDLER.post(callback::onFailure);
+                    }
+
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull Response response) {
+                        HANDLER.post(() -> {
+                            try {
+
+                                if (response.body() == null) {
+                                    callback.onFailure();
+                                    return;
+                                }
+
+                                byte[] result = response.body().bytes();
+                                callback.onSuccess(result);
+                            } catch (Exception e) {
+                                callback.onFailure();
+                            }
+                        });
+                    }
+                });
     }
 
     private static Request post(String endpoint, String body) {

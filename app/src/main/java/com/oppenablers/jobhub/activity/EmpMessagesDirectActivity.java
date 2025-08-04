@@ -59,7 +59,7 @@ public class EmpMessagesDirectActivity extends AppCompatActivity {
         });
 
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        messageRepository = new MessageRepository();
+        messageRepository = MessageRepository.getInstance();
 
         Intent intent = getIntent();
         if (!intent.hasExtra(EXTRA_USER_ID)) {
@@ -90,27 +90,6 @@ public class EmpMessagesDirectActivity extends AppCompatActivity {
     private void fetchCurrentUserName() {
         SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         currentUserName = prefs.getString("currentUserName", null);
-
-        if (currentUserName == null) {
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUserId);
-            userRef.child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String name = snapshot.getValue(String.class);
-                    if (name != null && !name.isEmpty()) {
-                        currentUserName = name;
-                        prefs.edit().putString("currentUserName", name).apply();
-                        updateTitle();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    currentUserName = "Employer";
-                    updateTitle();
-                }
-            });
-        }
     }
 
     private void updateTitle() {
@@ -234,6 +213,8 @@ public class EmpMessagesDirectActivity extends AppCompatActivity {
                         messageAdapter.addMessage(newMessage);
                     }
                 }
+
+                if (messageAdapter.getItemCount() < 1) return;
 
                 binding.messagesList.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
                 messageRepository.markMessagesAsRead(conversationId, currentUserId);

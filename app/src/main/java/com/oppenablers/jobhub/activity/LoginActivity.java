@@ -1,13 +1,21 @@
 package com.oppenablers.jobhub.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.Utility;
 import com.oppenablers.jobhub.api.JobHubClient;
@@ -49,16 +57,24 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     String userType = (String) getTokenResult.getClaims().get("user_type");
 
-                                                    if (userType.contentEquals("jobseeker")) {
-                                                        Intent intent = new Intent(LoginActivity.this, JsNavigatorActivity.class);
-                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                        startActivity(intent);
-                                                    } else if (userType.contentEquals("employer")) {
-                                                        Intent intent = new Intent(LoginActivity.this, EmpNavigatorActivity.class);
-                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                        startActivity(intent);
-                                                    }
+                                                    if (userType == null) return;
 
+                                                    FirebaseFirestore.getInstance()
+                                                            .collection(userType)
+                                                            .document(AuthManager.getCurrentUser().getUid()).get()
+                                                            .addOnSuccessListener(documentSnapshot -> {
+                                                                setUserName(documentSnapshot.get("name", String.class));
+
+                                                                if (userType.contentEquals("jobseeker")) {
+                                                                    Intent intent = new Intent(LoginActivity.this, JsNavigatorActivity.class);
+                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                    startActivity(intent);
+                                                                } else if (userType.contentEquals("employer")) {
+                                                                    Intent intent = new Intent(LoginActivity.this, EmpNavigatorActivity.class);
+                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                    startActivity(intent);
+                                                                }
+                                                            });
                                                 }
                                             }));
                         }
@@ -67,5 +83,12 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(this, "Wrong credentials", Toast.LENGTH_SHORT).show();
                     });
         });
+    }
+
+    private void setUserName(String userName) {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        prefs.edit()
+                .putString("currentUserName", userName)
+                .apply();
     }
 }

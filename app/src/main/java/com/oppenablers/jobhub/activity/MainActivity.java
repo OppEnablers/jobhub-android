@@ -22,6 +22,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.dialog.MaterialDialogs;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.oppenablers.jobhub.AuthManager;
 import com.oppenablers.jobhub.R;
 import com.oppenablers.jobhub.api.AuthInterceptor;
@@ -59,15 +62,24 @@ public class MainActivity extends AppCompatActivity {
 
                 String userType = (String) getTokenResult.getClaims().get("user_type");
 
-                if (userType.contentEquals("jobseeker")) {
-                    Intent intent = new Intent(MainActivity.this, JsNavigatorActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                } else if (userType.contentEquals("employer")) {
-                    Intent intent = new Intent(MainActivity.this, EmpNavigatorActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
+                if (userType == null) return;
+
+                FirebaseFirestore.getInstance()
+                        .collection(userType + "s")
+                        .document(AuthManager.getCurrentUser().getUid()).get()
+                        .addOnSuccessListener(documentSnapshot -> {
+                            setUserName(documentSnapshot.get("name", String.class));
+
+                            if (userType.contentEquals("jobseeker")) {
+                                Intent intent = new Intent(MainActivity.this, JsNavigatorActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            } else if (userType.contentEquals("employer")) {
+                                Intent intent = new Intent(MainActivity.this, EmpNavigatorActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        });
             });
         }
 
@@ -93,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("Main", "millis diff: " + millisDiff);
 
-                if (millisDiff > 200)
+                if (millisDiff > 500)
                     tapCount = 0;
 
                 tapCount++;
@@ -143,5 +155,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateClientHostName(SharedPreferences sharedPreferences) {
         JobHubClient.setHostName(sharedPreferences.getString("host_name", "localhost"));
+    }
+
+    private void setUserName(String userName) {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        prefs.edit()
+                .putString("currentUserName", userName)
+                .apply();
     }
 }

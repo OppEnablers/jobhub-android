@@ -41,7 +41,7 @@ public class JsMessagesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        messageRepository = new MessageRepository();
+        messageRepository = MessageRepository.getInstance();
 
         setupViews();
         loadConversations();

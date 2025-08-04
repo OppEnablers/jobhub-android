@@ -31,10 +31,10 @@ public class EmpMessagesFragment extends Fragment {
     private MessageRepository messageRepository;
     private String currentUserId;
 
-    private static final String TEST_EMPLOYER_ID = "yhPaESRBdCct8vphE4b7de0paGo1";
-    private static final String TEST_JOBSEEKER_ID = "ezGrfP1oi9dohk0qdKwpKPH9mIs2";
-    private static final String TEST_EMPLOYER_NAME = "iACADEMY";
-    private static final String TEST_JOBSEEKER_NAME = "Taku-chan";
+    private static final String TEST_EMPLOYER_ID = "3wFAKoMicaWCOBVmu2XW3q6wmFk2";
+    private static final String TEST_JOBSEEKER_ID = "xwlx8WuYzsPJiFhMqfp1lGjkcjV2";
+    private static final String TEST_EMPLOYER_NAME = "Jobber";
+    private static final String TEST_JOBSEEKER_NAME = "Jacob-chan";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +48,7 @@ public class EmpMessagesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        messageRepository = new MessageRepository();
+        messageRepository = MessageRepository.getInstance();
 
         setupViews();
         setupTestButton();
